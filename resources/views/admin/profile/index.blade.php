@@ -68,7 +68,7 @@
 								<div class="col-lg-6">
 									<div class="form-group">
 										<label class="form-control-label" for="input-email">Phone Number</label>
-										<input type="text" id="input-email" class="form-control" placeholder="9988774455" name="phonenumber"  value="<?php echo $admin->phonenumber ?>">
+										<input type="text" id="input-email" class="form-control" placeholder="9988774455" name="phonenumber"  value="<?php echo $admin->phonenumber ?>" minlength="10" maxlength="10" pattern="[0-9]{10}" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
 										@error('phonenumber')
 										    <small class="text-danger">{{ $message }}</small>
 										@enderror
@@ -84,6 +84,30 @@
 										    <small class="text-danger">{{ $message }}</small>
 										@enderror
 									</div>
+								</div>
+								@php
+								    $selectedRoles = !empty($admin->role) ? json_decode($admin->role, true) : [];
+
+								    $isAdmin = AdminAuth::isAdmin();
+								@endphp
+
+								<div class="col-md-6">
+								    <div class="form-group">
+								        <label class="form-control-label" for="input-type">Permissions</label>
+
+								        <select name="role[]" @if(!$isAdmin || $admin->id == 7) disabled @endif class="form-control" required multiple>
+								            <option value="" disabled>Select Permissions</option>
+
+								            <option value="cse" {{ in_array('cse', $selectedRoles) ? 'selected' : '' }}>CSE</option>
+								            <option value="qa" {{ in_array('qa', $selectedRoles) ? 'selected' : '' }}>Q&A</option>
+								            <option value="labadmin" {{ in_array('labadmin', $selectedRoles) ? 'selected' : '' }}>Lab Admin</option>
+								            <option value="labassociate" {{ in_array('labassociate', $selectedRoles) ? 'selected' : '' }}>Lab Associate</option>
+								        </select>
+
+								        @error('role')
+								            <small class="text-danger">{{ $message }}</small>
+								        @enderror
+								    </div>
 								</div>
 							</div>
 						</div>

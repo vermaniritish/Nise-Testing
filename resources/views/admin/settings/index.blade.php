@@ -48,6 +48,14 @@
 								    <small class="text-danger">{{ $message }}</small>
 								@enderror
 							</div>
+
+							<div class="form-group">
+								<label class="form-control-label" for="input-first-name">Company GST Value</label>
+								<input type="text" class="form-control" name="company_gst_value" required placeholder="Company GST Value" value="{{ Settings::get('company_gst_value') }}">
+								@error('company_gst_value')
+								    <small class="text-danger">{{ $message }}</small>
+								@enderror
+							</div>
 							<div class="row">
 								<div class="col-md-6">
 									<label class="form-control-label" for="input-first-name">Logo</label>

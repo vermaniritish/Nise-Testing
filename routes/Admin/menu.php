@@ -20,6 +20,12 @@ Route::post('/footer-menu/add', '\App\Http\Controllers\Admin\MenuController@addF
 Route::post('/courses-menu/add', '\App\Http\Controllers\Admin\MenuController@addCoursesMenu')
     ->name('admin.coursesMenu.add');
 
+Route::post('/information-menu/add', '\App\Http\Controllers\Admin\MenuController@addInformationMenu')
+    ->name('admin.informationMenu.add');
+
+Route::post('/other-links-menu/add', '\App\Http\Controllers\Admin\MenuController@addOtherLinksMenu')
+    ->name('admin.otherLinksMenu.add');
+
 Route::delete('menu/delete/{id}', '\App\Http\Controllers\Admin\MenuController@deleteMenuItem')->name('menu.delete');
 
 

@@ -141,7 +141,7 @@ class Users extends AppModel
     */
     public static function get($id)
     {
-    	$record = Users::select('users.*','state.name as state_name','district.name as district_name')->leftJoin('states as state','state.id','=','users.state_id')->leftJoin('district','district.id','=','users.district_id')->find($id);
+    	$record = Users::select('users.*','state.name as state_name')->leftJoin('states as state','state.id','=','users.state_id')->find($id);
 
 	    return $record;
     }

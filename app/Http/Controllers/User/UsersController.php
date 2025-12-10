@@ -7,6 +7,7 @@ use App\Models\Admin\State;
 use App\Models\Admin\District;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends AppController
 {
@@ -146,61 +147,100 @@ class UsersController extends AppController
         return back()->withErrors(['email_otp' => 'Invalid OTP']);
     }
 
-    public function registrationForm($id)
+    public function registrationForm(Request $request)
     {
-        $verification = User::findOrFail($id);
-        if (!$verification->is_mobile_verified) {
-            return redirect()->route('email.form')->withErrors(['email' => 'Please verify email first']);
-        }
         $states = State::all();
-        return view('front.user.registration', compact('verification','states'));
+        return view('front.user.registration', compact('states'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'id'          => 'required|exists:users,id',
-            'organisation_name'  => 'required|string|max:255',
-            'organisation_file'   => 'nullable|file|mimes:pdf,jpg,png|max:5120',
-            'pan'        => 'required|string|max:10',
-            'pan_file'   => 'nullable|file|mimes:pdf,jpg,png|max:5120',
-            'gst'        => 'required|string|max:15',
-            'gst_file'   => 'nullable|file|mimes:pdf,jpg,png|max:5120',
-            'address'    => 'required|string|max:500',
-            'pin'        => 'required|digits:6',
-            'state_id'   => 'required|exists:states,id',
-            'district_id'=> 'required|exists:district,id',
-        ]);
+        $type = $request->input('registration_type');
 
-        $panFile = $request->file('pan_file') ? $request->file('pan_file')->store('uploads/pan', 'public') : null;
-        $gstFile = $request->file('gst_file') ? $request->file('gst_file')->store('uploads/gst', 'public') : null;
-        $organisationFile = $request->file('organisation_file') ? $request->file('organisation_file')->store('uploads/organisation', 'public') : null;
+        if ($type === 'Company') {
+            $request->validate([
+                'registration_type'  => 'required|in:Company,Individual',
+                'company_name'       => 'required|string|max:255',
+                'address_1'          => 'required|string|max:255',
+                'address_2'          => 'nullable|string|max:255',
+                'state_id'           => 'required|exists:states,id',
+                'city'               => 'required|string|max:255',
+                'pincode'            => 'required|digits:6',
+                'pan'                => 'required|string|max:10',
+                'pan_file'           => 'nullable|file|mimes:pdf,jpg,png|max:5120',
+                'tin'                => 'required|string|max:50',
+                'registration_number'=> 'required|string|max:100',
+                'company_file'       => 'nullable|file|mimes:pdf,jpg,png|max:5120',
+                'person_name'        => 'required|string|max:255',
+                'mobile'             => 'required|string|max:15',
+                'email'              => 'required|email|max:255|unique:users,email',
+            ]);
 
-        $user = User::findOrFail($request->id);
-        $user->organisation_name  = $request->organisation_name;
-        $user->organisation_file  = $organisationFile;
-        $user->pan                = $request->pan;
-        $user->pan_file           = $panFile;
-        $user->gst                = $request->gst;
-        $user->gst_file           = $gstFile;
-        $user->address            = $request->address;
-        $user->pin                = $request->pin;
-        $user->state_id           = $request->state_id;
-        $user->district_id        = $request->district_id;
-        $user->mobile_otp = null;
-        $user->email_otp  = null;
+            // File uploads
+            $panFile = $request->file('pan_file') ? $request->file('pan_file')->store('uploads/pan', 'public') : null;
+            $companyFile = $request->file('company_file') ? $request->file('company_file')->store('uploads/company', 'public') : null;
 
-        $user->save();
+            // Create user
+            $user = new User();
+            $user->registration_type = 'Company';
+            $user->company_name = $request->company_name;
+            $user->company_file = $companyFile;
+            $user->address_1 = $request->address_1;
+            $user->address_2 = $request->address_2;
+            $user->state_id = $request->state_id;
+            $user->city = $request->city;
+            $user->pincode = $request->pincode;
+            $user->pan = strtoupper($request->pan);
+            $user->pan_file = $panFile;
+            $user->tin = $request->tin; 
+            $user->registration_number = $request->registration_number;
+            $user->person_name = $request->person_name;
+            $user->mobile = $request->mobile;
+            $user->email = $request->email;
+            $user->save();
 
-        $uniqueNumber = str_pad($user->id, 5, '0', STR_PAD_LEFT); // like 00001
-        $userIdSt = 'SM-INST-' . $uniqueNumber;
-        $user->institute_code = $userIdSt;
-        $user->save();
+            // Create institute code like SM-INST-00001
+            // $uniqueNumber = str_pad($user->id, 5, '0', STR_PAD_LEFT);
+            // $user->institute_code = 'SM-INST-' . $uniqueNumber;
+            $user->save();
+        } elseif ($type === 'Individual') {
+            $request->validate([
+                'registration_type'     => 'required|in:Company,Individual',
+                'ind_contact_person_name' => 'required|string|max:255',
+                'ind_address_1'         => 'required|string|max:255',
+                'ind_address_2'         => 'nullable|string|max:255',
+                'ind_state_id'          => 'required|exists:states,id',
+                'ind_city_or_district'  => 'required|string|max:255',
+                'ind_pin_code'          => 'required|digits:6',
+                'ind_mobile_number'                => 'required|string|max:15',
+                'ind_email'                 => 'required|email|max:255|unique:users,email',
+                'password'              => 'required|string|min:6',
+            ]);
 
-        return redirect()->route('registration.confirmation')->with('success', 'Registration successful!');
+            $user = new User();
+            $user->registration_type = 'Individual';
+            $user->ind_contact_person_name = $request->ind_contact_person_name;
+            $user->ind_address_1 = $request->ind_address_1;
+            $user->ind_address_2 = $request->ind_address_2;
+            $user->ind_state_id = $request->ind_state_id;
+            $user->ind_city_or_district = $request->ind_city_or_district;
+            $user->ind_pin_code = $request->ind_pin_code;
+            $user->ind_mobile_number = $request->ind_mobile_number;
+            $user->ind_email = $request->ind_email;
+            $user->mobile = $request->ind_mobile_number;
+            $user->email = $request->ind_email;
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            // Generate code
+            // $uniqueNumber = str_pad($user->id, 5, '0', STR_PAD_LEFT);
+            // $user->institute_code = 'SM-IND-' . $uniqueNumber;
+            $user->save();
+        }
+
+        return redirect()->route('registration.confirmation')
+                    ->with('success', 'Registration successful!');
     }
-
-
 
     public function getDistricts($state_id)
     {

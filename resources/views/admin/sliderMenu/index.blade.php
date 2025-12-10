@@ -78,7 +78,7 @@
 										<?php endif; ?>
 									</th>
 									<th class="sort" width="35%">
-										Heading
+										Title
 										<?php if(isset($_GET['sort']) && $_GET['sort'] == 'slider_menu.heading' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
 										<i class="fas fa-sort-down active" data-field="slider_menu.heading" data-sort="asc"></i>
 										<?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'slider_menu.heading' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>

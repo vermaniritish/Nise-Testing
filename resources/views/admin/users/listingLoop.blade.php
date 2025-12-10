@@ -14,9 +14,15 @@
 		</span>
 
 	</td>
+	@if(isset($row->registration_type) && $row->registration_type == 'Company')
 	<td>
-		<?php echo $row->organisation_name?>
+		<?php echo $row->person_name?>
 	</td>
+	@else
+	<td>
+		<?php echo $row->ind_contact_person_name?>
+	</td>
+	@endif
 	<td>
 		<a href="mailto:<?php echo $row->email ?>" target="_blank"><?php echo $row->email ?></a>
 	</td>

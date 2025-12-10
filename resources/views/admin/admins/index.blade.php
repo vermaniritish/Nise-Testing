@@ -105,6 +105,16 @@
 										<?php endif; ?>
 									</th>
 									<th class="sort">
+										Role
+										<?php if(isset($_GET['sort']) && $_GET['sort'] == 'admins.role' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
+										<i class="fas fa-sort-down active" data-field="admins.role" data-sort="asc"></i>
+										<?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'admins.role' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
+										<i class="fas fa-sort-up active" data-field="admins.role" data-sort="desc"></i>
+										<?php else: ?>
+										<i class="fas fa-sort" data-field="admins.role"></i>
+										<?php endif; ?>
+									</th>
+									<th class="sort">
 										Email
 										<?php if(isset($_GET['sort']) && $_GET['sort'] == 'admins.email' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
 										<i class="fas fa-sort-down active" data-field="admins.email" data-sort="asc"></i>

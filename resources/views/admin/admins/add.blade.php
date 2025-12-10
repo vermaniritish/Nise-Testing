@@ -68,7 +68,7 @@
 								<div class="col-lg-6">
 									<div class="form-group">
 										<label class="form-control-label" for="input-email">Phone Number</label>
-										<input type="text" id="input-email" class="form-control" placeholder="9988774455" name="phonenumber"  value="{{ old('phonenumber') }}">
+										<input type="text" id="input-email" class="form-control" placeholder="9988774455" name="phonenumber" value="{{ old('phonenumber') }}" minlength="10" maxlength="10" pattern="[0-9]{10}" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
 										@error('phonenumber')
 										    <small class="text-danger">{{ $message }}</small>
 										@enderror
@@ -117,7 +117,9 @@
 						                	@include('admin.partials.previewFileRender', ['file' => old('image') ])
 						                </div>
 									</div>
+									
 								</div>
+
 								<div class="col-md-6">
 									<div class="form-group">
 										<div class="custom-control">
@@ -149,10 +151,48 @@
 											<small class="text-info">Password should contain at least one capital letter (A-Z), one small letter (a-z), one number (0-9) and one special character (!@#$%^&amp;*).</small>
 										</div>
 									</div>
+                                    
 								</div>
 							</div>
 						</div>
+						<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+		                                        <label class="form-control-label" for="input-type">Role</label>
+		                                        <select name="role" class="form-control" required>
+		                                            <option value="" selected disabled>Select Role</option>
+		                                            <option value="cse">CSE</option>
+		                                            <option value="qa">Q&A</option>
+		                                            <option value="labadmin">Lab Admin</option>
+		                                            <option value="labassociate">Lab Associate</option>
+		                                            <option value="client">Client</option>
+		                                        </select>
+		                                        @error('role')
+		                                            <small class="text-danger">{{ $message }}</small>
+		                                        @enderror
+		                                    </div>
+	                                	</div>
+	                                	<div class="col-md-6">
+										    <div class="form-group">
+										        <label class="form-control-label" for="input-type">Lab Testing</label>
 
+										        <select name="lab_testing[]" class="form-control" multiple required>
+										            <option value="" disabled>Select Lab Testing</option>
+
+										            @foreach($testServices as $service)
+										                <option value="{{ $service->id }}" 
+										                    {{ (is_array(old('lab_testing')) && in_array($service->id, old('lab_testing'))) ? 'selected' : '' }}>
+										                    {{ $service->title }}
+										                </option>
+										            @endforeach
+										        </select>
+
+										        @error('lab_testing')
+										            <small class="text-danger">{{ $message }}</small>
+										        @enderror
+										    </div>
+										</div>
+									</div>
 						<hr class="my-4" />
 						<!-- Address -->
 						<h6 class="heading-small text-muted mb-4">Permissions</h6>

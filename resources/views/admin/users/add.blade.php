@@ -75,7 +75,8 @@
                             <div class="row">
                               <div class="col-md-6">
                                 <label>Organisation Name<span class="text-danger" style="font-size:11.5px">*</span></label>
-                                <input type="text" name="organisation_name" id="organisation_name" value="{{old('organisation_name')}}" class="form-control" placeholder="Organisation Name">
+                                <input type="text" maxlength="100" name="organisation_name" id="organisation_name" value="{{old('organisation_name')}}" class="form-control" placeholder="Organisation Name">
+                                <small>You can enter up to 100 characters only.</small>
                                 @error('organisation_name')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -173,7 +174,8 @@
                               </div>
                               <div class="col-md-6">
                                 <label>Address<span class="text-danger" style="font-size:11.5px">*</span></label>
-                                <textarea name="address" id="address" placeholder="* Enter address here..." cols="20" rows="5" class="form-control"></textarea>
+                                <textarea name="address" id="address" maxlength="300" placeholder="* Enter address here..." cols="20" rows="5" class="form-control"></textarea>
+                                <small>You can enter up to 300 characters only.</small>
                                 @error('address')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

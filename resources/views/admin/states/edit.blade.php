@@ -35,8 +35,9 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-first-name">Name</label>
-                                            <input type="text" value="{{ old('name', $states->name) }}" required class="form-control"
+                                            <input type="text" maxlength="100" value="{{ old('name', $states->name) }}" required class="form-control"
                                                 name="name" placeholder="Name">
+                                            <small>You can enter up to 100 characters only.</small>
                                             @error('name')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror

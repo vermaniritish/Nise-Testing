@@ -37,43 +37,45 @@
 		$directorDescHi  = nl2br(CustomPageData::get('director_desc_hi'));
 	?>
 	<!-- START ABOUT PROMO SECTION -->
-    <section id="faqpage" class="section-padding">
-        <div class="container">	 
-			<div class="row mb-5">
-				<div class="col-lg-6 col-md-6 col-sm-12 col-12 pr-lg-5 pr-md-5 pr-sm-0 pr-0 mb-lg-0 mb-md-0 mb-sm-5 mb-5 faq-page-into">
-					<h6>About Us</h6>
-					<h3>
-						<span class="lang-en">{{ $aboutUsTitleEn }}</span>
-						<span class="lang-hi" style="display:none;">{{ $aboutUsTitleHi }}</span>
-					</h3>
-					<span class="lang-en">{{ strip_tags($aboutUsDescEn) }}</span>
-					<span class="lang-hi" style="display:none;">{{ strip_tags($aboutUsDescHi) }}</span>
-				</div>
-				<!-- end col -->
-				<div class="col-lg-6 col-md-6 col-sm-12 col-12">
-					<div class="faq-page-into-features mb-5">
-						<div class="faq-page-into-features-icon">
-							<img src="<?php echo url(CustomPageData::get('director_image')) ?>" alt="Dr. Mohammad Rihan" style="height: 120px;box-shadow: 0px 0px 20px 8px #eee;border-radius: 5px 5px 5px 5px;" />
-						</div>
-						<div class="faq-page-into-features-text">
-							<h5 style="margin-bottom:5px;">
-								<span class="lang-en">{{ $directorTitleEn }}</span>
-								<span class="lang-hi" style="display:none;">{{ $directorTitleHi }}</span>
-							</h5>
-							<h6>
-								<span class="lang-en">{{ $directorSubTitleEn }}</span>
-								<span class="lang-hi" style="display:none;">{{ $directorSubTitleHi }}</span>
-							</h6>
-							<p style="margin-bottom: 0px;font-weight: 400;">
-								<span class="lang-en">{{ strip_tags($directorDescEn) }}</span>
-								<span class="lang-hi" style="display:none;">{{ strip_tags($directorDescHi) }}</span>
-							</p>
-							<button onclick="myFunction()" id="myBtn" class="faq-page-into-btn mt-4">Read more <i class="icofont icofont-caret-right"></i></button>	
-						</div>
+    <?php
+		$aboutUsTitleEn  = CustomPageData::get('about_us_title');
+		$aboutUsTitleHi  = CustomPageData::get('about_us_title_hi');
+
+		$aboutUsDescEn  = CustomPageData::get('about_us_desc');
+		$aboutUsDescHi  = CustomPageData::get('about_us_desc_hi');
+
+		$feedbackTitleEn  = CustomPageData::get('feedback_title');
+		$directorTitleHi  = CustomPageData::get('feedback_title_hi');
+
+		$feedbackDescription  = nl2br(CustomPageData::get('feedback_description'));
+		$directorDescHi  = nl2br(CustomPageData::get('feedback_description_hi'));
+
+		$feedbackBtnTitle  = CustomPageData::get('feedback_button_title');
+		$feedbackBtnLink  = CustomPageData::get('feedback_button_link');
+	?>
+	<section id="promot" class="section-padding">
+	    <div class="auto-container">
+		<div class="row">
+			
+			<div class="col-lg-6 col-md-6 col-12">
+				<h6>About Us</h6>
+				<!-- <h3> NISE <span>Testing Services</span></h3> -->
+				<h3>{{ $aboutUsTitleEn }}</h3>
+				<p><?php echo $aboutUsDescEn ?></p>
+			</div>
+			<div class="col-lg-6 col-md-6 col-12">				
+				<div class="single-wcus-promo2">
+					<div class="single-wcus-promo-inner">
+						<h3>{{ $feedbackTitleEn }}</h3>
+						<p>{!! $feedbackDescription !!}</p>
+						<a href="{{$feedbackBtnLink}}" class="btn-style btn-border btn-border-2">{{$feedbackBtnTitle}}</a>
 					</div>
 				</div>
-				<!-- end col -->					
 			</div>
+			<!-- end col -->	
+						
 		</div>
+	</div>
+	<!--- END CONTAINER -->
 	</section>
 @endsection

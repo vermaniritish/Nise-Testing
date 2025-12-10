@@ -108,6 +108,16 @@
 										<?php endif; ?>
 									</th>
 									<th class="sort" width="15%">
+										Is New
+										<?php if(isset($_GET['sort']) && $_GET['sort'] == 'notices.is_new' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
+										<i class="fas fa-sort-down active" data-field="notices.is_new" data-sort="asc"></i>
+										<?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'notices.is_new' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
+										<i class="fas fa-sort-up active" data-field="notices.is_new" data-sort="desc"></i>
+										<?php else: ?>
+										<i class="fas fa-sort" data-field="notices.is_new"></i>
+										<?php endif; ?>
+									</th>
+									<th class="sort" width="15%">
 										Created On
 										<?php if(isset($_GET['sort']) && $_GET['sort'] == 'notices.created' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
 										<i class="fas fa-sort-down active" data-field="notices.created" data-sort="asc"></i>

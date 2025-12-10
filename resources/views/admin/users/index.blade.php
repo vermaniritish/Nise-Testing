@@ -60,7 +60,7 @@
 										<?php endif; ?>
 									</th>
 									<th class="sort">
-										Organisation Name
+										Person Name
 										<?php if(isset($_GET['sort']) && $_GET['sort'] == 'users.organisation_name' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
 										<i class="fas fa-sort-down active" data-field="users.organisation_name" data-sort="asc"></i>
 										<?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'users.organisation_name' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>

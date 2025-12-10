@@ -128,7 +128,7 @@ class SliderMenuController extends AppController
 	        	{
 	        		$request->session()->flash('success', 'Slider menu  created.');
 	        		// return redirect()->route('admin.sliderMenu');
-                    return redirect()->route('admin.sliderMenu.view', ['id' => $sliderMenu->id]);
+                    return redirect()->route('admin.sliderMenu');
 	        	}
 	        	else
 	        	{
@@ -182,7 +182,7 @@ class SliderMenuController extends AppController
 		        	if(SliderMenu::modify($id, $data))
 		        	{
 		        		$request->session()->flash('success', 'Slider menu  inforamtion updated.');
-                        return redirect()->route('admin.sliderMenu.view', ['id' => $sliderMenu->id]);
+                        return redirect()->route('admin.sliderMenu');
 
 		        	}
 		        	else

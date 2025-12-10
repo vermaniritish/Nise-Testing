@@ -29,7 +29,7 @@
 		</div>
 	</td>
 	<td>
-		<?php echo _dt($row->created) ?>
+		<?php echo _dt($row->created_at) ?>
 	</td>
 	<td class="text-right">
 		<div class="dropdown">

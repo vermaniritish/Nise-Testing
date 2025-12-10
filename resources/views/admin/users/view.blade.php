@@ -1,3 +1,4 @@
+<?php use App\Models\Admin\State; ?>
 @extends('layouts.adminlayout')
 @section('content')
 	<div class="header bg-primary pb-6">
@@ -9,9 +10,9 @@
 					</div>
 					<div class="col-lg-6 col-5 text-right">
 						<a href="<?php echo route('admin.users') ?>" class="btn btn-neutral"><i class="fa fa-arrow-left"></i> Back</a>
-						<button class="btn btn-neutral" data-toggle="modal" data-target="#assignCentersModal">
+						<!-- <button class="btn btn-neutral" data-toggle="modal" data-target="#assignCentersModal">
 						    <i class="fa fa-plus"></i> Assign Centers
-						</button>
+						</button> -->
 						{{-- <div class="dropdown" data-toggle="tooltip" data-title="More Actions">
 							<a class="btn btn-neutral" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i class="fas fa-ellipsis-v"></i>
@@ -60,9 +61,30 @@
 									<td><?php echo $user->id ?></td>
 								</tr>
 								<tr>
-									<th>Organisation Name</th>
-									<td><?php echo $user->organisation_name ?></td>
+									<th>Registration Type</th>
+									<td><?php echo $user->registration_type ?></td>
 								</tr>
+
+								@if(isset($user->registration_type) && $user->registration_type == 'Company')
+								<tr>
+									<th>Company Name</th>
+									<td><?php echo $user->company_name ?></td>
+								</tr>
+								@endif
+
+								@if(isset($user->registration_type) && $user->registration_type == 'Company')
+								<tr>
+									<th>Authorize Person Name</th>
+									<td><?php echo $user->person_name ?></td>
+								</tr>
+								@else
+								<tr>
+									<th>Individual Person Name</th>
+									<td><?php echo $user->ind_contact_person_name ?></td>
+								</tr>
+								@endif
+
+								@if(isset($user->registration_type) && $user->registration_type == 'Company')
 								<tr>
 									<th>Email</th>
 									<td><?php echo $user->email ?></td>
@@ -71,26 +93,117 @@
 									<th>Mobile Number</th>
 									<td><?php echo $user->mobile ?></td>
 								</tr>
+								@else
+								<tr>
+									<th>Individual Email</th>
+									<td><?php echo $user->ind_email ?></td>
+								</tr>
+								<tr>
+									<th>Individual Mobile Number</th>
+									<td><?php echo $user->ind_mobile_number ?></td>
+								</tr>
+								@endif
+								@if(isset($user->registration_type) && $user->registration_type == 'Company')
 								<tr>
 									<th>Pan</th>
-									<td><?php echo $user->pan ?></td>
+									<td>
+									    <?php echo $user->pan; ?>
+
+									    <?php if($user->pan_file): ?>
+									        <br>
+									        <a href="<?php echo asset('storage/'.$user->pan_file); ?>" 
+									           target="_blank" class="btn btn-sm btn-primary">
+									           View PAN File
+									        </a>
+									    <?php endif; ?>
+									</td>
 								</tr>
 								<tr>
 									<th>GST</th>
 									<td><?php echo $user->gst ?></td>
 								</tr>
 								<tr>
+									<th>Tin Number</th>
+									<td><?php echo $user->tin ?></td>
+								</tr>
+								<tr>
+									<th>Registration Number</th>
+									<td>
+									    <?php echo $user->registration_number; ?>
+
+									    <?php if($user->company_file): ?>
+									        <br>
+									        <a href="<?php echo asset('storage/'.$user->company_file); ?>" 
+									           target="_blank" class="btn btn-sm btn-primary">
+									           View Company File
+									        </a>
+									    <?php endif; ?>
+									</td>
+								</tr>
+								@else
+								@endif
+
+								@if(isset($user->registration_type) && $user->registration_type == 'Company')
+								<?php
+									$getState = State::find($user->state_id);
+								?>
+								<tr>
 									<th>State Name</th>
-									<td><?php echo $user->state_name ?></td>
+									<td><?php echo $getState->name ?></td>
+								</tr>
+								@else
+								<?php
+									$getState = State::find($user->ind_state_id);
+								?>
+								<tr>
+									<th>Individual State Name</th>
+									<td><?php echo $getState->name ?></td>
+								</tr>
+								@endif
+
+								@if(isset($user->registration_type) && $user->registration_type == 'Company')
+								<tr>
+									<th>City Name</th>
+									<td><?php echo $user->city ?></td>
+								</tr>
+								@else
+								<tr>
+									<th>Individual City Name</th>
+									<td><?php echo $user->ind_city_or_district ?></td>
+								</tr>
+								@endif
+
+								@if(isset($user->registration_type) && $user->registration_type == 'Company')
+								<tr>
+									<th>Pincode</th>
+									<td><?php echo $user->pincode ?></td>
+								</tr>
+								@else
+								<tr>
+									<th>Individual Pincode</th>
+									<td><?php echo $user->ind_pin_code ?></td>
+								</tr>
+								@endif
+
+								@if(isset($user->registration_type) && $user->registration_type == 'Company')
+								<tr>
+									<th>Address 1</th>
+									<td><?php echo $user->address_1 ?></td>
 								</tr>
 								<tr>
-									<th>District Name</th>
-									<td><?php echo $user->district_name ?></td>
+									<th>Address 2</th>
+									<td><?php echo $user->address_2 ?></td>
+								</tr>
+								@else
+								<tr>
+									<th>Individual Address 1</th>
+									<td><?php echo $user->ind_address_1 ?></td>
 								</tr>
 								<tr>
-									<th>Address</th>
-									<td><?php echo $user->address ?></td>
+									<th>Individual Address 2</th>
+									<td><?php echo $user->ind_address_2 ?></td>
 								</tr>
+								@endif
 							</tbody>
 						</table>
 					</div>

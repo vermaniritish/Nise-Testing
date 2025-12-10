@@ -19,3 +19,6 @@ Route::match(['get', 'post'], '/actions/center/{id}', '\App\Http\Controllers\Adm
 
 Route::match(['get', 'post'], '/actions/batch/{id}', '\App\Http\Controllers\Admin\ActionsController@getBatchByCenterId')
     ->name('admin.actions.getBatchByCenterId');
+
+Route::match(['get', 'post'], '/actions/service-category/{id}', '\App\Http\Controllers\Admin\ActionsController@getServiceCatByServiceId')
+    ->name('admin.actions.getServiceCatByServiceId');

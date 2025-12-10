@@ -24,7 +24,7 @@
 		<div class="row">
 			<div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				@include('admin.partials.flash_messages')
-				<!--!!!!! DO NOT REMOVE listing-block CLASS. INCLUDE THIS IN PARENT DIV OF TABLE ON LISTING STATES !!!!!-->
+				<!--!!!!! DO NOT REMOVE listing-block CLASS. INCLUDE THIS IN PARENT DIV OF TABLE ON LISTING district !!!!!-->
 				<div class="card listing-block">
 			        <div class="card-header">
 			        	<div class="heading">
@@ -55,7 +55,7 @@
 							<?php endif; ?>
 						</div>
 					</div>
-			        <!--!!!!! DO NOT REMOVE listing-table, mark_all  CLASSES. INCLUDE THIS IN ALL TABLES LISTING STATES !!!!!-->
+			        <!--!!!!! DO NOT REMOVE listing-table, mark_all  CLASSES. INCLUDE THIS IN ALL TABLES LISTING district !!!!!-->
 			        <div class="card-body p-0">
 				        <div class="table-responsive text-nowrap">
 				          	<table class="table listing-table">
@@ -80,22 +80,22 @@
 										</th>
 										<th class="sort">
 											State
-											@if(isset($_GET['sort']) && $_GET['sort'] == 'states.name' && isset($_GET['direction']) && $_GET['direction'] == 'asc')
-											<i class="fas fa-sort-down active" data-field="states.name" data-sort="asc"></i>
-											@elseif(isset($_GET['sort']) && $_GET['sort'] == 'states.name' && isset($_GET['direction']) && $_GET['direction'] == 'desc')
-											<i class="fas fa-sort-up active" data-field="states.name" data-sort="desc"></i>
+											@if(isset($_GET['sort']) && $_GET['sort'] == 'district.name' && isset($_GET['direction']) && $_GET['direction'] == 'asc')
+											<i class="fas fa-sort-down active" data-field="district.name" data-sort="asc"></i>
+											@elseif(isset($_GET['sort']) && $_GET['sort'] == 'district.name' && isset($_GET['direction']) && $_GET['direction'] == 'desc')
+											<i class="fas fa-sort-up active" data-field="district.name" data-sort="desc"></i>
 											@else
-											<i class="fas fa-sort" data-field="states.name"></i>
+											<i class="fas fa-sort" data-field="district.name"></i>
 											@endif
 										</th>
 										<th class="sort">
-											Title
-											@if(isset($_GET['sort']) && $_GET['sort'] == 'district.title' && isset($_GET['direction']) && $_GET['direction'] == 'asc')
-											<i class="fas fa-sort-down active" data-field="district.title" data-sort="asc"></i>
-											@elseif(isset($_GET['sort']) && $_GET['sort'] == 'district.title' && isset($_GET['direction']) && $_GET['direction'] == 'desc')
-											<i class="fas fa-sort-up active" data-field="district.title" data-sort="desc"></i>
+											Name
+											@if(isset($_GET['sort']) && $_GET['sort'] == 'district.name' && isset($_GET['direction']) && $_GET['direction'] == 'asc')
+											<i class="fas fa-sort-down active" data-field="district.name" data-sort="asc"></i>
+											@elseif(isset($_GET['sort']) && $_GET['sort'] == 'district.name' && isset($_GET['direction']) && $_GET['direction'] == 'desc')
+											<i class="fas fa-sort-up active" data-field="district.name" data-sort="desc"></i>
 											@else
-											<i class="fas fa-sort" data-field="district.title"></i>
+											<i class="fas fa-sort" data-field="district.name"></i>
 											@endif
 										</th>
 										<th class="sort">

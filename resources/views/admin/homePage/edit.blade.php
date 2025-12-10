@@ -32,8 +32,9 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Title</label>
-                                        <input type="text"  class="form-control" name="home_about_us_title"
+                                        <input type="text" maxlength="150" class="form-control" name="home_about_us_title"
                                             placeholder="About us title" value="<?php echo $customPageData['home_about_us_title']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 150 characters only.</small>
                                         @error('home_about_us_title')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -42,8 +43,9 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Heading</label>
-                                        <input type="text"  class="form-control" name="home_about_us_heading"
+                                        <input type="text" maxlength="150" class="form-control" name="home_about_us_heading"
                                             placeholder="About us heading" value="<?php echo $customPageData['home_about_us_heading']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 150 characters only.</small>
                                         @error('home_about_us_heading')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -52,8 +54,9 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Short Description</label>
-                                        <input type="text"  class="form-control" name="home_about_us_short_desc"
+                                        <input type="text" maxlength="300" class="form-control" name="home_about_us_short_desc"
                                             placeholder="About us short description" value="<?php echo $customPageData['home_about_us_short_desc']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 300 characters only.</small>
                                         @error('home_about_us_short_desc')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -126,8 +129,9 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Title</label>
-                                        <input type="text"  class="form-control" name="home_about_us_title_hi"
+                                        <input type="text" maxlength="150" class="form-control" name="home_about_us_title_hi"
                                             placeholder="About us title" value="<?php echo $customPageData['home_about_us_title_hi']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 150 characters only.</small>
                                         @error('home_about_us_title_hi')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -136,9 +140,10 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Heading</label>
-                                        <input type="text"  class="form-control"
+                                        <input type="text" maxlength="150" class="form-control"
                                             name="home_about_us_heading_hi" placeholder="About us heading"
                                             value="<?php echo $customPageData['home_about_us_heading_hi']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 150 characters only.</small>
                                         @error('home_about_us_heading_hi')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -147,8 +152,9 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Short Description</label>
-                                        <input type="text"  class="form-control" name="home_about_us_short_desc_hi"
+                                        <input type="text" maxlength="300" class="form-control" name="home_about_us_short_desc_hi"
                                             placeholder="About us short description" value="<?php echo $customPageData['home_about_us_short_desc_hi']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 300 characters only.</small>
                                         @error('home_about_us_short_desc_hi')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -219,8 +225,9 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Service Title</label>
-                                        <input type="text" class="form-control" name="service_title"
+                                        <input type="text" maxlength="150" class="form-control" name="service_title"
                                             placeholder="Service Title" value="<?php echo $customPageData['service_title']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 150 characters only.</small>
                                         @error('service_title')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -229,8 +236,9 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Service Short Title</label>
-                                        <input type="text" class="form-control" name="service_short_title"
+                                        <input type="text" maxlength="150" class="form-control" name="service_short_title"
                                             placeholder="Service Short Title" value="<?php echo $customPageData['service_short_title']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 150 characters only.</small>
                                         @error('service_short_title')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -256,8 +264,9 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Feedback Title</label>
-                                        <input type="text"  class="form-control" name="feedback_title"
+                                        <input type="text" maxlength="150" class="form-control" name="feedback_title"
                                             placeholder="Feedback Title" value="<?php echo $customPageData['feedback_title']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 150 characters only.</small>
                                         @error('feedback_title')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -311,8 +320,9 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Feedback Title</label>
-                                        <input type="text"  class="form-control" name="feedback_title_hi"
+                                        <input type="text" maxlength="150" class="form-control" name="feedback_title_hi"
                                             placeholder="Feedback Title" value="<?php echo $customPageData['feedback_title_hi']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 150 characters only.</small>
                                         @error('feedback_title_hi')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -393,8 +403,9 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Title</label>
-                                        <input type="text"  class="form-control" name="yellow_title"
+                                        <input type="text" maxlength="150" class="form-control" name="yellow_title"
                                             placeholder="About us title" value="<?php echo $customPageData['yellow_title']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 150 characters only.</small>
                                         @error('yellow_title')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -403,8 +414,9 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Sub Heading</label>
-                                        <input type="text"  class="form-control" name="yellow_heading"
+                                        <input type="text" maxlength="150" class="form-control" name="yellow_heading"
                                             placeholder="About us heading" value="<?php echo $customPageData['yellow_heading']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 150 characters only.</small>
                                         @error('yellow_heading')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -467,8 +479,9 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Title</label>
-                                        <input type="text"  class="form-control" name="yellow_title_hi"
+                                        <input type="text" maxlength="150" class="form-control" name="yellow_title_hi"
                                             placeholder="About us title" value="<?php echo $customPageData['yellow_title_hi']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 150 characters only.</small>
                                         @error('yellow_title_hi')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -477,9 +490,10 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Sub Heading</label>
-                                        <input type="text"  class="form-control"
+                                        <input type="text" maxlength="150" class="form-control"
                                             name="yellow_heading_hi" placeholder="About us heading"
                                             value="<?php echo $customPageData['yellow_heading_hi']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 150 characters only.</small>
                                         @error('yellow_heading_hi')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror

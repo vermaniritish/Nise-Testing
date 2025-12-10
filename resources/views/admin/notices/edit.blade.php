@@ -39,17 +39,10 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <label class="form-control-label">Date</label>
-                                            <input class="form-control" type="date" name="date"
-                                                value="{{ old('date', isset($page->date) ? date('Y-m-d', strtotime($page->date)) : '') }}"
-                                                max="{{ date('Y-m-d') }}" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
                                             <label class="form-control-label" for="input-first-name">Title</label>
-                                            <input type="text" value="<?php echo $page->title ?? ''; ?>" required class="form-control"
+                                            <input type="text" maxlength="150" value="<?php echo $page->title ?? ''; ?>" required class="form-control"
                                                 name="title" placeholder="Text">
+                                            <small>You can enter up to 150 characters only.</small>
                                             @error('title')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -96,47 +89,6 @@
                                             @enderror
                                         </div>
                                     </div>
-
-                                    {{-- PDF Upload --}}
-                                    <div class="col-lg-6 type-section type-pdf {{ $selectedType == 'pdf' ? '' : 'd-none' }}">
-                                        <div class="form-group">
-                                            <div class="upload-image-section"
-                                                data-type="pdf"
-                                                data-multiple="false"
-                                                data-path="news_events"
-                                                data-resize-large="551*356">
-                                                <div class="upload-section">
-                                                    <div class="button-ref mb-3">
-                                                        <button class="btn btn-icon btn-primary btn-lg" type="button">
-                                                            <span class="btn-inner--icon"><i class="fas fa-upload"></i></span>
-                                                            <span class="btn-inner--text">Upload PDF</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="progress d-none">
-                                                        <div class="progress-bar bg-default" role="progressbar"></div>
-                                                    </div>
-                                                </div>
-
-                                                <textarea class="d-none" name="pdf_file">{{ old('pdf_file', $page->pdf_file ?? '') }}</textarea>
-                                                <div class="show-section {{ !(old('pdf_file', $page->pdf_file ?? '')) ? 'd-none' : '' }}">
-                                                    @if(old('pdf_file', $page->pdf_file ?? ''))
-                                                        @include('admin.partials.previewFileRender', ['file' => old('pdf_file', $page->pdf_file) ])
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label class="form-control-label">Description</label>
-                                            <textarea rows="2" id="editor1"  required class="form-control"
-                                                placeholder="Banner Description" name="description"><?php echo $page->description ?? ''; ?></textarea>
-                                            @error('description')
-                                                <small class="text-danger">{{ $message }}</small>
-                                            @enderror
-                                        </div>
-                                    </div> -->
-
                                 </div>
 
                             </div>
@@ -201,8 +153,9 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-first-name">Title</label>
-                                            <input type="text" value="<?php echo $page->title_hi ?? ''; ?>" required
+                                            <input type="text" maxlength="150" value="<?php echo $page->title_hi ?? ''; ?>" required
                                                 class="form-control" name="title_hi" placeholder="Text">
+                                            <small>You can enter up to 150 characters only.</small>
                                             @error('title_hi')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror

@@ -117,6 +117,7 @@ $version = 1.0;
         <script src="<?php echo url('partneradmin/assets/js/argon.js') ?>"></script>
         <script src="<?php echo url('partneradmin/assets/js/tag-it.min.js') ?>"></script>
         <script src="<?php echo url('partneradmin/assets/js/custom.js') ?>"></script>
+        <script src="<?php echo url('partneradmin/assets/js/helper.js') ?>"></script>
         <?php
         $action = get_controller_action(request()->route()->getAction()['controller']);
         $route = explode('/', $action);

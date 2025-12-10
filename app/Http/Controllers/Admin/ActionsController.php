@@ -27,6 +27,7 @@ use App\Models\Admin\Actions;
 use App\Models\PartnerAdmin\Center;
 use App\Models\PartnerAdmin\Batche;
 use App\Models\Admin\PollingStation;
+use App\Models\Admin\TestServiceCategory;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
@@ -388,6 +389,32 @@ class ActionsController extends AppController
 			"admin/actions/getBatch",
 			[
 				'batches' => $batches
+			]
+		)->render();
+
+
+		return Response()->json([
+			'status' => 'success',
+			'html' => $html
+		]);
+	}
+
+	function getServiceCatByServiceId(Request $request, $test_service_id)
+	{
+		$select = [
+			'testing_service_categories.id',
+			'testing_service_categories.test_category_title'
+		];
+		// $where['batches.status = ?'] = [1];
+		$where['testing_service_categories.test_service_id = ?'] = [$test_service_id];
+
+		$order = 'testing_service_categories.test_category_title asc';
+		$testServiceCategories = TestServiceCategory::getAll($select, $where, $order);
+
+		$html = view(
+			"admin/actions/getServiceCategory",
+			[
+				'testServiceCategories' => $testServiceCategories
 			]
 		)->render();
 

@@ -17,6 +17,11 @@
 	<td>
 		<?php echo $row->name ?>
 	</td>
+
+	<td>
+	    <?php echo ucfirst($row->role) ?>
+	</td>
+
 	<td>
 		<?php echo $row->email ?>
 	</td>

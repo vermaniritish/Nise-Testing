@@ -291,8 +291,122 @@ class MenuController extends AppController
     }
 
 
+    public function addInformationMenu(Request $request)
+    {
+        if (!Permissions::hasPermission('menu', 'create')) {
+            $request->session()->flash('error', 'Permission denied.');
+            return redirect()->route('admin.dashboard');
+        }
 
+        if ($request->isMethod('post')) {
+            $data = $request->all();
 
+            $validationErrors = [];
+            $isValid = true;
+
+            foreach ($data['informationItems'] as $index => $footerItem) {
+                $validator = Validator::make($footerItem, [
+                    'title' => [
+                        'required'
+                    ],
+                    'link' => 'required',
+                ], [
+                    'title.required' => 'The title field is required.',
+                    'title.regex' => 'The title cannot start with whitespace.',
+                    'title.unique' => 'The title must be unique.',
+                    'link.required' => 'The link field is required.',
+                    'link.regex' => 'The link cannot start with whitespace.',
+                ]);
+
+                if ($validator->fails()) {
+                    $validationErrors["informationItems.$index"] = $validator->errors()->toArray();
+                    $isValid = false;
+                }
+            }
+
+            if ($isValid) {
+                // Loop through each footer item
+                // dd($data['footerItems']);
+                Menu::where('slug', 'LIKE', 'information')->delete();
+                foreach ($data['informationItems'] as $footerItem) {
+                    // Create a new footer item
+                    $record['key'] = $footerItem['title'];
+                    $record['value'] = $footerItem['link'];
+                    $record['slug'] = $footerItem['slug'];
+                    // dd($record);
+                    Menu::create($record);
+                }
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Courses menu saved successfully'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Enter fields correctly',
+                    'errors' => $validationErrors
+                ], 422);
+            }
+        }
+    }
+
+    public function addOtherLinksMenu(Request $request)
+    {
+        if (!Permissions::hasPermission('menu', 'create')) {
+            $request->session()->flash('error', 'Permission denied.');
+            return redirect()->route('admin.dashboard');
+        }
+
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+
+            $validationErrors = [];
+            $isValid = true;
+
+            foreach ($data['otherLinksItems'] as $index => $footerItem) {
+                $validator = Validator::make($footerItem, [
+                    'title' => [
+                        'required'
+                    ],
+                    'link' => 'required',
+                ], [
+                    'title.required' => 'The title field is required.',
+                    'title.regex' => 'The title cannot start with whitespace.',
+                    'title.unique' => 'The title must be unique.',
+                    'link.required' => 'The link field is required.',
+                    'link.regex' => 'The link cannot start with whitespace.',
+                ]);
+
+                if ($validator->fails()) {
+                    $validationErrors["otherLinksItems.$index"] = $validator->errors()->toArray();
+                    $isValid = false;
+                }
+            }
+
+            if ($isValid) {
+                Menu::where('slug', 'LIKE', 'other_links')->delete();
+                foreach ($data['otherLinksItems'] as $footerItem) {
+                    $record['key'] = $footerItem['title'];
+                    $record['value'] = $footerItem['link'];
+                    $record['slug'] = $footerItem['slug'];
+                    // dd($record);
+                    Menu::create($record);
+                }
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Other links menu saved successfully'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Enter fields correctly',
+                    'errors' => $validationErrors
+                ], 422);
+            }
+        }
+    }
 
     function edit(Request $request, $id)
     {

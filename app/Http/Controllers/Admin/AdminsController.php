@@ -21,6 +21,7 @@ use App\Models\Admin\Permissions;
 use App\Models\Admin\AdminAuth;
 use App\Libraries\General;
 use App\Models\Admin\Admins;
+use App\Models\Admin\TestingService;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 
@@ -124,6 +125,14 @@ class AdminsController extends AppController
         		$data['password'] = Str::random(20);
         	}
 
+        	if (isset($data['role'])) {
+			    $data['role'] = $data['role'];
+			}
+
+        	if (isset($data['lab_testing'])) {
+			    $data['lab_testing'] = json_encode($data['lab_testing']);
+			}
+
         	/** Set random password in case send email button is on **/
     		$validator = Validator::make(
 	            $data,
@@ -202,10 +211,11 @@ class AdminsController extends AppController
 		    	return redirect()->back()->withErrors($validator)->withInput();
 		    }
 		}
-	    
+	    $testServices = TestingService::getAll();
 	    return view("admin/admins/add", [
-	    			'permissions' => Permissions::all()
-	    		]);
+			'permissions' => Permissions::all(),
+			'testServices' => $testServices
+		]);
     }
 
     function edit(Request $request, $id)
@@ -311,11 +321,12 @@ class AdminsController extends AppController
 			    	return redirect()->back()->withErrors($validator)->withInput();
 			    }
 			}
-
+			$testServices = TestingService::getAll();
 			return view("admin/admins/edit", [
 				'adminPermissions' => Permissions::getUserPermissions($admin->id),
     			'permissions' => Permissions::all(),
-    			'admin' => $admin
+    			'admin' => $admin,
+    			'testServices' => $testServices
     		]);
 		}
 		else

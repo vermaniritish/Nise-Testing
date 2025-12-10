@@ -451,3 +451,36 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+$(document).ready(function() {
+
+    jQuery.validator.addMethod("validEmail", function(value, element) {
+        return this.optional(element) ||
+            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value);
+    }, "Please enter a valid email address.");
+
+    $("#registrationForm").validate({
+        rules: {
+            email: {
+                required: true,
+                validEmail: true
+            },
+
+            ind_email: {
+                required: true,
+                validEmail: true
+            }
+        },
+        messages: {
+            email: {
+                required: "Please enter your email.",
+                validEmail: "Please enter a valid email address."
+            },
+            ind_email: {
+                required: "Please enter your email.",
+                validEmail: "Please enter a valid email address."
+            }
+        },
+        errorClass: "error" // ensures red error class
+    });
+
+});

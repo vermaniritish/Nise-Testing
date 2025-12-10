@@ -35,8 +35,9 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Title</label>
-                                        <input type="text" class="form-control" name="about_us_title"
+                                        <input type="text" maxlength="150" class="form-control" name="about_us_title"
                                             placeholder="Title" value="<?php echo $customPageData['about_us_title']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 150 characters only.</small>
                                         @error('about_us_title')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
@@ -61,7 +62,7 @@ use Illuminate\Support\Arr;
 
                     <div class="card">
                         <div class="card-body">
-                            <h6 class="heading-small text-muted mb-2">Director Information</h6>
+                            <h6 class="heading-small text-muted mb-2">Feedback Information</h6>
                             <hr class="my-4" />
                             <h6 class="heading-small text-muted mb-2">English</h6>
 
@@ -69,67 +70,41 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Title</label>
-                                        <input type="text" class="form-control" name="director_title"
-                                            placeholder="Title" value="<?php echo $customPageData['director_title']['value'] ?? ''; ?>">
-                                        @error('director_title')
+                                        <input type="text" maxlength="150" class="form-control" name="feedback_title"
+                                            placeholder="Title" value="<?php echo $customPageData['feedback_title']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 150 characters only.</small>
+                                        @error('feedback_title')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="input-first-name">Sub Title</label>
-                                        <input type="text" class="form-control" name="sub_title"
-                                            placeholder="Sub Title" value="<?php echo $customPageData['sub_title']['value'] ?? ''; ?>">
-                                        @error('sub_title')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
+                                
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">Description</label>
-                                        <textarea rows="2" id="editor3" class="form-control" placeholder="Description" name="director_desc"><?php echo $customPageData['director_desc']['value'] ?? ''; ?></textarea>
-                                        @error('director_desc')
+                                        <textarea rows="2" id="editor3" class="form-control" placeholder="Description" name="feedback_description"><?php echo $customPageData['feedback_description']['value'] ?? ''; ?></textarea>
+                                        @error('feedback_description')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="form-group">
-                                        <div
-                                            class="upload-image-section"
-                                            data-type="file"
-                                            data-multiple="false"
-                                            data-path="about_us"
-                                            data-resize-large="551*356"
-                                        >
-                                            <div class="upload-section">
-                                                <div class="button-ref mb-3">
-                                                    <button class="btn btn-icon btn-primary btn-lg" type="button">
-                                                        <span class="btn-inner--icon"><i class="fas fa-upload"></i></span>
-                                                        <span class="btn-inner--text">Upload Image</span>
-                                                    </button>
-                                                </div>
-                                                <!-- PROGRESS BAR -->
-                                                <div class="progress d-none">
-                                                  <div class="progress-bar bg-default" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-                                                </div>
-                                            </div>
-                                            <h6 class="heading-small text-muted mb-4">Upload Image Size Of 551x356</h6>
-                                            <textarea class="d-none" required name="about_us_image"><?php echo old('about_us_image') ?></textarea>
-                                            <div class="show-section <?php echo !old('about_us_image') ? 'd-none' : "" ?>">
-                                                @include('admin.partials.previewFileRender', ['file' => old('about_us_image') ])
-                                            </div>
-                                            <div class="fixed-edit-section">
-                                                @include('admin.partials.previewFileRender', [
-                                                    'file' =>
-                                                        $customPageData['about_us_image']['value'] ?? '',
-                                                    'relationType' => null,
-                                                    'relationId' => null,
-                                                ])
-                                            </div>
-                                        </div>
+                                        <label class="form-control-label" for="input-first-name">Title</label>
+                                        <input type="text" maxlength="100" class="form-control" name="feedback_button_title"
+                                            placeholder="Title" value="<?php echo $customPageData['feedback_button_title']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 100 characters only.</small>
+                                        @error('feedback_button_title')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-first-name">Url Link</label>
+                                        <input type="text" class="form-control" name="feedback_button_link"
+                                            placeholder="Url Link" value="<?php echo $customPageData['feedback_button_link']['value'] ?? ''; ?>">
+                                        @error('feedback_button_link')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -154,8 +129,9 @@ use Illuminate\Support\Arr;
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-first-name">Title</label>
-                                            <input type="text" class="form-control" name="about_us_title_hi"
+                                            <input type="text" maxlength="150" class="form-control" name="about_us_title_hi"
                                                 placeholder="Title" value="<?php echo $customPageData['about_us_title_hi']['value'] ?? ''; ?>">
+                                            <small>You can enter up to 150 characters only.</small>
                                             @error('about_us_title_hi')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -180,7 +156,7 @@ use Illuminate\Support\Arr;
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            <h6 class="heading-small text-muted mb-2">Director Information</h6>
+                            <h6 class="heading-small text-muted mb-2">Feedback Information</h6>
                             <hr class="my-4" />
                             <h6 class="heading-small text-muted mb-2">Hindi</h6>
 
@@ -188,19 +164,10 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-first-name">Title</label>
-                                        <input type="text" class="form-control" name="director_title_hi"
-                                            placeholder="Title" value="<?php echo $customPageData['director_title_hi']['value'] ?? ''; ?>">
-                                        @error('director_title_hi')
-                                            <small class="text-danger">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="input-first-name">Sub Title</label>
-                                        <input type="text" class="form-control" name="sub_title_hi"
-                                            placeholder="Sub Title" value="<?php echo $customPageData['sub_title_hi']['value'] ?? ''; ?>">
-                                        @error('sub_title_hi')
+                                        <input type="text" maxlength="150" class="form-control" name="feedback_title_hi"
+                                            placeholder="Title" value="<?php echo $customPageData['feedback_title_hi']['value'] ?? ''; ?>">
+                                        <small>You can enter up to 150 characters only.</small>
+                                        @error('feedback_title_hi')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
@@ -208,8 +175,8 @@ use Illuminate\Support\Arr;
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">Description</label>
-                                        <textarea rows="2" id="editor4" class="form-control" placeholder="Description" name="director_desc_hi"><?php echo $customPageData['director_desc_hi']['value'] ?? ''; ?></textarea>
-                                        @error('director_desc_hi')
+                                        <textarea rows="2" id="editor4" class="form-control" placeholder="Description" name="feedback_description_hi"><?php echo $customPageData['feedback_description_hi']['value'] ?? ''; ?></textarea>
+                                        @error('feedback_description_hi')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>

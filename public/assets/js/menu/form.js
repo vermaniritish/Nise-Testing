@@ -9,6 +9,8 @@ var menu = new Vue({
         megaMenu4: [{ id: '', title: '', link: '', slug: 'mega_menu4' }],
         footerItems: [{ id: '', title: '', link: '', slug: 'footer' }],
         coursesItems: [{ id: '', title: '', link: '', slug: 'courses' }],
+        informationItems: [{ id: '', title: '', link: '', slug: 'information' }],
+        otherLinksItems: [{ id: '', title: '', link: '', slug: 'other_links' }],
         mega_menu_title: ``,
         enable_mega_menu: true,
         mega_menu_title1: ``,
@@ -70,6 +72,26 @@ var menu = new Vue({
                             title_hi: item.key_hi || '',
                             link: item.value || '',
                             slug: item.slug || 'courses'
+                        }));
+
+                    this.informationItems = data.menuItems
+                        .filter(item => item.slug === 'information')
+                        .map(item => ({
+                            id: item.id || '',
+                            title: item.key || '',
+                            title_hi: item.key_hi || '',
+                            link: item.value || '',
+                            slug: item.slug || 'information'
+                        }));
+
+                    this.otherLinksItems = data.menuItems
+                        .filter(item => item.slug === 'other_links')
+                        .map(item => ({
+                            id: item.id || '',
+                            title: item.key || '',
+                            title_hi: item.key_hi || '',
+                            link: item.value || '',
+                            slug: item.slug || 'other_links'
                         }));
                 }
             } catch (error) {
@@ -454,6 +476,148 @@ var menu = new Vue({
                 let data = await response.json();
                 if (data.status) {
                     set_notification('success', 'Courses menu saved succesfully!');
+                    this.fetchMenuItems();
+                } else {
+                }
+            } catch (error) {
+                console.error("Error submitting courses form:", error);
+            }
+        },
+
+        addInformationItem() {
+            this.informationItems.push({ id: '', title: '',title_hi: '', link: '', slug: 'information' });
+        },
+        async removeInformationItem(index) {
+          const item = this.informationItems[index];
+          if (item.id) {
+            if (confirm('Are you sure you want to delete this menu item?')) {
+              try {
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                const response = await fetch(`${admin_url}/menu/delete/${item.id}`, {
+                  method: 'DELETE',
+                  headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  }
+                });
+                const data = await response.json();
+                if (data.status) {
+                  this.$nextTick(() => {
+                    this.informationItems.splice(index, 1);
+                  });
+                  set_notification('success', 'Record deleted successfully!');
+                } else {
+                  alert(data.message || 'Failed to delete the footer item.');
+                }
+              } catch (error) {
+                console.error('Error deleting footer item:', error);
+              }
+            }
+          } else {
+            this.$nextTick(() => {
+              this.informationItems.splice(index, 1);
+            });
+          }
+        },
+        async submitInformationForm() {
+            const formData = {
+                informationItems: [
+                    ...this.informationItems.map(item => ({
+                        id: item.id || null,
+                        title: item.title,
+                        title_hi: item.title_hi,
+                        link: item.link,
+                        slug: item.slug
+                    }))
+                ]
+            };
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            try {
+                let response = await fetch(admin_url + '/information-menu/add', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                let data = await response.json();
+                if (data.status) {
+                    set_notification('success', 'Courses menu saved succesfully!');
+                    this.fetchMenuItems();
+                } else {
+                }
+            } catch (error) {
+                console.error("Error submitting courses form:", error);
+            }
+        },
+
+        addOtherLinksItem() {
+            this.otherLinksItems.push({ id: '', title: '',title_hi: '', link: '', slug: 'other_links' });
+        },
+        async removeOtherLinksItem(index) {
+          const item = this.otherLinksItems[index];
+          if (item.id) {
+            if (confirm('Are you sure you want to delete this menu item?')) {
+              try {
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                const response = await fetch(`${admin_url}/menu/delete/${item.id}`, {
+                  method: 'DELETE',
+                  headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  }
+                });
+                const data = await response.json();
+                if (data.status) {
+                  this.$nextTick(() => {
+                    this.otherLinksItems.splice(index, 1);
+                  });
+                  set_notification('success', 'Record deleted successfully!');
+                } else {
+                  alert(data.message || 'Failed to delete the footer item.');
+                }
+              } catch (error) {
+                console.error('Error deleting footer item:', error);
+              }
+            }
+          } else {
+            this.$nextTick(() => {
+              this.otherLinksItems.splice(index, 1);
+            });
+          }
+        },
+        async submitOtherLinksForm() {
+            const formData = {
+                otherLinksItems: [
+                    ...this.otherLinksItems.map(item => ({
+                        id: item.id || null,
+                        title: item.title,
+                        title_hi: item.title_hi,
+                        link: item.link,
+                        slug: item.slug
+                    }))
+                ]
+            };
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            try {
+                let response = await fetch(admin_url + '/other-links-menu/add', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                let data = await response.json();
+                if (data.status) {
+                    set_notification('success', 'Other links menu saved succesfully!');
                     this.fetchMenuItems();
                 } else {
                 }

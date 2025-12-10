@@ -38,17 +38,19 @@
                             <h6 class="heading-small text-muted mb-4">Banner</h6> --}}
                             <div class="pl-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-first-name">Banner Heading</label>
-                                    <input type="text" class="form-control" name="heading"
-                                        placeholder="Banner Heading" value="<?php echo $page->heading ?? ''; ?>">
+                                    <label class="form-control-label" for="input-first-name">Title</label>
+                                    <input type="text" maxlength="150" class="form-control" name="heading"
+                                        placeholder="Title" value="<?php echo $page->heading ?? ''; ?>">
+                                    <small>You can enter up to 150 characters only.</small>
                                     @error('heading')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-first-name">Title</label>
-                                    <input type="text" class="form-control" name="title"
-                                        value="<?php echo $page->title ?? ''; ?>" placeholder="Title">
+                                    <label class="form-control-label" for="input-first-name">Sub Title</label>
+                                    <input type="text" maxlength="150" class="form-control" name="title"
+                                        value="<?php echo $page->title ?? ''; ?>" placeholder="Sub Title">
+                                    <small>You can enter up to 150 characters only.</small>
                                     @error('title')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
@@ -158,17 +160,19 @@
                             <div class="pl-lg-4">
 
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-first-name">Banner Heading</label>
-                                    <input type="text" class="form-control" name="heading_hi"
-                                        placeholder="Banner Heading" value="<?php echo $page->heading_hi ?? ''; ?>">
+                                    <label class="form-control-label" for="input-first-name">Title</label>
+                                    <input type="text" class="form-control" maxlength="150" name="heading_hi"
+                                        placeholder="Title" value="<?php echo $page->heading_hi ?? ''; ?>">
+                                    <small>You can enter up to 150 characters only.</small>
                                     @error('heading_hi')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-first-name">Title</label>
-                                    <input type="text" class="form-control" name="title_hi"
-                                        value="<?php echo $page->title_hi ?? ''; ?>" placeholder="Title">
+                                    <label class="form-control-label" for="input-first-name">Sub Title</label>
+                                    <input type="text" maxlength="150" class="form-control" name="title_hi"
+                                        value="<?php echo $page->title_hi ?? ''; ?>" placeholder="Sub Title">
+                                    <small>You can enter up to 150 characters only.</small>
                                     @error('title_hi')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror

@@ -57,8 +57,12 @@
 									<td><?php echo $page->id ?></td>
 								</tr>
 								<tr>
-									<th>Heading</th>
+									<th>Title</th>
 									<td><?php echo $page->heading ?></td>
+								</tr>
+								<tr>
+									<th>Sub Title</th>
+									<td><?php echo $page->title ?></td>
 								</tr>
 								<tr>
 									<th>Button Title</th>
@@ -107,8 +111,12 @@
 									<td><?php echo $page->id ?></td>
 								</tr>
 								<tr>
-									<th>Heading</th>
+									<th>Title</th>
 									<td><?php echo $page->heading_hi ?? "" ?></td>
+								</tr>
+								<tr>
+									<th>Sub Title</th>
+									<td><?php echo $page->title_hi ?? "" ?></td>
 								</tr>
 								<tr>
 									<th>Button Title</th>

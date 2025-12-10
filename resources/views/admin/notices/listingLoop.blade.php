@@ -38,7 +38,17 @@
         </div>
     </td>
     <td>
-        <?php echo _dt($row->created_at); ?>
+        <div class="custom-control">
+            <label class="custom-toggle">
+                <?php $switchUrl = route('admin.actions.switchUpdate', ['relation' => 'notices', 'field' => 'is_new', 'id' => $row->id]); ?>
+                <input type="checkbox" name="is_new" onchange="switch_action('<?php echo $switchUrl; ?>', this)"
+                    value="1" <?php echo $row->is_new ? 'checked' : ''; ?>>
+                <span class="custom-toggle-slider rounded-circle" data-label-off="OFF" data-label-on="ON"></span>
+            </label>
+        </div>
+    </td>
+    <td>
+        <?php echo _dt($row->created); ?>
     </td>
     <td class="text-center">
         <div class="dropdown">

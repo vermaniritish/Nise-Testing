@@ -1347,3 +1347,17 @@ $('body').on('change','#center_id', function(){
         }
     });
 });
+
+$('body').on('change','#test_service_id', function(){
+    var test_service_id = $(this).val();
+    $('#service_category_id').empty();
+    $.ajax({
+        url: admin_url + '/actions/service-category/' + test_service_id,
+        type: 'get',
+        success: function(resp)
+        {
+            $('#service_category_id').html(resp.html);
+            $('#service_category_id').selectpicker('refresh');
+        }
+    });
+});

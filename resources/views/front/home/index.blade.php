@@ -8,10 +8,33 @@ $logos = $logos ? json_decode($logos, true) : null;
 @section('content')
 <style>
 #more {display: none;}
+.overlay:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(...);
+    z-index: 1;
+}
+
+.single-wprocess-text {
+    position: relative;
+    z-index: 2;
+}
+
+.overlay:before {
+    pointer-events: none;
+}
+
+.overlay:before {
+    pointer-events: none !important;
+}
 </style>
 	<div class="container-fluid" style="padding:0px;">
 	<div class="row">
-	<div class="col-lg-8 col-md-8 col-12" style="padding:0px;">
+	<div @if(!Auth::check()) class="col-lg-8 col-md-8 col-12" @else class="col-lg-12 col-md-12 col-12" @endif style="padding:0px;">
 		<section class="slider-section">
 			<div class="home-slides owl-carousel owl-theme ">
 				@foreach($sliders as $s)
@@ -22,8 +45,8 @@ $logos = $logos ? json_decode($logos, true) : null;
 							<div class="row">
 								<div class="col-lg-8 col-md-8 col-12 mr-auto text-left">
 									<div class="home-single-slide-dec">
-										<h2>{{ $s->title }}</h2>
-										<p class="text-capitalize">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+										<h2>{{ $s->heading }}</h2>
+										<p class="text-capitalize">{{ $s->title }} </p>
 										@if(isset($s->button_title) && $s->button_title)
 										<div class="home-single-slide-button">
 											<a href="{{ $s->button_link }}" class="btn-style btn-filled">{{ $s->button_title }}</a>
@@ -40,38 +63,63 @@ $logos = $logos ? json_decode($logos, true) : null;
 		</section>
 	<!-- END SLIDER SECTION  -->
 	</div>
+	@if(!Auth::check())
 	<div class="col-lg-4 col-md-4 col-12 single-wcus-promo">
 		<div class="row">
 			<div class="col-12 text-left">
 				<div class="section-title-2">
 					<h3><span>Login</span></h3>
 				</div>
-				
-				<form action="#">
-				<div class="section-title-2">
-				<div class="row">	
-					<div class="form-group col-lg-12 mb-3">
-						<label for="userphone">Please provide Registered Mobile Number</label>
-						<input name="userphone" class="form-control" id="userphone" placeholder="Registered Mobile Number" required="required" type="tel" style="width: 93%;">
-					</div>
-					
-					<div class="form-group col-lg-12 mb-3">
-						<label for="txt_Captcha">OTP</label>
-						<input name="userpass" class="form-control" id="userpass" placeholder="Password*" required="required" type="password" style="width: 93%;">
-					</div>
-					<div class="form-group col-lg-12 mb-3">
-						<a href="userdasboard.php" title="Click here to submit your message!" class="btn-style btn-filled btn-filled-2">Submit</a>
-					</div>
-					
-					<div class="form-group col-lg-12 mb-3">
-						<p><b>New User?</b> <a href="sign-up.php">Register Here</a></p>
-					</div>
-				</div>
-				</div>
-				</form>								
+				@if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        <form method="POST" action="{{ route('login.sendOtp') }}">
+            @csrf
+            <div class="form-group col-lg-12 mb-3">
+                <label for="userphone"><b>Please provide Registered Mobile Number</b></label>
+                <input name="userphone" value="{{ old('mobile', session('mobile')) }}" class="form-control" placeholder="Registered Email/Mobile" required type="text">
+            </div>
+            <div class="form-group col-lg-12 mb-3">
+                <button type="submit" class="btn-style btn-filled btn-filled-2">Send OTP</button>
+            </div>
+        </form>
+
+        <!-- Step 2: Verify OTP -->
+	        @if(session('login_id'))
+	        <form method="POST" action="{{ route('login.verifyOtp') }}">
+	            @csrf
+	            <input type="hidden" name="id" value="{{ session('login_id') }}">
+	            <div class="form-group col-lg-12 mb-3">
+	                <label for="otp">Enter OTP</label>
+	                <input name="otp" class="form-control" placeholder="Enter OTP" required type="text">
+	            </div>
+	            <div class="form-group col-lg-12 mb-3">
+	                <button type="submit" class="btn-style btn-filled btn-filled-2">Verify & Login</button>
+	            </div>
+	        </form>
+	        @endif								
 			</div>
 		</div>
 	</div>
+	@endif
 </div>
 <?php
 	$homeAboutUsHeadingEn  = CustomPageData::get('home_about_us_heading');
@@ -109,7 +157,7 @@ $logos = $logos ? json_decode($logos, true) : null;
 					<h6>{{ $homeAboutUsTitleEn }}</h6>
 					<h3>{{ $homeAboutUsHeadingEn }}</h3>
 					<p><b>{{ $homeAboutUsShortDescEn }}</b></p>
-					<p style="margin-bottom: 0px;font-weight: 400;">{{ strip_tags($homeAboutUsDescEn) }}</p>
+					<p style="margin-bottom: 0px;font-weight: 400;">{{ strip_tags(html_entity_decode($homeAboutUsDescEn)) }}</p>
 					@if(CustomPageData::get('home_about_us_button') == 1)
 					<a href="<?php echo CustomPageData::get('home_about_us_button_link') ?>" class="faq-page-into-btn mt-4">
 						{{ $homeAboutUsButtonTextEn }}<i class="icofont icofont-caret-right"></i>
@@ -147,24 +195,22 @@ $logos = $logos ? json_decode($logos, true) : null;
 			<!-- end section title -->
 			<div class="row">
 				@foreach($notices as $notice)
+				<a href="{{route('testServiceDetails',['slug'=> $notice->slug])}}">
 				<div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-5">
-					<div class="single-wprocess">
-						
+					<div class="single-wprocess">						
 						<div class="single-wprocess-text">
-							<a href="{{$notice->url}}" class="boxContent">
 							<h5>{!! $notice->title !!}</h5>
-							<p class="shortInfo">{{$notice->description}}</p>
+							<p class="shortInfo">{{ Str::limit(strip_tags($notice->description),150) }}</p>
 							<p>
-								<a href="{{$notice->url}}">{{$notice->button_title}}</a>
+								<a href="{{route('testServiceDetails',['slug'=> $notice->slug])}}">{{$notice->button_title}}</a>
 							</p>
-							</a>
 						</div>
-						
 					</div>
 				</div>
+				</a>
 				@endforeach
 			</div>
-     </div>
+     	</div>
         <!--- END CONTAINER -->
     </section>      
 	@endsection

@@ -35,17 +35,19 @@
                             <h6 class="heading-small text-muted mb-4">Slider information</h6>
                             <div class="pl-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-first-name">Banner Heading</label>
-                                    <input type="text" class="form-control" name="heading"
-                                        value="{{ old('heading') }}" placeholder="Banner Heading">
+                                    <label class="form-control-label" for="input-first-name">Title</label>
+                                    <input type="text" maxlength="150" class="form-control" name="heading"
+                                        value="{{ old('heading') }}" placeholder="Title">
+                                    <small>You can enter up to 150 characters only.</small>
                                     @error('heading')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-first-name">Title</label>
-                                    <input type="text" class="form-control" name="title"
-                                        value="{{ old('title') }}" placeholder="Title">
+                                    <label class="form-control-label" for="input-first-name">Sub Title</label>
+                                    <input type="text" maxlength="150" class="form-control" name="title"
+                                        value="{{ old('title') }}" placeholder="Sub Title">
+                                    <small>You can enter up to 150 characters only.</small>
                                     @error('title')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
@@ -143,17 +145,19 @@
                             <h6 class="heading-small text-muted mb-4">Slider information</h6>
                             <div class="pl-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-first-name">Banner Heading</label>
-                                    <input type="text" class="form-control" name="heading_hi"
-                                        value="{{ old('heading_hi') }}" placeholder="Banner Heading">
+                                    <label class="form-control-label" for="input-first-name">Title</label>
+                                    <input type="text" maxlength="150" class="form-control" name="heading_hi"
+                                        value="{{ old('heading_hi') }}" placeholder="Title">
+                                    <small>You can enter up to 150 characters only.</small>
                                     @error('heading_hi')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label" for="input-first-name">Title</label>
-                                    <input type="text" class="form-control" name="title_hi"
-                                        value="{{ old('title_hi') }}" placeholder="Title">
+                                    <label class="form-control-label" for="input-first-name">Sub Title</label>
+                                    <input type="text" maxlength="150" class="form-control" name="title_hi"
+                                        value="{{ old('title_hi') }}" placeholder="Sub Title">
+                                    <small>You can enter up to 150 characters only.</small>
                                     @error('title_hi')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror

@@ -15,22 +15,13 @@ use Illuminate\Support\Facades\Session;
 |
 */
 
-Route::get('/locale/{lang}', function ($lang) {
-    // Set the locale
-    App::setLocale($lang);
-
-    // Store the locale in session
-    request()->session()->put('locale', $lang);
-
-    // Redirect back to the previous page
-    $tttt = request()->session()->get('locale');
-    $redirectRoutes = [
-        'en' => "",
-        'hi' => "/hi"
-    ];
-
-    return redirect($redirectRoutes[$lang]);
-});
+Route::get('locale/{lang}', function ($lang) {
+    $available = ['en', 'hi'];
+    if (in_array($lang, $available)) {
+        Session::put('locale', $lang);
+    }
+    return redirect()->back();
+})->name('change.language');
 
 Route::middleware(['guest'])->group(function () {
     include "Admin/auth.php";
@@ -39,10 +30,16 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/news-event-details/{id?}', '\App\Http\Controllers\User\DashboardController@newsEventDetails')->name('newsEventDetails');
     Route::get('/notices', '\App\Http\Controllers\User\DashboardController@notices')->name('notices');
     Route::get('/testing-service', '\App\Http\Controllers\User\DashboardController@testingService')->name('testingService');
+
+    Route::get('/testing-service-detail/{slug}', '\App\Http\Controllers\User\DashboardController@testServiceDetails')->name('testServiceDetails');
+
+    Route::match(['get','post'],'/test-service-category-detail/{slug}', '\App\Http\Controllers\User\DashboardController@testServiceCategoryDetails')->name('testServiceCategoryDetails');
+
     Route::get('/notice-details/{id?}', '\App\Http\Controllers\User\DashboardController@noticeDetails')->name('noticeDetails');
     Route::get('/search', '\App\Http\Controllers\User\DashboardController@search')->name('search');
 
     Route::get('/page/details/{slug?}', '\App\Http\Controllers\User\DashboardController@screenReaderDetail')->name('screenReaderDetail');
+    Route::get('/order-forms', '\App\Http\Controllers\User\DashboardController@orderForms')->name('orderForms');
     
     Route::get('/gallery', function () {
         $query = request()->query();
@@ -99,7 +96,7 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/email-verify', '\App\Http\Controllers\User\UsersController@verifyEmailOtp')
     ->name('email.verify');
 
-    Route::get('/registration/{id?}', '\App\Http\Controllers\User\UsersController@registrationForm')
+    Route::get('/registration', '\App\Http\Controllers\User\UsersController@registrationForm')
     ->name('registration.form');
 
     Route::post('/registration/store', '\App\Http\Controllers\User\UsersController@store')
@@ -123,13 +120,18 @@ Route::middleware(['guest'])->group(function () {
     ->name('logout');
 });
 
-Route::prefix('partner-admin')->middleware(['partnerAdminAuth'])->group(function () {
+Route::prefix('user')->middleware(['auth'])->group(function () {
+    // include "user/dashboard.php";
+});
+
+Route::prefix('user')->middleware(['partnerAdminAuth'])->group(function () {
     include "PartnerAdmin/dashboard.php";
     include "PartnerAdmin/manageCenter.php";
     include "PartnerAdmin/batches.php";
     include "PartnerAdmin/participants.php";
     include "PartnerAdmin/profile.php";
     include "PartnerAdmin/actions.php";
+    include "PartnerAdmin/testManagements.php";
 });
 
 Route::prefix('admin')->middleware(['adminAuth'])->group(function () {
@@ -162,5 +164,11 @@ Route::prefix('admin')->middleware(['adminAuth'])->group(function () {
     include "Admin/userManagement.php";
     include "Admin/states.php";
     include "Admin/district.php";
+    include "Admin/testingServices.php";
+    include "Admin/testingServiceContent.php";
+    include "Admin/testServiceCategories.php";
+    include "Admin/serviceCategoryWiseTests.php";
+    include "Admin/testManagements.php";    
+    include "Admin/labManagements.php";    
 
 });

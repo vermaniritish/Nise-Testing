@@ -2,12 +2,12 @@
 use App\Models\Admin\Menu;
 use App\Models\Admin\MenuHindi;
 use App\Models\Admin\Settings;
-use App\Models\Admin\NewsEvent;
+use App\Models\Admin\Notices;
 use App\Models\Admin\Pages;
 $menu = Menu::where('slug', 'header')->orderBy('id', 'asc')->get();
 $menuHi = MenuHindi::where('slug', 'header')->orderBy('id', 'asc')->get();
 // $headerAds = HeaderAds::where('status',1)->orderBy('id', 'desc')->get();
-$headerAds = NewsEvent::where('status',1)->orderBy('id', 'desc')->take(6)->get();
+$headerAds = Notices::where('status',1)->orderBy('id', 'desc')->take(6)->get();
 $pageSRAData = Pages::where('slug','sra')->get();
 ?>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -160,12 +160,25 @@ $pageSRAData = Pages::where('slug','sra')->get();
 								<li><button id="btn-increase" class="topbarfontsiz">A+</button></li>
 								<li><span class="topbartxtgap">|</span></li>
 								<li>
-								    <button id="langBtn"
+									@php
+									    $currentLang = app()->getLocale();
+									    $toggleLang = $currentLang === 'en' ? 'hi' : 'en';
+									    $toggleLabel = $currentLang === 'en' ? 'हिंदी' : 'English';
+									@endphp
+
+									<form action="{{ route('change.language', $toggleLang) }}" method="get" style="display:inline;">
+									    <button type="submit"
+									        class="btn btn-sm"
+									        style="font-size:12px; padding:3px 10px; background-color:#f6f6f6; border:1px solid #1272b9; color:#1272b9; border-radius:5px;">
+									        {{ $toggleLabel }}
+									    </button>
+									</form>
+								    <!-- <button id="langBtn"
 								            class="btn btn-secondary"
 								            style="font-size:12px;padding:3px;background-color:#f6f6f6;border-color:#f6f6f6;color:#1272b9;"
 								            onclick="toggleLang()">
 								        हिंदी
-								    </button>
+								    </button> -->
 								</li>
 								<li><span class="topbartxtgap">|</span></li>
 								<li><span class="topbarft">Customer Support: 0124-2853060 | </li>
@@ -189,7 +202,7 @@ $pageSRAData = Pages::where('slug','sra')->get();
 				<div class="row">
 					<div class="col-lg-8 col-md-3 col-sm-6 col-12 mx-auto pl-0 mb-lg-0">
 						<div class="logo">
-							<a href="https://firstsite.in/development/suryamitra/public" style="float: left;">
+							<a href="https://firstsite.in/development/testing/public" style="float: left;">
 							   <img class="img-fluid logoimg" src="{{ Settings::get('logo') ? url(Settings::get('logo')) : '' }}" alt="">
 							   <span class="logoTxt">
 									<small>National Institute of Solar Energy</small>
@@ -223,17 +236,48 @@ $pageSRAData = Pages::where('slug','sra')->get();
 								   	<?php foreach($menu as $m): ?>
 										@if(isset($m['mega_menu']) && $m['mega_menu'] && $m['mega_menu'] != '[]')
 											<?php $mega = json_decode($m['mega_menu'], true); ?>
-												<li class="dropdown"><a href="#" class="nav-link">{{ $m->key }}</a>
-													<ul class="dropdown-menu">
-														@foreach($mega as $mg)
-														<li><a href="{{ $mg['link'] }}">{{ $mg['title'] }}</a></li>
-														@endforeach
-													</ul>
-												</li>
+											<li class="dropdown"><a href="#" class="nav-link">{{ $m->key }}</a>
+												<ul class="dropdown-menu">
+													@foreach($mega as $mg)
+														<li>
+															<a href="{{ $mg['link'] }}">
+																{{ $mg['title'] }}
+															</a>
+														</li>
+													@endforeach
+												</ul>
+											</li>
 										@else
-										<li><a href="{{ (strpos($m->value, 'http://') >= 0 || strpos($m->value, 'https://') >= 0 ? $m->value : url($m->value)) }}" class="nav-link">{{$m->key}}</a></li>
+											@php
+											    $isLoginItem = strtolower(trim($m->key)) === 'login';
+											@endphp
+
+											{{-- Hide "Login" if user already logged in --}}
+											@if(Auth::check() && $isLoginItem)
+											    @continue
+											@endif
+											<li>
+												<a href="{{ (strpos($m->value, 'http://') >= 0 || strpos($m->value, 'https://') >= 0 ? $m->value : url($m->value)) }}" class="nav-link">{{$m->key}}</a>
+											</li>
+											
 										@endif
 									<?php endforeach; ?>
+								    @if(Auth::check())
+								        <li class="nav-item dropdown">
+										    <a class="dropdown-toggle nav-link" href="#" role="button" data-bs-toggle="dropdown">
+										        Profile
+										    </a>
+										    <ul class="dropdown-menu">
+										        <li>
+										            <a class="dropdown-item" href="{{ route('partner.dashboard') }}">My Profile</a>
+										        </li>
+										        <li><hr class="dropdown-divider"></li>
+										        <li>
+										            <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+										        </li>
+										    </ul>
+										</li>
+								    @endif
 								</ul>
 							</nav>
 						</div>
@@ -269,7 +313,7 @@ $pageSRAData = Pages::where('slug','sra')->get();
 
 				        <a target="_blank" href="{{ $fileUrl }}">
 				            @if($hA->is_new) 
-			                    <img src="{{ asset('frontend/assets/img/new.png') }}">
+			                    <img src="{{ asset('frontend/assets/img/new.gif') }}">
 			                @endif
 				            <span style="display:inline;">
 				                {{ $hA->title ?? '' }}

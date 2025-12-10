@@ -6,6 +6,7 @@ $companyName = Settings::get('company_name');
 $googleKey = Settings::get('google_api_key');
 $version = 1.0;
 ?>
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -14,7 +15,7 @@ $version = 1.0;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ url('/frontend/assets/img/favicon.png') }}" />
-    <title>NISE - Suryamitra</title>
+    <title>NISE - Testing</title>
     <!-- Bootstrap core CSS -->
     <link href="{{ url('/frontend/assets/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Google Font  -->
@@ -124,11 +125,12 @@ $version = 1.0;
     <script src="{{ url('/frontend/assets/js/scrolltopcontrol.js')}}"></script>
     <!-- WOW - Reveal Animations When You Scroll -->
     <script src="{{ url('/frontend/assets/js/wow.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <!-- scripts js -->
     <script src="{{ url('/frontend/assets/js/scripts.js')}}"></script>
     <!-- chart js -->
-    <script src="{{ url('/frontend/assets/js/canvasjs.min.js')}}"></script>
-    <script src="{{ url('/frontend/assets/js/canvasjs.activeone.js')}}"></script>
+    <!-- <script src="{{ url('/frontend/assets/js/canvasjs.min.js')}}"></script> -->
+    <!-- <script src="{{ url('/frontend/assets/js/canvasjs.activeone.js')}}"></script> -->
     @stack('scripts')
 </body>
 

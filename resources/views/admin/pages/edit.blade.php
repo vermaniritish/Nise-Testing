@@ -40,8 +40,9 @@ use Illuminate\Support\Arr;
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-first-name">Title</label>
-                                            <input type="text" class="form-control" name="title" required
+                                            <input type="text" maxlength="150" class="form-control" name="title" required
                                                 placeholder="Title" value="<?php echo $page->title ?? ''; ?>">
+                                            <small>You can enter up to 150 characters only.</small>
                                             @error('title')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
@@ -145,8 +146,9 @@ use Illuminate\Support\Arr;
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-first-name">Title</label>
-                                            <input type="text" class="form-control" name="title_hi" required
+                                            <input type="text" maxlength="150" class="form-control" name="title_hi" required
                                                 placeholder="Title" value="<?php echo $page->title_hi ?? ''; ?>">
+                                            <small>You can enter up to 150 characters only.</small>
                                             @error('title_hi')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror

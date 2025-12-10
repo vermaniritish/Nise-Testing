@@ -44,9 +44,7 @@ class StatesController extends AppController
     	{
     		$search = $request->get('search');
     		$search = '%' . $search . '%';
-    		$where['( 
-    			states.name LIKE ?
-    		)'] = [$search, $search];
+    		$where['( states.name LIKE ?)'] = [$search];
     	}
 
     	if($request->get('status') !== "" && $request->get('status') !== null)
@@ -224,7 +222,7 @@ class StatesController extends AppController
 
     function delete(Request $request, $id)
     {
-    	if(!Permissions::hasPermissionn('states', 'delete'))
+    	if(!Permissions::hasPermission('states', 'delete'))
     	{
     		$request->session()->flash('error', 'Permission denied.');
     		return redirect()->route('admin.dashboard');

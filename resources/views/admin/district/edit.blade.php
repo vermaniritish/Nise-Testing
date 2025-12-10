@@ -48,7 +48,8 @@
                             </div>
 							<div class="form-group">
 								<label class="form-control-label" for="input-first-name">Name</label>
-								<input type="text" class="form-control" name="name" required placeholder="Name" value="{{ old('name', isset($district->name) && $district->name ? $district->name :"" ) }}">
+								<input type="text" maxlength="100" class="form-control" name="name" required placeholder="Name" value="{{ old('name', isset($district->name) && $district->name ? $district->name :"" ) }}">
+								<small>You can enter up to 100 characters only.</small>
 								@error('name')
 								    <small class="text-danger">{{ $message }}</small>
 								@enderror

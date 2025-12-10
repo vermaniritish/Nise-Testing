@@ -9,6 +9,31 @@
 	$part1 = $parts[0];        // पहला word
 	$part2 = $parts[1] ?? '';
 ?>
+<style>
+	.overlay:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(...);
+    z-index: 1;
+}
+
+.single-wprocess-text {
+    position: relative;
+    z-index: 2;
+}
+
+.overlay:before {
+    pointer-events: none;
+}
+
+.overlay:before {
+    pointer-events: none !important;
+}
+</style>
 <section id="page-banner">
 		
 		<div class="single-page-title-area-bottom">
@@ -44,21 +69,54 @@
 			<!-- end section title -->
 			<div class="row">
 				@foreach($notices as $notice)
+				<a href="{{route('testServiceDetails',['slug'=> $notice->slug])}}">
+				<div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-5">
+					<div class="single-wprocess">						
+						<div class="single-wprocess-text">
+							<h5>{!! $notice->title !!}</h5>
+							<p class="shortInfo">{{ Str::limit(strip_tags($notice->description),150) }}</p>
+							<p>
+								<a href="{{route('testServiceDetails',['slug'=> $notice->slug])}}">{{$notice->button_title}}</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				</a>
+				@endforeach
+				<!-- @foreach($notices as $notice)
 				<div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-5">
 					<div class="single-wprocess">
 						<div class="single-wprocess-text">
 							<a href="service-photovoltaic-module.php" class="boxContent">
 							<h5>{!! $notice->title !!}</h5>
-							<p class="shortInfo">{{$notice->description}}</p>
+							<p class="shortInfo">{{ strip_tags(html_entity_decode($notice->description)) }}</p>
 							<p><a href="{{$notice->url}}">{{$notice->button_title}}</a></p>
 							</a>
 						</div>
 						
 					</div>
 				</div>
-				@endforeach
+				@endforeach -->
 			</div>
         </div>
         <!--- END CONTAINER -->
     </section>
 @endsection
+
+<script>
+function myFunction() {
+  var dots = document.getElementById("dots");
+  var moreText = document.getElementById("more");
+  var btnText = document.getElementById("myBtn");
+
+  if (dots.style.display === "none") {
+    dots.style.display = "inline";
+    btnText.innerHTML = "Read more"; 
+    moreText.style.display = "none";
+  } else {
+    dots.style.display = "none";
+    btnText.innerHTML = "Read less"; 
+    moreText.style.display = "inline";
+  }
+}
+</script>

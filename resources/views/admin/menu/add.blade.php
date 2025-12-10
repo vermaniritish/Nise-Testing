@@ -115,7 +115,7 @@
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-8">
-                                    <h3 class="mb-0">Footer Quick Links</h3>
+                                    <h3 class="mb-0">About Us</h3>
                                 </div>
                             </div>
                         </div>
@@ -169,7 +169,7 @@
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-8">
-                                    <h3 class="mb-0">Footer Courses Menu</h3>
+                                    <h3 class="mb-0">Departments</h3>
                                 </div>
                             </div>
                         </div>
@@ -208,6 +208,115 @@
                                     <draggable/>
                                 </div>
                                 <button type="button" class="btn btn-sm py-2 px-3 btn-primary" @click="addCourseItem">
+                                    <i class="fa fa-plus"></i> Add More
+                                </button>
+                                <hr class="my-4" />
+                                @if (Permissions::hasPermission('menu', 'create'))
+                                    <button type="submit" class="btn btn-sm py-2 px-3 btn-success float-right">
+                                        <i class="fa fa-save"></i> Submit
+                                    </button>
+                                @endif
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h3 class="mb-0">Information</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form @submit.prevent="submitInformationForm">
+                                <div class="">
+                                    <draggable v-model="informationItems" :options="{group:'information'}">
+                                    <div class="row" v-for="(item, index) in informationItems" :key="item.id || 'new-' + index">
+                                        <div class="col-lg-1 text-right">
+                                            <i class="drag-point fa fa-grip-vertical" style="background: linen;padding: 4px;cursor: grab;font-size: 16px;margin-top:10px;"></i>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-title">Title</label>
+                                                <input type="text" class="form-control" v-model="item.title" placeholder="Title">
+                                                <small class="text-danger" v-if="footerErrors[`informationItems.${index}`] && footerErrors[`informationItems.${index}`].title">
+                                                    @{{ footerErrors[`informationItems.${index}`].title[0] }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-link">Link</label>
+                                                <input type="text" class="form-control" v-model="item.link" placeholder="Link">
+                                                <small class="text-danger" v-if="footerErrors[`informationItems.${index}`] && footerErrors[`informationItems.${index}`].link">
+                                                    @{{ footerErrors[`informationItems.${index}`].link[0] }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 d-flex align-items-center">
+                                            <button type="button" class="btn btn-danger" @click="removeInformationItem(index)" style="margin-top: 0;">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <draggable/>
+                                </div>
+                                <button type="button" class="btn btn-sm py-2 px-3 btn-primary" @click="addInformationItem">
+                                    <i class="fa fa-plus"></i> Add More
+                                </button>
+                                <hr class="my-4" />
+                                @if (Permissions::hasPermission('menu', 'create'))
+                                    <button type="submit" class="btn btn-sm py-2 px-3 btn-success float-right">
+                                        <i class="fa fa-save"></i> Submit
+                                    </button>
+                                @endif
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h3 class="mb-0">Other Links</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form @submit.prevent="submitOtherLinksForm">
+                                <div class="">
+                                    <draggable v-model="otherLinksItems" :options="{group:'other_links'}">
+                                    <div class="row" v-for="(item, index) in otherLinksItems" :key="item.id || 'new-' + index">
+                                        <div class="col-lg-1 text-right">
+                                            <i class="drag-point fa fa-grip-vertical" style="background: linen;padding: 4px;cursor: grab;font-size: 16px;margin-top:10px;"></i>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-title">Title</label>
+                                                <input type="text" class="form-control" v-model="item.title" placeholder="Title">
+                                                <small class="text-danger" v-if="footerErrors[`otherLinksItems.${index}`] && footerErrors[`otherLinksItems.${index}`].title">
+                                                    @{{ footerErrors[`otherLinksItems.${index}`].title[0] }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-link">Link</label>
+                                                <input type="text" class="form-control" v-model="item.link" placeholder="Link">
+                                                <small class="text-danger" v-if="footerErrors[`otherLinksItems.${index}`] && footerErrors[`otherLinksItems.${index}`].link">
+                                                    @{{ footerErrors[`otherLinksItems.${index}`].link[0] }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 d-flex align-items-center">
+                                            <button type="button" class="btn btn-danger" @click="removeOtherLinksItem(index)" style="margin-top: 0;">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <draggable/>
+                                </div>
+                                <button type="button" class="btn btn-sm py-2 px-3 btn-primary" @click="addOtherLinksItem">
                                     <i class="fa fa-plus"></i> Add More
                                 </button>
                                 <hr class="my-4" />

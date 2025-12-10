@@ -62,15 +62,6 @@
 									<td><?php echo $page->title  ?> <br>
                                         <?php echo $page->title_hi ?? ""  ?></td>
 								</tr>
-								<tr>
-									<th>File Url</th>
-									<td><a href="<?php echo $page->file_url ?? ""  ?>"> </td>
-								</tr>
-                                <!-- <tr>
-									<th>Description</th>
-									<td><?php echo $page->description  ?> <br>
-                                        <?php echo $page->description_hi ?? ""  ?></td>
-								</tr> -->
 							</tbody>
 						</table>
 					</div>
@@ -110,12 +101,6 @@
                                         <?php endif; ?>
                                     </td>
 								</tr>
-                                <th scope="row">
-                                    Date
-                                </th>
-                                <td>
-                                    <?php echo _dt($page->date) ?>
-                                </td>
 								<tr>
 									<th scope="row">
 										Created On

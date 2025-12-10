@@ -58,51 +58,7 @@ class LoginController extends AppController
 
         return redirect()->back()->with('success', "OTP sent to {$sendTo}");
     }
-
-    // public function sendOtp(Request $request)
-    // {
-    //     $request->validate([
-    //         'userphone' => 'required',
-    //     ]);
-
-    //     $isEmail = filter_var($request->userphone, FILTER_VALIDATE_EMAIL);
-        
-    //     // Find user by mobile OR email
-    //     $user = User::where('mobile', $request->userphone)
-    //                 ->orWhere('email', $request->userphone)
-    //                 ->first();
-
-    //     if (!$user) {
-    //         if ($isEmail) {
-    //             return back()->withErrors(['userphone' => 'This email is not registered.']);
-    //         } else {
-    //             return back()->withErrors(['userphone' => 'This mobile number is not registered.']);
-    //         }
-    //     }
-
-    //     // Generate OTP
-    //     $otp = rand(100000, 999999);
-    //     if (filter_var($request->userphone, FILTER_VALIDATE_EMAIL)) {
-    //         $user->email_otp = $otp;
-    //         $sendTo = $user->email;
-    //         // Email send logic
-    //         // Mail::to($user->email)->send(new SendOtpMail($otp));
-    //     } else {
-    //         $user->mobile_otp = $otp;
-    //         $sendTo = $user->mobile;
-    //         // SMS send logic
-    //         // SmsService::send($user->mobile, "Your OTP is $otp");
-    //     }
-
-    //     session(['mobile' => $request->userphone]);
-
-    //     $user->save();
-    //     Session::put('login_id', $user->id);
-    //     Session::put('login_type', filter_var($request->userphone, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile');
-
-    //     return redirect()->back()->with('success', "OTP sent to {$sendTo}");
-    // }
-
+    
     public function verifyOtp(Request $request){
         $request->validate([
             'otp' => 'required|numeric',
