@@ -26,7 +26,7 @@ Route::post('/information-menu/add', '\App\Http\Controllers\Admin\MenuController
 Route::post('/other-links-menu/add', '\App\Http\Controllers\Admin\MenuController@addOtherLinksMenu')
     ->name('admin.otherLinksMenu.add');
 
-Route::delete('menu/delete/{id}', '\App\Http\Controllers\Admin\MenuController@deleteMenuItem')->name('menu.delete');
+Route::get('menu/delete/{id}', '\App\Http\Controllers\Admin\MenuController@deleteMenuItem')->name('menu.delete');
 
 
 

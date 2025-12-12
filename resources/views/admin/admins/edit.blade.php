@@ -94,7 +94,7 @@
 								    <div class="form-group">
 								        <label class="form-control-label" for="input-type">Role</label>
 
-								        <select name="role" @if(!$isAdmin || $admin->id == 7) disabled @endif class="form-control" required>
+								        <select name="role" class="form-control" required>
 										    <option value="" selected disabled>Select Role</option>
 
 										    <option value="cse" {{ $admin->role == 'cse' ? 'selected' : '' }}>CSE</option>
@@ -114,7 +114,6 @@
 								        <label class="form-control-label" for="input-type">Lab Testing</label>
 
 								        <select name="lab_testing[]" 
-								                @if(!$isAdmin || $admin->id == 7) disabled @endif 
 								                class="form-control" 
 								                required 
 								                multiple>

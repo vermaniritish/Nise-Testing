@@ -108,14 +108,7 @@ var menu = new Vue({
                 if (confirm('Are you sure you want to delete this item?')) {
                     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                     try {
-                        let response = await fetch(admin_url + `/menu/delete/${item.id}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': csrfToken,
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            }
-                        });
+                        let response = await fetch(admin_url + `/menu/delete/${item.id}`);
                         let data = await response.json();
                         if (data.status) {
                             this.menuItems.splice(index, 1);
@@ -171,14 +164,7 @@ var menu = new Vue({
                 if (confirm('Are you sure you want to delete this item?')) {
                     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                     try {
-                        let response = await fetch(admin_url + `/menu/delete/${item.id}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': csrfToken,
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            }
-                        });
+                        let response = await fetch(admin_url + `/menu/delete/${item.id}`);
                         let data = await response.json();
                         if (data.status) {
                             if (k == '1')
@@ -214,14 +200,7 @@ var menu = new Vue({
                 if (confirm('Are you sure you want to delete this footer item?')) {
                     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                     try {
-                        let response = await fetch(admin_url + `/menu/delete/${item.id}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': csrfToken,
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            }
-                        });
+                        let response = await fetch(admin_url + `/menu/delete/${item.id}`);
                         let data = await response.json();
                         if (data.status) {
                             this.footerItems.splice(index, 1);
@@ -426,14 +405,7 @@ var menu = new Vue({
                 if (confirm('Are you sure you want to delete this menu item?')) {
                     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                     try {
-                        let response = await fetch(admin_url + `/menu/delete/${item.id}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': csrfToken,
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            }
-                        });
+                        let response = await fetch(admin_url + `/menu/delete/${item.id}`);
                         let data = await response.json();
                         if (data.status) {
                             this.coursesItems.splice(index, 1);
@@ -493,14 +465,7 @@ var menu = new Vue({
             if (confirm('Are you sure you want to delete this menu item?')) {
               try {
                 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                const response = await fetch(`${admin_url}/menu/delete/${item.id}`, {
-                  method: 'DELETE',
-                  headers: {
-                    'X-CSRF-TOKEN': csrfToken,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                  }
-                });
+                const response = await fetch(`${admin_url}/menu/delete/${item.id}`);
                 const data = await response.json();
                 if (data.status) {
                   this.$nextTick(() => {
@@ -564,14 +529,7 @@ var menu = new Vue({
             if (confirm('Are you sure you want to delete this menu item?')) {
               try {
                 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                const response = await fetch(`${admin_url}/menu/delete/${item.id}`, {
-                  method: 'DELETE',
-                  headers: {
-                    'X-CSRF-TOKEN': csrfToken,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                  }
-                });
+                const response = await fetch(`${admin_url}/menu/delete/${item.id}`);
                 const data = await response.json();
                 if (data.status) {
                   this.$nextTick(() => {

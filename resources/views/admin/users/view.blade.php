@@ -111,7 +111,7 @@
 
 									    <?php if($user->pan_file): ?>
 									        <br>
-									        <a href="<?php echo asset('storage/'.$user->pan_file); ?>" 
+									        <a href="<?php echo url($user->pan_file); ?>" 
 									           target="_blank" class="btn btn-sm btn-primary">
 									           View PAN File
 									        </a>
@@ -133,7 +133,7 @@
 
 									    <?php if($user->company_file): ?>
 									        <br>
-									        <a href="<?php echo asset('storage/'.$user->company_file); ?>" 
+									        <a href="<?php echo url($user->company_file); ?>" 
 									           target="_blank" class="btn btn-sm btn-primary">
 									           View Company File
 									        </a>

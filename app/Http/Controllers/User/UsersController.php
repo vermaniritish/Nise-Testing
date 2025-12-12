@@ -63,7 +63,8 @@ class UsersController extends AppController
             $user = User::create([
                 'mobile' => $request->mobile,
                 'mobile_otp' => $otp,
-                'is_mobile_verified' => 0
+                'is_mobile_verified' => 0,
+                'created' => date('Y-m-d H:i:s')
             ]);
         }
 
@@ -177,8 +178,27 @@ class UsersController extends AppController
             ]);
 
             // File uploads
-            $panFile = $request->file('pan_file') ? $request->file('pan_file')->store('uploads/pan', 'public') : null;
-            $companyFile = $request->file('company_file') ? $request->file('company_file')->store('uploads/company', 'public') : null;
+            if ($request->hasFile('pan_file')) {
+                $file = $request->file('pan_file');
+
+                $extension = $file->getClientOriginalExtension();
+                $filename = time() . '-' . uniqid() . '.' . $extension;
+
+                $file->move(public_path('uploads/pan'), $filename);
+
+                $panFile = '/uploads/pan/' . $filename;
+            }
+
+            if ($request->hasFile('company_file')) {
+                $file = $request->file('company_file');
+
+                $extension = $file->getClientOriginalExtension();
+                $filename = time() . '-' . uniqid() . '.' . $extension;
+
+                $file->move(public_path('uploads/company'), $filename);
+
+                $companyFile = '/uploads/company/' . $filename;
+            }
 
             // Create user
             $user = new User();
@@ -197,13 +217,15 @@ class UsersController extends AppController
             $user->person_name = $request->person_name;
             $user->mobile = $request->mobile;
             $user->email = $request->email;
+            $user->created = date('Y-m-d H:i:s');
             $user->save();
 
             // Create institute code like SM-INST-00001
             // $uniqueNumber = str_pad($user->id, 5, '0', STR_PAD_LEFT);
             // $user->institute_code = 'SM-INST-' . $uniqueNumber;
             $user->save();
-        } elseif ($type === 'Individual') {
+        } 
+        elseif ($type === 'Individual') {
             $request->validate([
                 'registration_type'     => 'required|in:Company,Individual',
                 'ind_contact_person_name' => 'required|string|max:255',
@@ -230,6 +252,7 @@ class UsersController extends AppController
             $user->mobile = $request->ind_mobile_number;
             $user->email = $request->ind_email;
             $user->password = Hash::make($request->password);
+            $user->created = date('Y-m-d H:i:s');
             $user->save();
 
             // Generate code

@@ -20,10 +20,10 @@
             </a>
         </li>
         <?php endif; ?>
-        <?php if(Permissions::hasPermission('lab_managements', 'listing')): ?>
-        <?php $active = strpos(request()->route()->getAction()['as'], 'admin.labManagements') > -1; ?>
+        <?php if(Permissions::hasPermission('admins', 'listing')): ?>
+        <?php $active = strpos(request()->route()->getAction()['as'], 'admin.admins') > -1; ?>
         <li class="nav-item">
-            <a class="nav-link<?php echo $active ? ' active' : ''; ?>" href="<?php echo route('admin.labManagements'); ?>">
+            <a class="nav-link<?php echo $active ? ' active' : ''; ?>" href="<?php echo route('admin.admins'); ?>">
                 <i class="fas fa-flask text-primary"></i>
                 <span class="nav-link-text">Lab Management</span>
             </a>

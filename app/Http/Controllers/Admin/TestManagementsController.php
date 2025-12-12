@@ -310,11 +310,13 @@ class TestManagementsController extends AppController
         ->leftJoin('users as user', 'user.id', '=', 'order_remarks.user_id')
         ->where('order_remarks.order_test_id',$id)->get();
         $admins = Admins::getAll();
+        $admin = AdminAuth::getLoginUser();
         if ($orderTest) {
             return view("admin/testManagements/view", [
                 'orderTest' => $orderTest,
                 'orderRemarks' => $orderRemarks,
-                'admins' => $admins
+                'admins' => $admins,
+                'admin' => $admin
             ]);
         } else {
             abort(404);

@@ -1,10 +1,7 @@
 @extends('layouts.adminlayout')
 @section('content')
 
-<?php
-	use App\Models\Admin\Admins;
-	// pr($orderTest); die;
-?>
+<?php use App\Models\Admin\Admins;?>
 <section>
 
     <div class="header bg-primary pb-6">
@@ -22,7 +19,22 @@
                     </div>
 
                     <div class="col-lg-6 col-5 text-right">
-
+						@if($admin->role == 'cse' || $admin->role == 'labadmin')
+							@if(!$orderTest->mark_disclose)
+							<form action="{{ route('admin.mark.disclose') }}" method="POST">
+								@csrf
+								<input type="hidden" name="order_test_id" value="{{ $orderTest->id }}">
+								<button type="submit" class="btn btn-neutral">
+									Mark Close
+								</button>
+							</form>
+							@endif
+						@endif
+						@if($orderTest->mark_disclose)
+						<button type="button" class="btn btn-primary">
+							<i class="fa fa-check"></i> Mark Closed
+						</button>
+						@endif
                     </div>
 
                 </div>
@@ -66,14 +78,6 @@
 								<div class="col-md-12 text-success">
 								    <div class="d-flex align-items-center" style="gap:650px;">
 								        <h5 class="m-0"><strong>Company Details</strong></h5>
-
-								        <form action="{{ route('admin.mark.disclose') }}" method="POST">
-								            @csrf
-								            <input type="hidden" name="order_test_id" value="{{ $orderTest->id }}">
-								            <button type="submit" class="btn btn-sm btn-primary">
-								                Mark Disclose
-								            </button>
-								        </form>
 								    </div>
 								    <hr>
 								</div>
@@ -148,6 +152,11 @@
 									<div class="col-lg-12 col-md-12 col-xs-12">
 									<label class=" control-label" for="meta_title"> Actual completion date : </label>
 									</div>
+									@if($orderTest->close_at)
+									<div class="col-lg-12 col-md-12 col-xs-12">
+										<label class=" control-label" for="meta_title"> Close At : {{ _dt($orderTest->close_at) }} </label>
+									</div>
+									@endif
 								</div>
 								<div class="col-md-12">
 									<div class="col-lg-12 col-md-12 col-xs-12">
@@ -236,7 +245,7 @@
 							</div>
 							@endif
 						</div>
-						@if(isset($orderTest->mark_disclose) && $orderTest->mark_disclose != 1)
+						@if(!$orderTest->mark_disclose)
 						<form method="post" action="{{route('admin.testOrder.remark')}}" class="form-validation" novalidate="novalidate">
 						{{ @csrf_field() }}
 						<div class="row">
@@ -293,7 +302,7 @@
                                         >
                                             <div class="upload-section">
                                                 <div class="button-ref mt-4">
-                                                    <button class="btn btn-icon btn-primary btn-lg" type="button">
+                                                    <button class="btn btn-icon btn-primary btn-sm" type="button">
                                                         <span class="btn-inner--icon"><i class="fas fa-upload"></i></span>
                                                         <span class="btn-inner--text">Upload File</span>
                                                     </button>
@@ -324,14 +333,16 @@
 							</div>
 						</form>
 						@endif
+
+						@if($admin->role == 'labadmin' && !$orderTest->mark_disclose)
 						<form method="post" action="{{route('admin.mark.disclose.uploadFile')}}" class="form-validation" novalidate="novalidate">
 						{{ @csrf_field() }}
 						<div class="row">
-							<div class="col-md-12 text-success"><h5><strong>Mark Disclosed Upload Report </strong></h5><hr></div>
+							<div class="col-md-12 text-success"><h5><strong>Upload Report </strong></h5><hr></div>
 								<div class="col-md-6">
 									<div class="form-group">
 										<input type="hidden" name="order_test_id" value="{{ $orderTest->id }}">
-										<label class="form-control-label" for="input-first-name">Upload Report </label>
+										<label class="form-control-label" for="input-first-name">Please upload your report before mark it close.</label>
 										
 										<div class="upload-image-section" 
                                             data-type="file" 
@@ -341,7 +352,7 @@
                                         >
                                             <div class="upload-section">
                                                 <div class="button-ref mt-4">
-                                                    <button class="btn btn-icon btn-primary btn-lg" type="button">
+                                                    <button class="btn btn-icon btn-primary btn-sm" type="button">
                                                         <span class="btn-inner--icon"><i class="fas fa-upload"></i></span>
                                                         <span class="btn-inner--text">Upload File</span>
                                                     </button>
@@ -365,6 +376,7 @@
 								</div>	
 							</div>
 						</form>
+						@endif
 						@if(!empty($orderTest->report_upload))
 						    <div class="row mt-4">
 						        <div class="col-md-12 text-info">
