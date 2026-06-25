@@ -23,7 +23,7 @@ use App\Models\Admin\Permissions;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use App\Libraries\FileSystem;
-
+use DB;
 class ProfileController extends AppController
 {
 	function __construct()
@@ -127,6 +127,11 @@ class ProfileController extends AppController
 
 		        			if($admin->save())
 		        			{
+								DB::table('sessions')
+									->where('user_id', $admin->id)
+									->delete();
+
+								Auth::logoutOtherDevices($request->password);
 		        				$request->session()->flash('success', 'Password updated successfully.');
 			    				return redirect()->route('admin.changePassword');
 		        			}

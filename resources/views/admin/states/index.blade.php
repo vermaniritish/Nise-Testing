@@ -10,7 +10,7 @@
 					</div>
 					<div class="col-lg-6 col-5 text-right">
 						<?php if(Permissions::hasPermission('states', 'create')): ?>
-						<a href="<?php echo route('admin.states.add') ?>" class="btn btn-neutral"><i class="fas fa-plus"></i>New</a>
+						<a href="<?php echo route('admin.states.add') ?>" class="btn btn-neutral"><i class="fas fa-plus"></i> New</a>
 						<?php endif;?>
 						@include('admin.states.filters')
 					</div>
@@ -18,8 +18,7 @@
 			</div>
 		</div>
 	</div>
-<div class="content_area">
-	<div class="container-xxl flex-grow-1 container-p-y">
+	<div class="container-fluid mt--6">
 		<div class="row">
 			<div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				@include('admin.partials.flash_messages')
@@ -99,15 +98,15 @@
 										</th>
 										<th class="sort">
 											Created ON
-											@if(isset($_GET['sort']) && $_GET['sort'] == 'states.created_at' && isset($_GET['direction']) && $_GET['direction'] == 'asc')
-											<i class="fas fa-sort-down active" data-field="states.created_at" data-sort="asc"></i>
-											@elseif(isset($_GET['sort']) && $_GET['sort'] == 'states.created_at' && isset($_GET['direction']) && $_GET['direction'] == 'desc')
-											<i class="fas fa-sort-up active" data-field="states.created_at" data-sort="desc"></i>
+											@if(isset($_GET['sort']) && $_GET['sort'] == 'states.created' && isset($_GET['direction']) && $_GET['direction'] == 'asc')
+											<i class="fas fa-sort-down active" data-field="states.created" data-sort="asc"></i>
+											@elseif(isset($_GET['sort']) && $_GET['sort'] == 'states.created' && isset($_GET['direction']) && $_GET['direction'] == 'desc')
+											<i class="fas fa-sort-up active" data-field="states.created" data-sort="desc"></i>
 											@else
-											<i class="fas fa-sort" data-field="states.created_at"></i>
+											<i class="fas fa-sort" data-field="states.created"></i>
 											@endif
 										</th>
-										<th>
+										<th class="text-center">
 											Actions
 										</th>
 					              	</tr>
@@ -137,6 +136,5 @@
 			</div>
 		</div>
 	</div>
-</div>
 	
 @endsection

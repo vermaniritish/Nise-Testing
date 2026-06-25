@@ -1,6 +1,6 @@
 <?php foreach($listing->items() as $k => $row): ?>
 <tr>
-	<td>
+	<td class="text-center">
 		<!-- MAKE SURE THIS HAS ID CORRECT AND VALUES CORRENCT. THIS WILL EFFECT ON BULK CRUTIAL ACTIONS -->
 		<div class="custom-control custom-checkbox">
 			<input type="checkbox" class="custom-control-input listing_check" id="listing_check<?php echo $k ?>" value="<?php echo $row->id ?>">

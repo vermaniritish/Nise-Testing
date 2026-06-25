@@ -60,7 +60,7 @@
 						<table class="table align-items-center table-flush listing-table">
 							<thead class="thead-light">
 								<tr>
-									<th class="checkbox-th" width="5%">
+									<th class="checkbox-th text-center" width="5%">
 										<div class="custom-control custom-checkbox">
 											<input type="checkbox" class="custom-control-input mark_all" id="mark_all">
 											<label class="custom-control-label" for="mark_all"></label>
@@ -88,12 +88,12 @@
 									</th>
 									<th class="sort">
 										Service
-										<?php if(isset($_GET['sort']) && $_GET['sort'] == 'testing_service_categories.test_service_id' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
-										<i class="fas fa-sort-down active" data-field="testing_service_categories.test_service_id" data-sort="asc"></i>
-										<?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'testing_service_categories.test_service_id' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
-										<i class="fas fa-sort-up active" data-field="testing_service_categories.test_service_id" data-sort="desc"></i>
+										<?php if(isset($_GET['sort']) && $_GET['sort'] == 'testing_services_title' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
+										<i class="fas fa-sort-down active" data-field="testing_services_title" data-sort="asc"></i>
+										<?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'testing_services_title' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
+										<i class="fas fa-sort-up active" data-field="testing_services_title" data-sort="desc"></i>
 										<?php else: ?>
-										<i class="fas fa-sort" data-field="testing_service_categories.test_service_id"></i>
+										<i class="fas fa-sort" data-field="testing_services_title"></i>
 										<?php endif; ?>
 									</th>
                                     {{-- <th class="sort">

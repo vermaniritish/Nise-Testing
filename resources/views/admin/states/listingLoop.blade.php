@@ -24,7 +24,7 @@
         </div>
     </td>
 	<td>
-		{{ _dt($row->created_at) }}
+		{{ _dt($row->created) }}
 	</td>
 	<td class="text-center">
         <div class="dropdown">
@@ -33,11 +33,6 @@
                 <i class="fas fa-ellipsis-v"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                <a class="dropdown-item" href="<?php echo route('admin.states.view', ['id' => $row->id]); ?>">
-                    <i class="fas fa-eye text-yellow"></i>
-                    <span class="status">View</span>
-                </a>
-                <div class="dropdown-divider"></div>
                 <?php if(Permissions::hasPermission('states', 'update')): ?>
                 <a class="dropdown-item" href="<?php echo route('admin.states.edit', ['id' => $row->id]); ?>">
                     <i class="fas fa-pencil-alt text-info"></i>

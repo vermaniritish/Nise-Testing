@@ -12,7 +12,7 @@
 						<div id="ost-container">
 							<div class="ost-multi-header">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.php">Home</a></li>
+									<li class="breadcrumb-item"><a href="{{ url('/') }}">{{ __('front.Home') }}</a></li>
 									<li class="breadcrumb-item active">EOI Enrollment</li>
 								</ol>
 							</div>

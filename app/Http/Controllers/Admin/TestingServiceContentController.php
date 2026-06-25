@@ -48,6 +48,7 @@ class TestingServiceContentController extends AppController
                     $data,
                     [
                         'main_heading' => ['required'],
+                        'main_heading_hi' => ['required'],
                         // 'title_hi' => ['required'],
                     ]
                 );

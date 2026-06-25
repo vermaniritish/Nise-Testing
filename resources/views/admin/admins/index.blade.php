@@ -77,7 +77,7 @@
 						<table class="table align-items-center table-flush listing-table">
 							<thead class="thead-light">
 								<tr>
-									<th class="checkbox-th">
+									<th class="checkbox-th text-center">
 										<div class="custom-control custom-checkbox">
 											<input type="checkbox" class="custom-control-input mark_all" id="mark_all">
 											<label class="custom-control-label" for="mark_all"></label>

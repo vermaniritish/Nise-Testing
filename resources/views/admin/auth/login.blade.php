@@ -51,11 +51,21 @@
 									<div class="input-group-prepend">
 										<span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
 									</div>
-									<input class="form-control" required placeholder="Password" type="password" name="password" value="{{ old('password') }}">
+									<input class="form-control" autocomplete="off" required placeholder="Password" type="password" name="password" value="{{ old('password') }}">
 								</div>
 								@error('password')
 								    <small class="text-danger">{{ $message }}</small>
 								@enderror
+							</div>
+							<div class="form-group mb-0">
+								<img src="{{ captcha_src() }}"  id="captchaImg" alt="captcha">
+
+								<img src="{{ url('/assets/img/refresh3.png') }}" id="refresh"
+									onclick="doImageReload();" style="cursor:pointer;" alt="Refresh" height="30px" width="30px">
+								<br>
+								<input type="text" name="txt_Captcha" class="form-control mt-2 @error('txt_Captcha') is-invalid @enderror" placeholder="@lang('Please Insert Captcha')" />
+								@error('txt_Captcha')<div class="text-danger">Captcha is invalid. Please try again.</div> @enderror
+								<br>
 							</div>
 							<div class="custom-control text-right">
 								<a href="<?php echo route('admin.forgotPassword') ?>" class="text-dark"><small>Forgot password?</small></a>
@@ -70,3 +80,12 @@
 		</div>
 	</div>
 @endsection
+
+@push('scripts')
+<script>
+function doImageReload() {
+    const captcha = document.getElementById('captchaImg');
+    captcha.src = "{{ captcha_src() }}" + "?" + Math.random();
+}
+</script>
+@endpush

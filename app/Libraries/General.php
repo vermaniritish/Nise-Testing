@@ -195,7 +195,6 @@ class General
 				}
 				catch(\Exception $e)
 				{
-					pr($e); die;
 					$sent = false;
 				}
 			}

@@ -1,6 +1,10 @@
-<?php use App\Models\Admin\CustomPageData; ?>
+<?php 
+use App\Models\Admin\CustomPageData;
+use Illuminate\Support\Str;
+?>
 @extends('layouts.frontendlayout')
 @section('content')
+<?php $lang = app()->getLocale();?>
 <section id="page-banner">
 	<div class="single-page-title-area-bottom">
 		<div class="auto-container">
@@ -24,10 +28,11 @@
 <section id="blog" class="section-padding">
 	<div class="container">	 
 		<div class="row">
-			<div class="col-lg-8 col-md-8 col-12 pr-lg-5 pr-md-5 pr-sm-0 pr-0 mb-lg-0 mb-md-4 mb-sm-4 mb-4">
+			<div class="col-12">
 				<div class="blog-single-des">
 					<div class="row mb-5">
-						<div class="col-12 ser-page-into lang-en">
+						@if($lang == 'en')
+						<div class="col-md-12 ser-page-into">
 							<h4>{{ $notice->title ?? '' }}</h4>
 						    @if(isset($notice->file_type))
 							    @switch($notice->file_type)
@@ -82,18 +87,19 @@
 							@endif
 
 						</div>
+						@else
 
-
-						<div class="col-12 ser-page-into lang-hi" style="display:none;">
+						<div class="col-md-12 ser-page-into">
 							<h4>{{isset($notice->title_hi) && $notice->title_hi ? $notice->title_hi : ''}}</h4>
-							@if(isset($notice->file_type))
-						        @if($notice->file_type == 'content')
+							@if(isset($notice->file_type_hi))
+						        @if($notice->file_type_hi == 'content_hi')
 						            <p>{!! isset($notice->description_hi) && $notice->description_hi ? $notice->description_hi : '' !!}</p>
 
-						        @elseif($notice->file_type == 'url')
+						        @elseif($notice->file_type_hi == 'url_hi')
 						            @php
-						                $url = $notice->url ?? '';
-						                $isYoutube = preg_match('/(youtube\.com|youtu\.be)/', $url);
+						                $url = $notice->url_hi ?? '';
+										echo $url; die;
+						                $isYoutube = Str::contains($url, ['youtube.com', 'youtu.be']);
 						            @endphp
 
 						            @if($isYoutube)
@@ -110,16 +116,17 @@
 						                <p><a href="{{ $url }}" target="_blank">{{ $url }}</a></p>
 						            @endif
 
-						        @elseif($notice->file_type == 'pdf')
-						            @if(!empty($notice->pdf_file))
+						        @elseif($notice->file_type_hi == 'pdf_hi')
+						            @if(!empty($notice->pdf_file_hi))
 						                {{-- PDF embed --}}
-						                <iframe src="{{ asset('storage/'.$notice->pdf_file) }}"
+						                <iframe src="{{ url($notice->pdf_file_hi) }}"
 						                        width="100%" height="600px" style="border:none;"></iframe>
-						                <p><a href="{{ asset('storage/'.$notice->pdf_file) }}" target="_blank">Download PDF</a></p>
+						                <p><a href="{{ url($notice->pdf_file_hi) }}" target="_blank">Download PDF</a></p>
 						            @endif
 						        @endif
 						    @endif
 						</div>
+						@endif
 					</div>
 				</div>
 			</div>

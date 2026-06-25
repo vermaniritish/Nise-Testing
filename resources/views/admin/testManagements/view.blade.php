@@ -1,7 +1,10 @@
 @extends('layouts.adminlayout')
 @section('content')
 
-<?php use App\Models\Admin\Admins;?>
+<?php 
+use App\Models\Admin\Admins;
+use App\Libraries\General;
+?>
 <section>
 
     <div class="header bg-primary pb-6">
@@ -18,7 +21,8 @@
 
                     </div>
 
-                    <div class="col-lg-6 col-5 text-right">
+                    <div class="col-lg-6 col-5 d-flex align-items-center gap-2 justify-content-end">
+						<a href="<?php echo route('admin.testManagements') ?>" class="btn btn-neutral"><i class="fa fa-arrow-left"></i> Back</a>
 						@if($admin->role == 'cse' || $admin->role == 'labadmin')
 							@if(!$orderTest->mark_disclose)
 							<form action="{{ route('admin.mark.disclose') }}" method="POST">
@@ -32,9 +36,10 @@
 						@endif
 						@if($orderTest->mark_disclose)
 						<button type="button" class="btn btn-primary">
-							<i class="fa fa-check"></i> Mark Closed
+							<i class="fa fa-check"></i> Closed
 						</button>
 						@endif
+						<a href="<?php echo route('testpdf', ['id' => General::encrypt($orderTest->id)]) ?>" class="btn btn-neutral"><i class="fa fa-download"></i> Download</a>
                     </div>
 
                 </div>
@@ -82,23 +87,35 @@
 								    <hr>
 								</div>
 								<div class="col-md-6">
+									@if($orderTest->order_data && $orderTest->order_data->users->registration_type == 'Company')
 									<div class="col-lg-12 col-md-12 col-xs-12">
-										<label class="control-label" for="meta_title"> Company Name : </label> {{isset($orderTest->order_data) && $orderTest->order_data ? $orderTest->order_data->users->company_name : ''}}.
+										<label class="control-label" for="meta_title"> Company Name : </label> {{isset($orderTest->order_data->users) && $orderTest->order_data->users ? $orderTest->order_data->users->company_name : ''}}.
 									</div>
 									<div class="col-lg-12 col-md-12 col-xs-12">
-										<label class=" control-label" for="meta_title"> Address : </label>{{isset($orderTest->order_data) && $orderTest->order_data ? $orderTest->order_data->users->address_1.''.$orderTest->order_data->users->address_2 : ''}}.
+										<label class=" control-label" for="meta_title"> Address : </label>{{isset($orderTest->order_data->users) && $orderTest->order_data->users ? $orderTest->order_data->users->address_1.''.$orderTest->order_data->users->address_2 : ''}}.
 									</div>
 									<div class="col-lg-12 col-md-12 col-xs-12">
-										<label class=" control-label" for="meta_title"> PAN : </label> {{isset($orderTest->order_data) && $orderTest->order_data ? $orderTest->order_data->users->pan : ''}} <a href="{{isset($orderTest->order_data) && $orderTest->order_data ? asset($orderTest->order_data->users->pan_file) : ''}}" target="_blank">View</a>
+										<label class=" control-label" for="meta_title"> PAN : </label> {{isset($orderTest->order_data->users) && $orderTest->order_data->users ? $orderTest->order_data->users->pan : ''}} <a href="{{isset($orderTest->order_data->users) && $orderTest->order_data->users ? asset($orderTest->order_data->users->pan_file) : ''}}" target="_blank">View</a>
 									</div>
 									<div class="col-lg-12 col-md-12 col-xs-12">
-										<label class=" control-label" for="meta_title"> Registration Number : </label> {{isset($orderTest->order_data) && $orderTest->order_data ? $orderTest->order_data->users->registration_number : ''}}
+										<label class=" control-label" for="meta_title"> Registration Number : </label> {{isset($orderTest->order_data->users) && $orderTest->order_data->users ? $orderTest->order_data->users->registration_number : ''}}
 									</div>
+									@else
+									<div class="col-lg-12 col-md-12 col-xs-12">
+										<label class="control-label" for="meta_title"> Individual Name : </label> {{isset($orderTest->order_data->users) && $orderTest->order_data->users ? $orderTest->order_data->users->ind_contact_person_name : ''}}.
+									</div>
+									<div class="col-lg-12 col-md-12 col-xs-12">
+										<label class=" control-label" for="meta_title"> Address : </label>{{isset($orderTest->order_data->users) && $orderTest->order_data->users->ind_address_1 && $orderTest->order_data->users->ind_address_2 ? $orderTest->order_data->users->ind_address_1.''.$orderTest->order_data->users->ind_address_2 : ''}}.
+									</div>
+									@endif
 								</div>
 								<div class="col-md-6">
+									@if($orderTest->order_data && $orderTest->order_data->users->registration_type == 'Company')
 									<div class="col-lg-12 col-md-12 col-xs-12">
-									<label class=" control-label" for="meta_title"> Authorize Person Name : </label>
-									{{isset($orderTest->order_data) && $orderTest->order_data ? $orderTest->order_data->users->person_name : ''}}                       		</div>
+										<label class=" control-label" for="meta_title"> Authorize Person Name : </label>
+										{{isset($orderTest->order_data) && $orderTest->order_data ? $orderTest->order_data->users->person_name : ''}}
+									</div>
+									@endif
 									<div class="col-lg-12 col-md-12 col-xs-12">
 									<label class=" control-label" for="meta_title"> E-mail : </label>
 									{{isset($orderTest->order_data) && $orderTest->order_data ? $orderTest->order_data->users->email : ''}}                       		</div>
@@ -142,44 +159,6 @@
 								<div class="col-md-6">
 									<div class="col-lg-12 col-md-12 col-xs-12">
 									<label class=" control-label" for="meta_title"> Test Status : </label>
-									Sample Accepted                        		</div>
-									<div class="col-lg-12 col-md-12 col-xs-12">
-									<label class=" control-label" for="meta_title"> Test start date : </label>
-									01/09/2023                        		</div>
-									<div class="col-lg-12 col-md-12 col-xs-12">
-									<label class=" control-label" for="meta_title"> Test Job Completion Date : </label>
-									</div>
-									<div class="col-lg-12 col-md-12 col-xs-12">
-									<label class=" control-label" for="meta_title"> Actual completion date : </label>
-									</div>
-									@if($orderTest->close_at)
-									<div class="col-lg-12 col-md-12 col-xs-12">
-										<label class=" control-label" for="meta_title"> Close At : {{ _dt($orderTest->close_at) }} </label>
-									</div>
-									@endif
-								</div>
-								<div class="col-md-12">
-									<div class="col-lg-12 col-md-12 col-xs-12">
-									<label class=" control-label" for="meta_title"> Uploaded Documents : </label>
-									<p style="font-size:13px;"><strong>PV Module Details</strong> – <a href="{{ $orderTest->order_data->upload_pv_module_docs ? asset($orderTest->order_data->upload_pv_module_docs) : '#' }}" target="_blank">View File</a><br/>
-									<?php
-									   $detailOfDocuments = $orderTest->documents;
-									?>
-									@if(isset($detailOfDocuments) && $detailOfDocuments)
-										@foreach($detailOfDocuments as $detOfDocs)
-											<strong>{{isset($detOfDocs['title']) && $detOfDocs['title'] ? $detOfDocs['title'] : ''}}</strong> – <a href="{{ asset($detOfDocs['name_of_doc_ssi']) }}">View file</a><br/>
-											<strong>{{isset($detOfDocs['sub_title']) && $detOfDocs['sub_title'] ? $detOfDocs['sub_title'] : ''}}</strong> – <a href="{{ asset($detOfDocs->name_of_doc_billmat) }}">View file</a>
-											<br/>
-										@endforeach
-									@endif
-									<strong>Internal Test Report (optional)</strong> – <a href="{{isset($orderTest->order_data->internal_test_report) && $orderTest->order_data->internal_test_report ? asset($orderTest->order_data->internal_test_report) : ''}}">View file</a></p> 
-										
-									</div>
-								</div>
-								<div class="col-md-12 text-success"><h5><strong>Tech Details</strong></h5><hr></div>
-								<div class="col-md-6">
-									<div class="col-lg-12 col-md-12 col-xs-12">
-									<label class=" control-label" for="meta_title"> Test Status : </label>
 									{{ isset($orderTest->test_status) && $orderTest->test_status ? ucwords(str_replace('_', ' ', $orderTest->test_status)) : '' }}                        		
 									</div>
 									<div class="col-lg-12 col-md-12 col-xs-12">
@@ -194,6 +173,38 @@
 									<label class=" control-label" for="meta_title"> Actual completion date : </label>
 										{{ isset($orderTest->actual_completion_date) && $orderTest->actual_completion_date ? \Carbon\Carbon::parse($orderTest->actual_completion_date)->format('d/m/Y') : '' }}
 									</div>
+									@if($orderTest->close_at)
+									<div class="col-lg-12 col-md-12 col-xs-12">
+										<label class=" control-label" for="meta_title"> Close At : {{ _dt($orderTest->close_at) }} </label>
+									</div>
+									@endif
+								</div>
+								<div class="col-md-12">
+									<div class="col-lg-12 col-md-12 col-xs-12">
+									<label class=" control-label" for="meta_title"> Uploaded Documents : </label>
+									<p style="font-size:13px;">
+										<strong>PV Module Details</strong> 
+											@if($orderTest->order_data && isset($orderTest->order_data->upload_pv_module_docs) && $orderTest->order_data->upload_pv_module_docs)
+											– <a href="{{ $orderTest->order_data->upload_pv_module_docs ? asset($orderTest->order_data->upload_pv_module_docs) : '#' }}" target="_blank">View File</a>
+											@endif
+										<br/>
+										<?php
+										$detailOfDocuments = $orderTest->documents;
+										?>
+										@if(isset($detailOfDocuments) && $detailOfDocuments)
+											@foreach($detailOfDocuments as $detOfDocs)
+												<strong>{{isset($detOfDocs['title']) && $detOfDocs['title'] ? $detOfDocs['title'] : ''}}</strong> – <a href="{{ asset($detOfDocs['name_of_doc_ssi']) }}">View file</a><br/>
+												<strong>{{isset($detOfDocs['sub_title']) && $detOfDocs['sub_title'] ? $detOfDocs['sub_title'] : ''}}</strong> – <a href="{{ asset($detOfDocs->name_of_doc_billmat) }}">View file</a>
+												<br/>
+											@endforeach
+										@endif
+										<strong>Internal Test Report (optional)</strong> 
+										@if(isset($orderTest->order_data->internal_test_report) && $orderTest->order_data->internal_test_report)
+										– <a href="{{isset($orderTest->order_data->internal_test_report) && $orderTest->order_data->internal_test_report ? asset($orderTest->order_data->internal_test_report) : ''}}">View file</a>
+										@endif
+									</p> 
+										
+									</div>
 								</div>
 							@if(isset($orderRemarks) && count($orderRemarks) > 0)
 							<div class="col-md-12 text-success"><h5><strong>Progress Timeline</strong></h5><hr></div>
@@ -205,8 +216,8 @@
 											<li class="timeline-item timeline-item-transparent">
 												<span class="timeline-point timeline-point-primary"></span> 
 												@php
-												    $first = $ordRem->assign_first_name ?? '';
-												    $last = $ordRem->assign_last_name ?? '';
+												    $first = $ordRem->owner_first_name ?? '';
+												    $last = $ordRem->owner_last_name ?? '';
 
 												    $initials = strtoupper(substr($first, 0, 1) . substr($last, 0, 1));
 												@endphp
@@ -253,7 +264,7 @@
 							<div class="col-md-12 text-success"><h5><strong>Actions</strong></h5><hr></div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<label class="form-control-label" for="input-test-status">Test Status</label>
+										<label class="form-control-label" for="input-test-status">Listed Remark</label>
 										<select name="test_status" id="test_status" class="form-control">
 				                            <option value="">Select</option>
 				                            <option value="sample_accepted">Sample accepted</option>
@@ -385,30 +396,26 @@
 						        </div>
 
 						        <div class="col-md-6">
-						            <div class="card shadow p-3">
-
-						                {{-- Show file name --}}
+						            <div class="card-body shadow p-3">
 						                <p><strong>Report File:</strong> {{ basename($orderTest->report_upload) }}</p>
 
-						                {{-- Preview for PDF / Image --}}
-						                @php
-						                    $file = $orderTest->report_upload;
-						                    $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-						                @endphp
+						                <p>
+											@php
+												$file = $orderTest->report_upload;
+												$ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+											@endphp
 
-						                @if(in_array($ext, ['jpg', 'jpeg', 'png', 'gif']))
-						                    <img src="{{ asset($file) }}" alt="Report File" class="img-fluid">
-						                @elseif($ext == 'pdf')
-						                    <iframe src="{{ asset($file) }}" width="100%" height="400px"></iframe>
-						                @else
-						                    <p class="text-danger">Preview not available for this file type.</p>
-						                @endif
-
-						                {{-- Download Button --}}
-						                <a href="{{ asset($file) }}" download class="btn btn-success mt-3">
+											@if(in_array($ext, ['jpg', 'jpeg', 'png', 'gif']))
+												<img src="{{ asset($file) }}" alt="Report File" class="img-fluid">
+											@elseif($ext == 'pdf')
+												<iframe src="{{ asset($file) }}" width="100%" height="400px"></iframe>
+											@else
+												<p class="text-danger">Preview not available for this file type.</p>
+											@endif
+										</p>
+						                <a href="{{ asset($file) }}" download class="btn btn-success btn-sm">
 						                    <i class="fa fa-download"></i> Download Report
 						                </a>
-
 						            </div>
 						        </div>
 						    </div>

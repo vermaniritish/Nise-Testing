@@ -84,6 +84,70 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-first-name">Description</label>
+                                            <textarea type="text" id="editor1" class="form-control" name="description" placeholder="Description">{{ old('description', $page->description) }}</textarea>
+                                            @error('description')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div id="app" class="col-lg-12">
+                                        <div class="">
+                                            <table class="table table-bordered mb-2">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Label</th>
+                                                        <th>Price</th>
+                                                        <th width="120">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(row, index) in fees" :key="index">
+                                                        <td>
+                                                            <input 
+                                                                type="text"
+                                                                v-model="row.label"
+                                                                :name="`variations[${index}][label]`"
+                                                                required
+                                                                class="form-control"
+                                                                placeholder="Enter Text"
+                                                            >
+                                                        </td>
+                                                        <td>
+                                                            <input 
+                                                                type="number"
+                                                                v-model="row.price"
+                                                                :name="`variations[${index}][price]`"
+                                                                required
+                                                                class="form-control"
+                                                                placeholder="$"
+                                                            >
+                                                        </td>
+                                                        <td>
+                                                            <button 
+                                                                type="button"
+                                                                class="btn btn-danger btn-sm"
+                                                                @click="removeRow(index)"
+                                                                v-if="fees.length > 1"
+                                                            >
+                                                                Remove
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <button 
+                                                type="button" 
+                                                class="btn btn-primary btn-sm"
+                                                @click="addRow"
+                                            >
+                                                Add More
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -117,3 +181,8 @@
         </form>
     </div>
 @endsection
+@push('scripts')
+<script>
+    var variations = @json(old('variations', $page->variations ?? []));
+</script>
+@endpush

@@ -1,4 +1,7 @@
-<?php use App\Models\Admin\CustomPageData; ?>
+<?php 
+use App\Models\Admin\CustomPageData; 
+use App\Libraries\General;
+?>
 @extends('layouts.frontendlayout')
 @section('content')
 
@@ -7,7 +10,7 @@
       <div class="row mb-5">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12 pr-lg-5 pr-md-5 pr-sm-0 pr-0 mb-lg-0 mb-md-0 mb-sm-5 mb-5 faq-page-into">
           <h6>User Dashboard</h6>
-          <h4>Welcome {{isset($user->company_name) && $user->company_name ? $user->company_name : ''}}!</h4><span style="display:inline-block;"><a href="index.php">Logout</a></span>
+          <h4>Welcome {{isset($user->company_name) && $user->company_name ? $user->company_name : ''}}!</h4><span style="display:inline-block;"><a href="{{route('logout')}}">Logout</a></span>
           <div class="steam-details-tab">
             <div class="row">
               <div class="col-12">
@@ -219,8 +222,8 @@
                                     </td>
 
                                     <td>
-                                        @if(!empty($order->report_file))
-                                            <a href="{{ asset('uploads/reports/'.$order->report_file) }}" target="_blank" class="btn btn-sm btn-primary">
+                                        @if(!empty($order->report_upload ))
+                                            <a href="{{ url($order->report_upload ) }}" target="_blank" class="btn btn-sm btn-primary">
                                                 Download
                                             </a>
                                         @else
@@ -229,7 +232,7 @@
                                     </td>
 
                                     <td>
-                                        <a href="#" target="_blank" class="btn btn-sm btn-secondary">
+                                        <a href="{{ route('testpdf', ['id' => General::encrypt($order->id)]) }}" target="_blank" class="btn btn-sm btn-secondary">
                                             Print
                                         </a>
                                     </td>

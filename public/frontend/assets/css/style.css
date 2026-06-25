@@ -127,7 +127,56 @@ body[light-mode="dark"] .light-mode-button span:nth-child(2) {
 }
 
 body[light-mode="dark"] a {
-    color: #141516;
+    color: #f1bf01;
+}
+
+body[light-mode="dark"] body,
+body[light-mode="dark"] p,
+body[light-mode="dark"] h1,
+body[light-mode="dark"] h2,
+body[light-mode="dark"] h3,
+body[light-mode="dark"] h4,
+body[light-mode="dark"] h5,
+body[light-mode="dark"] h6,
+body[light-mode="dark"] a,
+body[light-mode="dark"] dt,
+body[light-mode="dark"] dd,
+body[light-mode="dark"] blockquote,
+body[light-mode="dark"] th,
+body[light-mode="dark"] .logoTxt,
+body[light-mode="dark"] small,
+body[light-mode="dark"] .section-title-2 h3,
+body[light-mode="dark"] td {
+  color: #ffffff !important;
+}
+
+body[light-mode="dark"] .breadcrumb-item
+{
+  color: inherit;
+}
+/*body[light-mode="dark"] .bg-gray,
+body[light-mode="dark"] .jobsdiv,
+body[light-mode="dark"] td,
+body[light-mode="dark"] th,
+body[light-mode="dark"] .auto-container > div:nth-of-type(1),
+body[light-mode="dark"] .mean-container .mean-bar,
+body[light-mode="dark"] .mean-container .mean-nav,
+body[light-mode="dark"] .mean-container a.meanmenu-reveal,
+body[light-mode="dark"] .sticky-menu {
+  background-color: #141516 !important;
+}*/
+
+
+body[light-mode="dark"] .single-wcus-promo-inner
+{
+  background-color: #000;
+  border:solid 1px #8ecae6
+  
+}
+
+body[light-mode="dark"] .breadcrumb-item a 
+{
+	color:#8ecae6 !important;
 }
 .navbar-brand {
   display: inline-block;
@@ -194,7 +243,7 @@ h6 {
 }
 
 a {
-	color: #333;
+	color: #f1bf01;
 	text-decoration: none;
 	-webkit-transition: all 0.2s;
 	transition: all 0.2s;
@@ -292,16 +341,17 @@ fieldset {
 }
 
 .overlay:before {
-	background: rgba(0, 0, 0);
+	background: rgba(0, 0, 0, 0.8);
 	content: "";
 	height: 100%;
 	left: 0;
-	opacity: 0.8;
+	opacity: 0.8 !Important;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
 	position: absolute;
 	top: 0;
 	width: 100%;
-	z-index: -1;
+	height:100%;
+	z-index: -1 !Important;
 }
 
 .overlay2 {
@@ -2013,6 +2063,10 @@ textarea.form-control {
 	padding: 13px;
 }
 
+.single-wcus-promo {
+	background: #f5f5f5;
+	
+}
 .single-wcus-promo2 {
 	background: #f5f5f5;
 	border-radius: 20px;
@@ -2867,7 +2921,7 @@ footer {
 	content: "";
 	height: 2px;
 	width: 60px;
-	background: #8ecae6;
+	background: #f1bf01;
 	left: 0;
 	bottom: 0;
 }
@@ -2891,7 +2945,7 @@ footer .mailing-list {
 
 .footer-logo-icon {
 	margin-right: 5px;
-	color: #8ecae6;
+	color: #f1bf01;
 	font-size: 45px;
 	line-height: 44px;
 	margin-bottom: 20px;
@@ -2928,7 +2982,7 @@ footer .mailing-list {
 .fnews-btn {
 	font-size: 23px;
 	color: #fff;
-	background: #8ecae6;
+	background: #f1bf01;
 	cursor: pointer;
 	margin-left: -2px;
 	height: 45px;
@@ -2962,7 +3016,7 @@ ul.quick-link-list li a:after {
 	content: "";
 	height: 1px;
 	width: 100%;
-	background: #8ecae6;
+	background: #f1bf01;
 	left: 0;
 	top: 29px;
 	opacity: 0;
@@ -3020,7 +3074,7 @@ ul.quick-link-list li a:hover:after {
 
 .singleRecpost p {
 	margin-top: 5px;
-	color: #8ecae6;
+	color: #f1bf01;
 	font-size: 14px;
 }
 
@@ -3037,7 +3091,7 @@ ul.quick-link-list li a:hover:after {
 .single-fcontact-icon {
 	margin-right: 10px;
 	font-size: 20px;
-	color: #8ecae6;
+	color: #f1bf01;
 }
 
 .single-fcontact-des {
@@ -3072,7 +3126,7 @@ ul.quick-link-list li a:hover:after {
 }
 
 .footer-social ul li a:hover {
-	background: #8ecae6;
+	background: #f1bf01;
 }
 
 .footer-widget .recent-photo a {
@@ -3112,7 +3166,7 @@ ul.quick-link-list li a:hover:after {
 	content: "";
 	height: 1px;
 	width: 100%;
-	background: #8ecae6;
+	background: #f1bf01;
 	left: 0;
 	top: 29px;
 	opacity: 0;
@@ -3150,7 +3204,6 @@ ul.quick-link-list li a:hover:after {
   background: #272a38;
   border: none;
 }
-
 
 /*
 * ----------------------------------------------------------------------------------------

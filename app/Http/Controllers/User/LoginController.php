@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Libraries\General;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,6 +44,16 @@ class LoginController extends AppController
         if ($isEmail) {
             $user->email_otp = $otp;
             $sendTo = $user->email;
+            $codes = [
+                '{email}' => $user->email,
+                '{otp}' => $user->email_otp
+            ];
+
+            General::sendTemplateEmail(
+                $user->email, 
+                'send_credentials', 
+                $codes
+            );
             // Mail::to($user->email)->send(new SendOtpMail($otp));
         } else {
             $user->mobile_otp = $otp;
@@ -103,8 +114,8 @@ class LoginController extends AppController
         Auth::logout(); // user logout
 
         // session clear
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        // $request->session()->invalidate();
+        // $request->session()->regenerateToken();
 
         return redirect()->route('home.index')->with('success', 'You have been logged out successfully.');
     }

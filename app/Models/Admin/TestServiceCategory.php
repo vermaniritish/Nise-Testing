@@ -59,10 +59,13 @@ class TestServiceCategory extends AppModel
 
     	$listing = TestServiceCategory::select([
 	    		'testing_service_categories.*',
+                'testing_services.title as testing_services_title',
                 'owner.first_name as owner_first_name',
                 'owner.last_name as owner_last_name'
 	    	])
             ->leftJoin('admins as owner', 'owner.id', '=', 'testing_service_categories.created_by')
+            ->leftJoin('testing_services', 'testing_services.id', '=', 'testing_service_categories.test_service_id')
+            
 	    	->orderBy($orderBy, $direction);
         if(!empty($where))
 	    {

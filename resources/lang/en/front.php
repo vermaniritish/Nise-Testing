@@ -102,6 +102,16 @@ return [
 'Recent Notices' => 'Recent Notices',
 'Search Here' => 'Search Here',
 'SCREEN_READER_ACCESS' => 'SCREEN READER ACCESS',
-
-
+'login_section' => 'Please Provide Registered Email / Mobile Number',
+'Send OTP' => 'Send OTP',
+'Enter OTP' => 'Enter OTP',
+'Verify & Login' => 'Verify & Login',
+'Profile' => 'Profile',
+'My Profile' => 'My Profile',
+'Logout' => 'Logout',
+'About Us' => 'About Us',
+'Disclaimer' => 'Disclaimer',
+'Site Map' => 'Site Map',
+'Read More' => 'Read More',
+'Testing Service for' => 'Testing Service for'
 ];

@@ -1,6 +1,10 @@
 <?php use App\Models\Admin\CustomPageData; ?>
 @extends('layouts.frontendlayout')
 @section('content')
+<?php 
+$lang = app()->getLocale(); 
+$lang = $lang ? $lang : 'hi';
+?>
 <section id="page-banner">
     <div class="single-page-title-area-bottom">
         <div class="auto-container">
@@ -9,10 +13,9 @@
                     <div id="ost-container">
                         <div class="ost-multi-header">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                                <li class="breadcrumb-item"><a href="testing-services.php">Testing Services</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('/') }}">{{ __('front.Home') }}</a></li>
                                 <li class="breadcrumb-item active">
-                                    {{ $serviceDetail->title ?? '' }}
+                                    {{ $serviceDetail['title'.($lang == 'hi' ? '_hi' : '')] }}
                                 </li>
                             </ol>
                         </div>
@@ -29,7 +32,7 @@
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-12 col-12 mb-lg-0 mb-md-0 mb-5 pr-lg-5 pr-md-5 pr-sm-2 pr-2">
                 <div class="widget cat_wid mb-5">
-                    <h3 class="widget-title">Testing Service for:</h3>
+                    <h3 class="widget-title">{{ __('front.Testing Service for') }}:</h3>
                     <div class="widget-inner mt-4">
                         <div class="category-menu">
                             <ul>
@@ -37,7 +40,7 @@
                                     @foreach($testingServices as $testServ)
                                         <li>
                                             <a href="{{ route('testServiceDetails', ['slug'=> $testServ->slug]) }}" class="active">
-                                                {{ $testServ->title ?? '' }}
+                                                {{ $testServ['title'.($lang == 'hi' ? '_hi' : '')] ?? '' }}
                                                 <i class="float-right icofont icofont-thin-right"></i>
                                             </a>
                                         </li>
@@ -58,7 +61,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="order-forms.php">
+                                    <a href="{{ url('/order-forms') }}">
                                         Order Forms <i class="float-right icofont icofont-law-document"></i>
                                     </a>
                                 </li>
@@ -73,8 +76,8 @@
             <div class="col-lg-8 col-md-8 col-12">
                 <div class="row">
                     <div class="col-12 ser-page-into">
-                        <h4>{{$serviceDetail->main_heading}}</h4>
-                        {!! $serviceDetail->description ?? '' !!}
+                        <h4>{{$serviceDetail['main_heading'.($lang == 'hi' ? '_hi' : '')]}}</h4>
+                        {!! $serviceDetail['description'.($lang == 'hi' ? '_hi' : '')] ?? '' !!}
                         @if(isset($userId) && $userId)
                             <div style="background: #f1bf01; color:#ffffff; padding:13px 0;" class="text-center">
                                 <p class="text-uppercase" style="display:inline-block; margin-bottom:0;">

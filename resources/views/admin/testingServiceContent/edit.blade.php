@@ -20,14 +20,14 @@
             <!--!! CSRF FIELD !!-->
             {{ @csrf_field() }}
             <div class="row">
-                <div class="col-xl-12 order-xl-1">
+                <div class="col-xl-6">
                     <div class="card">
                         <!--!! FLAST MESSAGES !!-->
                         @include('admin.partials.flash_messages')
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-8">
-                                    <h3 class="mb-0">Update Content</h3>
+                                    <h3 class="mb-0">English Content</h3>
                                 </div>
                             </div>
                         </div>
@@ -91,6 +91,53 @@
                                                 @endforeach
                                             </select>
                                             @error('type_id')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-4" />
+                            <button href="#" class="btn btn-sm py-2 px-3 btn-primary float-right">
+                                <i class="fa fa-save"></i> Submit
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="card">
+                        <!--!! FLAST MESSAGES !!-->
+                        @include('admin.partials.flash_messages')
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h3 class="mb-0">Hindi Content</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="heading-small text-muted mb-4">Enter information</h6>
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-first-name">Main Heading</label>
+                                            <input type="text" maxlength="150" value="<?php echo $testServ->main_heading_hi ?? ''; ?>" required class="form-control"
+                                                name="main_heading_hi" placeholder="Text">
+                                            <small>You can enter up to 150 characters only.</small>
+                                            @error('main_heading_hi')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    {{-- Content Editor --}}
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Description</label>
+                                            <textarea rows="2" id="editor2" class="form-control" placeholder="Description" name="description_hi">{{ old('description_hi', $testServ->description_hi ?? '') }}</textarea>
+                                            @error('description_hi')
                                                 <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>

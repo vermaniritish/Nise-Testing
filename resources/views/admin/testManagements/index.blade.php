@@ -8,9 +8,6 @@
                         <h6 class="h2 text-white d-inline-block mb-0">Manage Test Managements</h6>
                     </div>
                     <div class="col-lg-6 col-5 text-right">
-                        <?php if(Permissions::hasPermission('test_managements', 'create')): ?>
-                        <a href="<?php echo route('admin.testManagements.add') ?>" class="btn btn-neutral"><i class="fas fa-plus"></i>New</a>
-                        <?php endif;?>
                         @include('admin.testManagements.filters')
                     </div>
                 </div>
@@ -58,48 +55,53 @@
                         <table class="table align-items-center table-flush listing-table">
                             <thead class="thead-light">
                                 <tr>
-                                    
+                                    <th class="checkbox-th text-center">
+										<div class="custom-control custom-checkbox">
+											<input type="checkbox" class="custom-control-input mark_all" id="mark_all">
+											<label class="custom-control-label" for="mark_all"></label>
+										</div>
+									</th>
                                     <th style="vertical-align:top;" class="sort">
                                         Test job id
-                                        <?php if(isset($_GET['sort']) && $_GET['sort'] == 'test_managements.test_job_id' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
-                                        <i class="fas fa-sort-down active" data-field="test_managements.test_job_id" data-sort="asc"></i>
-                                        <?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'test_managements.test_job_id' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
-                                        <i class="fas fa-sort-up active" data-field="test_managements.test_job_id" data-sort="desc"></i>
+                                        <?php if(isset($_GET['sort']) && $_GET['sort'] == 'order_number' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
+                                        <i class="fas fa-sort-down active" data-field="order_number" data-sort="asc"></i>
+                                        <?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'order_number' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
+                                        <i class="fas fa-sort-up active" data-field="order_number" data-sort="desc"></i>
                                         <?php else: ?>
-                                        <i class="fas fa-sort" data-field="test_managements.test_job_id"></i>
+                                        <i class="fas fa-sort" data-field="order_number"></i>
                                         <?php endif; ?>
                                     </th>
                                     <th style="vertical-align:top;" class="sort">
                                         Test Service
-                                        <?php if(isset($_GET['sort']) && $_GET['sort'] == 'test_managements.test_service' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
-                                        <i class="fas fa-sort-down active" data-field="test_managements.test_service" data-sort="asc"></i>
-                                        <?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'test_managements.test_service' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
-                                        <i class="fas fa-sort-up active" data-field="test_managements.test_service" data-sort="desc"></i>
+                                        <?php if(isset($_GET['sort']) && $_GET['sort'] == 'service_title' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
+                                        <i class="fas fa-sort-down active" data-field="service_title" data-sort="asc"></i>
+                                        <?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'service_title' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
+                                        <i class="fas fa-sort-up active" data-field="service_title" data-sort="desc"></i>
                                         <?php else: ?>
-                                        <i class="fas fa-sort" data-field="test_managements.test_service"></i>
+                                        <i class="fas fa-sort" data-field="service_title"></i>
                                         <?php endif; ?>
                                     </th>
                                     <th style="vertical-align:top;" class="sort">
                                         Test Type
-                                        <?php if(isset($_GET['sort']) && $_GET['sort'] == 'test_managements.test_type' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
-                                        <i class="fas fa-sort-down active" data-field="test_managements.test_type" data-sort="asc"></i>
-                                        <?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'test_managements.test_type' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
-                                        <i class="fas fa-sort-up active" data-field="test_managements.test_type" data-sort="desc"></i>
+                                        <?php if(isset($_GET['sort']) && $_GET['sort'] == 'category_title' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
+                                        <i class="fas fa-sort-down active" data-field="category_title" data-sort="asc"></i>
+                                        <?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'category_title' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
+                                        <i class="fas fa-sort-up active" data-field="category_title" data-sort="desc"></i>
                                         <?php else: ?>
-                                        <i class="fas fa-sort" data-field="test_managements.test_type"></i>
+                                        <i class="fas fa-sort" data-field="category_title"></i>
                                         <?php endif; ?>
                                     </th>
                                     <th style="vertical-align:top;" class="sort">
                                         Order Date
-                                        <?php if(isset($_GET['sort']) && $_GET['sort'] == 'test_managements.order_date' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
-                                        <i class="fas fa-sort-down active" data-field="test_managements.order_date" data-sort="asc"></i>
-                                        <?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'test_managements.order_date' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
-                                        <i class="fas fa-sort-up active" data-field="test_managements.order_date" data-sort="desc"></i>
+                                        <?php if(isset($_GET['sort']) && $_GET['sort'] == 'orders.created' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
+                                        <i class="fas fa-sort-down active" data-field="orders.created" data-sort="asc"></i>
+                                        <?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'orders.created' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
+                                        <i class="fas fa-sort-up active" data-field="orders.created" data-sort="desc"></i>
                                         <?php else: ?>
-                                        <i class="fas fa-sort" data-field="test_managements.order_date"></i>
+                                        <i class="fas fa-sort" data-field="orders.created"></i>
                                         <?php endif; ?>
                                     </th>
-                                    <th style="vertical-align:top;" class="sort">
+                                    <!-- <th style="vertical-align:top;" class="sort">
                                         Assign Job
                                         <?php if(isset($_GET['sort']) && $_GET['sort'] == 'test_managements.assign_job' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
                                         <i class="fas fa-sort-down active" data-field="test_managements.assign_job" data-sort="asc"></i>
@@ -158,8 +160,8 @@
                                         <?php else: ?>
                                         <i class="fas fa-sort" data-field="test_managements.actual_completion_date"></i>
                                         <?php endif; ?>
-                                    </th>
-                                    <th class="text-center" width="10%">
+                                    </th> -->
+                                    <th class="text-center" width="55%">
                                         Actions
                                     </th>
                                 </tr>

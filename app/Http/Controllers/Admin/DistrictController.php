@@ -48,8 +48,8 @@ class DistrictController extends AppController
     		$where['( 
     			states.name LIKE ? 
     			or 
-    			district.title LIKE ?
-    		)'] = [$search,$search,$search];
+    			district.name LIKE ?
+    		)'] = [$search,$search];
     	}
 
     	if($request->get('status') !== "" && $request->get('status') !== null)

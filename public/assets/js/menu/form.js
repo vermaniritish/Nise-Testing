@@ -3,14 +3,14 @@ var menu = new Vue({
     data: {
         menuItems: [{ id: '', title: '', title_hi: '', link: '', slug: 'header', megaMenu: [] }],
         megaMenu: [{ id: '', title: '',title_hi: '', link: '', slug: 'mega_menu' }],
-        megaMenu1: [{ id: '', title: '', link: '', slug: 'mega_menu1' }],
-        megaMenu2: [{ id: '', title: '', link: '', slug: 'mega_menu2' }],
-        megaMenu3: [{ id: '', title: '', link: '', slug: 'mega_menu3' }],
-        megaMenu4: [{ id: '', title: '', link: '', slug: 'mega_menu4' }],
-        footerItems: [{ id: '', title: '', link: '', slug: 'footer' }],
-        coursesItems: [{ id: '', title: '', link: '', slug: 'courses' }],
-        informationItems: [{ id: '', title: '', link: '', slug: 'information' }],
-        otherLinksItems: [{ id: '', title: '', link: '', slug: 'other_links' }],
+        megaMenu1: [{ id: '', title: '', title_hi: '', link: '', slug: 'mega_menu1' }],
+        megaMenu2: [{ id: '', title: '', title_hi: '', link: '', slug: 'mega_menu2' }],
+        megaMenu3: [{ id: '', title: '', title_hi: '', link: '', slug: 'mega_menu3' }],
+        megaMenu4: [{ id: '', title: '', title_hi: '', link: '', slug: 'mega_menu4' }],
+        footerItems: [{ id: '', title: '', title_hi: '', link: '', slug: 'footer' }],
+        coursesItems: [{ id: '', title: '', title_hi: '', link: '', slug: 'courses' }],
+        informationItems: [{ id: '', title: '', title_hi: '', link: '', slug: 'information' }],
+        otherLinksItems: [{ id: '', title: '', title_hi: '', link: '', slug: 'other_links' }],
         mega_menu_title: ``,
         enable_mega_menu: true,
         mega_menu_title1: ``,
@@ -137,15 +137,15 @@ var menu = new Vue({
         },
         addMegaItem(k) {
             if (k == '1')
-                this.megaMenu1.push({ id: '', title: '', link: '', slug: `mega_menu${k ? k : ``}` });
+                this.megaMenu1.push({ id: '', title: '', title_hi: item.key_hi || '', link: '', slug: `mega_menu${k ? k : ``}` });
             else if (k == '2')
-                this.megaMenu2.push({ id: '', title: '', link: '', slug: `mega_menu${k ? k : ``}` });
+                this.megaMenu2.push({ id: '', title: '', title_hi: item.key_hi || '', link: '', slug: `mega_menu${k ? k : ``}` });
             else if (k == '3')
-                this.megaMenu3.push({ id: '', title: '', link: '', slug: `mega_menu${k ? k : ``}` });
+                this.megaMenu3.push({ id: '', title: '', title_hi: item.key_hi || '', link: '', slug: `mega_menu${k ? k : ``}` });
             else if (k == '4')
-                this.megaMenu4.push({ id: '', title: '', link: '', slug: `mega_menu${k ? k : ``}` });
+                this.megaMenu4.push({ id: '', title: '', title_hi: item.key_hi || '', link: '', slug: `mega_menu${k ? k : ``}` });
             else
-                this.megaMenu.push({ id: '', title: '', link: '', slug: `mega_menu${k ? k : ``}` });
+                this.megaMenu.push({ id: '', title: '', title_hi: item.key_hi || '', link: '', slug: `mega_menu${k ? k : ``}` });
 
         },
         async removeMegaItem(index, k) {
@@ -273,6 +273,7 @@ var menu = new Vue({
                         ...this.megaMenu1.map(item => ({
                             id: item.id || null,
                             title: item.title,
+                            title_hi: item.title_hi,
                             link: item.link,
                             slug: item.slug
                         }))
@@ -286,6 +287,7 @@ var menu = new Vue({
                         ...this.megaMenu2.map(item => ({
                             id: item.id || null,
                             title: item.title,
+                            title_hi: item.title_hi,
                             link: item.link,
                             slug: item.slug
                         }))
@@ -299,6 +301,7 @@ var menu = new Vue({
                         ...this.megaMenu3.map(item => ({
                             id: item.id || null,
                             title: item.title,
+                            title_hi: item.title_hi,
                             link: item.link,
                             slug: item.slug
                         }))
@@ -312,6 +315,7 @@ var menu = new Vue({
                         ...this.megaMenu4.map(item => ({
                             id: item.id || null,
                             title: item.title,
+                            title_hi: item.title_hi,
                             link: item.link,
                             slug: item.slug
                         }))
@@ -325,6 +329,7 @@ var menu = new Vue({
                         ...this.megaMenu.map(item => ({
                             id: item.id || null,
                             title: item.title,
+                            title_hi: item.title_hi,
                             link: item.link,
                             slug: item.slug
                         }))
@@ -365,6 +370,7 @@ var menu = new Vue({
                     ...this.footerItems.map(item => ({
                         id: item.id || null,
                         title: item.title,
+                        title_hi: item.title_hi,
                         title_hi: item.title_hi,
                         link: item.link,
                         slug: item.slug

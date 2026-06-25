@@ -10,25 +10,6 @@
 			<a href="javascript:;" class="float-right px-2 closeit"><i class="fa fa-times-circle"></i></a>
 			<div class="dropdown-item">
 				<div class="row">
-					<div class="col-md-12">
-						<div class="custom-control custom-radio custom-control-inline">
-							<input type="radio" id="allrole" name="role" value="" <?php echo (!isset($_GET['role']) || $_GET['role'] === '' || $_GET['role'] === null ? 'checked' : '') ?> class="custom-control-input">
-							<label class="custom-control-label" for="allrole">All</label>
-						</div>
-						<div class="custom-control custom-radio custom-control-inline">
-							<input type="radio" id="onlyrole" name="role" value="customer" <?php echo (isset($_GET['role']) && $_GET['role'] == 'customer' ? 'checked' : '') ?> class="custom-control-input">
-							<label class="custom-control-label" for="onlyrole">Agents</label>
-						</div>
-						<div class="custom-control custom-radio custom-control-inline">
-							<input type="radio" id="superrole" name="role" value="seller" <?php echo (isset($_GET['role']) && $_GET['role'] == 'seller' ? 'checked' : '') ?> class="custom-control-input">
-							<label class="custom-control-label" for="superrole">Sellers</label>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="dropdown-divider"></div>
-			<div class="dropdown-item">
-				<div class="row">
 					<div class="col-md-6">
 						<label class="form-control-label">Created On</label>
 						<input class="form-control" type="date" name="created_on[0]" value="<?php echo (isset($_GET['created_on'][0]) && !empty($_GET['created_on'][0]) ? $_GET['created_on'][0] : '' ) ?>" placeholder="DD-MM-YYYY" >

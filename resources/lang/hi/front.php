@@ -101,6 +101,18 @@ return [
 
 'Search Here' => 'यहां खोजें',
 'SCREEN_READER_ACCESS' => 'स्क्रीन रीडर एक्सेस',
+'login_section' => 'कृपया पंजीकृत मोबाइल नंबर और ईमेल प्रदान करें',
+'Send OTP' => 'ओटीपी भेजें',
+'Enter OTP' => 'ओटीपी दर्ज करें',
+'Verify & Login' => 'सत्यापित और लॉगिन करें',
+'Profile' => 'प्रोफ़ाइल',
+'My Profile' => 'मेरी प्रोफाइल',
+'Logout' => 'लॉग आउट',
+'About Us' => 'हमारे बारे में',
+'Disclaimer' => 'अस्वीकरण',
+'Site Map' => 'साइट मैप',
+'Read More' => 'और पढ़ें',
+'Testing Service for' => 'परीक्षण सेवा परीक्षण सेवा'
 ];
 
 

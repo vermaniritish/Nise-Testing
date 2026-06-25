@@ -13,8 +13,11 @@ class TrustHosts extends Middleware
      */
     public function hosts()
     {
-        return [
+		 return [
+			'testing.nise.res.in',
+		];
+        /*return [
             $this->allSubdomainsOfApplicationUrl(),
-        ];
+        ];*/
     }
 }

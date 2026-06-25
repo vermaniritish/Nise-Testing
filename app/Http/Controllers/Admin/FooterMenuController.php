@@ -113,6 +113,7 @@ class FooterMenuController extends AppController
 	        if(!$validator->fails())
 	        {
                 $payload['key']=$data['title'];
+                $payload['key_hi']=$data['title_hi'];
                 $payload['value']=$data['link'];
 	        	$footerMenu = FooterMenu::create($payload);
 	        	if($footerMenu)
@@ -161,6 +162,7 @@ class FooterMenuController extends AppController
 		        	unset($data['_token']);
                     $payload['key']=$data['title'];
                     $payload['value']=$data['link'];
+					$payload['key_hi']=$data['title_hi'];
 		        	if(FooterMenu::modify($id, $payload))
 		        	{
 		        		$request->session()->flash('success', 'Footer menu inforamtion updated.');

@@ -232,13 +232,7 @@ class NoticesController extends AppController
         if (is_array($ids) && !empty($ids)) {
             switch ($action) {
                 case 'delete':
-                    foreach ($ids as $id) {
-                        $notice = Notices::find($id);
-                        if ($notice) {
-                            $notice->categories()->detach(); // Detach categories from the notice
-                        }
-                    }
-                    Notices::removeAll($ids);
+                    Notices::whereIn('id', $ids)->delete($ids);
                     $message = count($ids) . ' records has been deleted.';
                     break;
             }

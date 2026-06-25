@@ -9,6 +9,9 @@ $menuHi = MenuHindi::where('slug', 'header')->orderBy('id', 'asc')->get();
 // $headerAds = HeaderAds::where('status',1)->orderBy('id', 'desc')->get();
 $headerAds = Notices::where('status',1)->orderBy('id', 'desc')->take(6)->get();
 $pageSRAData = Pages::where('slug','sra')->get();
+$currentLang = app()->getLocale();
+$toggleLang = $currentLang === 'en' ? 'hi' : 'en';
+$toggleLabel = $currentLang === 'en' ? 'हिंदी' : 'English';
 ?>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <style>
@@ -121,21 +124,23 @@ $pageSRAData = Pages::where('slug','sra')->get();
 						<div>
 							<img src="{{ url('frontend/assets/img/emblem.png') }}" alt="" style="height: 39px; padding-right: 5px; display: inline-block; padding-bottom: 14px;filter: brightness(0) invert(1)" /> 
 							<div class="navbar-brand header-text" href="#">
-								<div class="mb-0 hindiLabel">
-									भारत सरकार
-								</div>
+								@if($currentLang == 'hi')
+								<div class="mb-0 hindiLabel">भारत सरकार</div>
+								@else
 								<a class="mb-0 hindiLabel text-white" href="#" onclick="fnAlertRedirection('https://www.india.gov.in/');">GOVERNMENT
 									OF INDIA</a>
+								@endif
 							</div>
 							<div class="navbar-brand">
 								<span style="color: #aeaeb1;">|</span>
 							</div>
 							<img src="{{ url('frontend/assets/img/emblem.png') }}" alt="" style="height: 39px; padding-right: 5px; display: inline-block; padding-bottom: 14px;filter: brightness(0) invert(1)" /> 
-							<div class="navbar-brand header-text" href="#">
-								<div class="mb-0 hindiLabel">
-									 नवीन और नवीकरणीय ऊर्जा मंत्रालय            
-								</div>
-								<a class="mb-0 hindiLabel text-white" href="#" onclick="fnAlertRedirection('https://mnre.gov.in/');">MINISTRY OF NEW AND RENEWABLE ENERGY</a>
+							<div class="navbar-brand header-text">
+								@if($currentLang == 'hi')
+									<a class="mb-0 hindiLabel text-white" href="#" onclick="fnAlertRedirection('https://mnre.gov.in/');">नवीन और नवीकरणीय ऊर्जा मंत्रालय</a>
+								@else
+									<a class="mb-0 hindiLabel text-white" href="#" onclick="fnAlertRedirection('https://mnre.gov.in/');">MINISTRY OF NEW AND RENEWABLE ENERGY</a>
+								@endif
 							</div>
 						</div>
 					</div>
@@ -144,7 +149,11 @@ $pageSRAData = Pages::where('slug','sra')->get();
 						<div class="info-menu">
 							<ul>
 								<li>
-									<a href="#" class="topbarft">Skip to Main Content</a>
+									@if($currentLang == 'hi')
+									<a href="" class="topbarft">मुख्य सामग्री पर जाएँ</a>
+									@else
+									<a href="" class="topbarft">Skip to Main Content</a>
+									@endif
 								</li>
 								<li>
 									<span class="topbartxtgap">|</span>
@@ -160,12 +169,6 @@ $pageSRAData = Pages::where('slug','sra')->get();
 								<li><button id="btn-increase" class="topbarfontsiz">A+</button></li>
 								<li><span class="topbartxtgap">|</span></li>
 								<li>
-									@php
-									    $currentLang = app()->getLocale();
-									    $toggleLang = $currentLang === 'en' ? 'hi' : 'en';
-									    $toggleLabel = $currentLang === 'en' ? 'हिंदी' : 'English';
-									@endphp
-
 									<form action="{{ route('change.language', $toggleLang) }}" method="get" style="display:inline;">
 									    <button type="submit"
 									        class="btn btn-sm"
@@ -181,11 +184,20 @@ $pageSRAData = Pages::where('slug','sra')->get();
 								    </button> -->
 								</li>
 								<li><span class="topbartxtgap">|</span></li>
-								<li><span class="topbarft">Customer Support: 0124-2853060 | </li>
-								<li><a class="topbarft" href="mailto:information.nise@nise.res.in">information.nise@nise.res.in</a></span></li>
+								@if($currentLang == 'hi')
+								<li><span class="topbarft">ग्राहक सहेयता: {{Settings::get('customer_support_phone')}} | </li>
+								@else
+								<li><span class="topbarft">Customer Support: {{Settings::get('customer_support_phone')}} | </li>
+								@endif
+								<?php 
+								$email = Settings::get('customer_support_email'); 
+								$facebook = Settings::get('facebook'); 
+								$youtube = Settings::get('youtube'); 
+								?>
+								<li><a class="topbarft" href="mailto:{{$email}}">{{$email}}</a></span></li>
 								<li><span class="topbartxtgap">|</span></li>
-								<li><a href="#"><i class="icofont icofont-social-facebook"></i></a></li>
-								<li><a href="#"><i class="icofont icofont-social-twitter"></i></a></li>
+								<li><a href="{{ $facebook }}" target="_blank"><i class="icofont icofont-social-facebook"></i></a></li>
+								<li><a href="{{ $youtube }}" target="_blank"><i class="icofont icofont-social-youtube"></i></a></li>
 								
 							</ul>
 						</div>
@@ -202,7 +214,7 @@ $pageSRAData = Pages::where('slug','sra')->get();
 				<div class="row">
 					<div class="col-lg-8 col-md-3 col-sm-6 col-12 mx-auto pl-0 mb-lg-0">
 						<div class="logo">
-							<a href="https://firstsite.in/development/testing/public" style="float: left;">
+							<a href="{{url('/')}}" style="float: left;">
 							   <img class="img-fluid logoimg" src="{{ Settings::get('logo') ? url(Settings::get('logo')) : '' }}" alt="">
 							   <span class="logoTxt">
 									<small>National Institute of Solar Energy</small>
@@ -236,12 +248,12 @@ $pageSRAData = Pages::where('slug','sra')->get();
 								   	<?php foreach($menu as $m): ?>
 										@if(isset($m['mega_menu']) && $m['mega_menu'] && $m['mega_menu'] != '[]')
 											<?php $mega = json_decode($m['mega_menu'], true); ?>
-											<li class="dropdown"><a href="#" class="nav-link">{{ $m->key }}</a>
+											<li class="dropdown"><a href="#" class="nav-link">{{$m['key'.($currentLang == 'hi' ? '_hi' : '')]}}</a>
 												<ul class="dropdown-menu">
 													@foreach($mega as $mg)
 														<li>
 															<a href="{{ $mg['link'] }}">
-																{{ $mg['title'] }}
+																{{ $mg['title'. ($currentLang == 'hi' ? '_hi' : '')] }}
 															</a>
 														</li>
 													@endforeach
@@ -251,29 +263,27 @@ $pageSRAData = Pages::where('slug','sra')->get();
 											@php
 											    $isLoginItem = strtolower(trim($m->key)) === 'login';
 											@endphp
-
-											{{-- Hide "Login" if user already logged in --}}
 											@if(Auth::check() && $isLoginItem)
 											    @continue
 											@endif
 											<li>
-												<a href="{{ (strpos($m->value, 'http://') >= 0 || strpos($m->value, 'https://') >= 0 ? $m->value : url($m->value)) }}" class="nav-link">{{$m->key}}</a>
+												<a href="{{ (strpos($m->value, 'http://') >= 0 || strpos($m->value, 'https://') >= 0 ? $m->value : url($m->value)) }}" class="nav-link">{{$m['key'.($currentLang == 'hi' ? '_hi' : '')]}}</a>
 											</li>
 											
 										@endif
 									<?php endforeach; ?>
 								    @if(Auth::check())
-								        <li class="nav-item dropdown">
-										    <a class="dropdown-toggle nav-link" href="#" role="button" data-bs-toggle="dropdown">
-										        Profile
+								        <li class=" dropdown">
+										    <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
+										        {{ __('front.Profile') }}
 										    </a>
 										    <ul class="dropdown-menu">
 										        <li>
-										            <a class="dropdown-item" href="{{ route('partner.dashboard') }}">My Profile</a>
+										            <a class="dropdown-item" href="{{ route('partner.dashboard') }}">{{ __('front.My Profile') }}</a>
 										        </li>
 										        <li><hr class="dropdown-divider"></li>
 										        <li>
-										            <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+										            <a class="dropdown-item" href="{{ route('logout') }}">{{ __('front.Logout')}}</a>
 										        </li>
 										    </ul>
 										</li>
@@ -300,23 +310,36 @@ $pageSRAData = Pages::where('slug','sra')->get();
 		    <div class="ticker">
 		        @if(isset($headerAds) && $headerAds->count() > 0)
 				    @foreach($headerAds as $hA)
-				        @php
-						    $fileUrl = '#';
-						    if ($hA->file_type == 'pdf' && !empty($hA->pdf_file)) {
-						        $fileUrl = asset($hA->pdf_file);
-						    } elseif ($hA->file_type == 'url' && !empty($hA->url)) {
-						        $fileUrl = $hA->url;
-						    } elseif ($hA->file_type == 'content') {
-						        $fileUrl = route('newsEventDetails', ['id' => $hA->id]);
-						    }
-						@endphp
+						@if($currentLang == 'en')
+							@php
+								$fileUrl = '#';
+								if ($hA->file_type == 'pdf' && !empty($hA->pdf_file)) {
+									$fileUrl = asset($hA->pdf_file);
+								} elseif ($hA->file_type == 'url' && !empty($hA->url)) {
+									$fileUrl = $hA->url;
+								} elseif ($hA->file_type == 'content') {
+									$fileUrl = route('noticeDetails', ['slug' => $hA->slug]);
+								}
+							@endphp
+						@else
+							@php
+								$fileUrl = '#';
+								if ($hA->file_type_hi == 'pdf_hi' && !empty($hA->pdf_file_hi)) {
+									$fileUrl = asset($hA->pdf_file_hi);
+								} elseif ($hA->file_type_hi == 'url_hi' && !empty($hA->url)) {
+									$fileUrl = $hA->url;
+								} elseif ($hA->file_type_hi == 'content_hi') {
+									$fileUrl = route('noticeDetails', ['slug' => $hA->slug]);
+								}
+							@endphp
+						@endif
 
 				        <a target="_blank" href="{{ $fileUrl }}">
 				            @if($hA->is_new) 
-			                    <img src="{{ asset('frontend/assets/img/new.gif') }}">
+			                    <span style="display:inline;"><img src="{{ asset('frontend/assets/img/new.gif') }}"></span>
 			                @endif
 				            <span style="display:inline;">
-				                {{ $hA->title ?? '' }}
+				                {{ $hA['title' . ($currentLang == 'hi' ? '_hi' : '')]}}
 				            </span>
 				        </a>
 				    @endforeach

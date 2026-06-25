@@ -24,6 +24,7 @@ use Illuminate\Support\Arr;
             <div class="row">
                 <div class="col-xl-6">
                     <div class="card">
+                        @include('admin.partials.flash_messages')
                         <div class="card-body">
                             <h6 class="heading-small text-muted mb-2">Home page about us</h6>
                             <hr class="my-4" />
@@ -334,6 +335,26 @@ use Illuminate\Support\Arr;
                                         <textarea rows="2" class="form-control editor6" placeholder=""
                                             name="feedback_description_hi"><?php echo $customPageData['feedback_description_hi']['value'] ?? ''; ?></textarea>
                                         @error('feedback_description_hi')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-first-name">Feedback Button Title</label>
+                                        <input type="text"  class="form-control" name="feedback_button_title_hi"
+                                            placeholder="Feedback Button Title" value="<?php echo $customPageData['feedback_button_title_hi']['value'] ?? ''; ?>">
+                                        @error('feedback_button_title_hi')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-first-name">Feedback Button Link</label>
+                                        <input type="text"  class="form-control" name="feedback_button_link_hi"
+                                            placeholder="Feedback Button Link" value="<?php echo $customPageData['feedback_button_link_hi']['value'] ?? ''; ?>">
+                                        @error('feedback_button_link_hi')
                                             <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>

@@ -1,6 +1,6 @@
 <?php foreach($listing->items() as $k => $row): ?>
 <tr>
-    <td>
+    <td class=" text-center">
         <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input listing_check" id="listing_check<?php echo $k; ?>"
                 value="<?php echo $row->id; ?>">

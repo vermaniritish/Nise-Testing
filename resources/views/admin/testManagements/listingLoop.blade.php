@@ -1,4 +1,3 @@
-
 <?php foreach($listing->items() as $k => $row): ?>
     @php
         $serviceId = $row->service_category_wise_test->service->id ?? null;
@@ -11,6 +10,10 @@
         });
     @endphp
     <tr>
+        <td class="text-center"><div class="custom-control custom-checkbox">
+			<input type="checkbox" class="custom-control-input listing_check" id="listing_check<?php echo $row->id ?>" value="<?php echo $row->id ?>">
+			<label class="custom-control-label" for="listing_check<?php echo $row->id ?>"></label>
+		</div></td>
         <!-- visible/display columns (not inside the form) -->
         <td><?= $row->order_data->order_number ?? '' ?></td>
         <td><?= $row->service_category_wise_test->service->title ?? '' ?></td>
@@ -19,7 +22,7 @@
 
         <!-- single td containing the form for this row -->
         <td colspan="7">
-            <form action="{{ route('admin.testManagements') }}" method="POST" class="form-inline">
+            <form action="{{ route('admin.testManagements') }}" method="POST" class="">
                 @csrf
                 <input type="hidden" name="test_id" value="<?= $row->id ?? '' ?>">
                 <!-- hidden fields that will be submitted -->
@@ -31,6 +34,7 @@
                 <!-- visible inputs/selects (all inside the same form) -->
                 <div class="row" style="gap:8px; align-items:center;">
                     <div class="col-auto">
+                        <label>Assign Job</label>
                         <select name="assign_job" id="assign_job_<?= $k ?>" class="form-control">
                             <option value="">Select</option>
                              @foreach($filteredAdmins as $admin)
@@ -43,10 +47,12 @@
                     </div>
 
                     <div class="col-auto">
+                        <label>Assigned Date</label>
                         <input type="date" name="assigned_date" value="{{$row->assigned_date}}" class="form-control" />
                     </div>
 
                     <div class="col-auto">
+                        <label>Test Status</label>
                         <select name="test_status" id="test_status_<?= $k ?>" class="form-control">
                             <option value="">Select</option>
                             <option value="sample_accepted" <?= ($row->test_status == 'sample_accepted') ? 'selected' : '' ?>>Sample accepted</option>
@@ -58,14 +64,17 @@
                     </div>
 
                     <div class="col-auto">
+                        <label>Test Start Date</label>
                         <input type="date" name="test_start_date" value="{{$row->test_start_date}}" class="form-control" />
                     </div>
 
                     <div class="col-auto">
+                        <label>Test Job Completion Date</label>
                         <input type="date" name="test_job_completion_date" value="{{$row->test_job_completion_date}}" class="form-control" />
                     </div>
 
                     <div class="col-auto">
+                        <label>Actual Completion Date</label>
                         <input type="date" name="actual_completion_date" value="{{$row->actual_completion_date}}" class="form-control" />
                     </div>
 

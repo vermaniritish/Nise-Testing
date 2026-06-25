@@ -6,9 +6,8 @@ $companyName = Settings::get('company_name');
 $googleKey = Settings::get('google_api_key');
 $version = 1.0;
 ?>
-
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="hi">
 
 <head>
     <meta charset="utf-8">
@@ -71,14 +70,38 @@ $version = 1.0;
             return "<?php echo csrf_token() ?>";
         }
     </script>
+    <script>
+        // Apply selected language
+        function langChange(lang) {
+            localStorage.setItem('lang', lang);
+            document.body.classList.remove('lang-en-active', 'lang-hi-active');
+            document.body.classList.add(lang === 'hi' ? 'lang-hi-active' : 'lang-en-active');
+            updateButton(lang);
+        }
+
+        // Toggle Hindi/English on button click
+        function toggleLang() {
+            const currentLang = localStorage.getItem('lang') || 'en';
+            const newLang = (currentLang === 'en') ? 'hi' : 'en';
+            langChange(newLang);
+        }
+
+        // Update button label
+        function updateButton(lang) {
+            const btn = document.getElementById('langBtn');
+            if (btn) btn.textContent = (lang === 'en') ? 'हिंदी' : 'English';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            const lang = localStorage.getItem('lang') || 'en';
+            document.body.classList.add(lang === 'hi' ? 'lang-hi-active' : 'lang-en-active');
+            updateButton(lang);
+        });
+        langChange('{{request()->session()->get('locale')}}');
+    </script>
         <!-- Latest jQuery -->
-    <script id="rendered-js" >
-    /*
-    Steps / article on my website:
-    https://henryegloff.com/how-to-code-a-simple-dark-mode-toggle/
-
-    */
-
+    <script>
     function toggle_light_mode() {
     var app = document.getElementsByTagName("BODY")[0];
     if (localStorage.lightMode == "dark") {
@@ -128,6 +151,7 @@ $version = 1.0;
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <!-- scripts js -->
     <script src="{{ url('/frontend/assets/js/scripts.js')}}"></script>
+    
     <!-- chart js -->
     <!-- <script src="{{ url('/frontend/assets/js/canvasjs.min.js')}}"></script> -->
     <!-- <script src="{{ url('/frontend/assets/js/canvasjs.activeone.js')}}"></script> -->

@@ -168,7 +168,7 @@ class PagesController extends AppController
                 // dd($data);
                 $page = Pages::create($records);
                 if ($page) {
-                    $this->createPage($page,$data);
+                    // $this->createPage($page,$data);
                     $request->session()->flash('success', 'Page created successfully.');
                     return redirect()->route('admin.pages');
                 } else {

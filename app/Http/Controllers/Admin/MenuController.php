@@ -87,7 +87,7 @@ class MenuController extends AppController
     }
 
 
-    public function add(Request $request)
+    public function add(Request $request, $slug = null)
     {
         if (!Permissions::hasPermission('menu', 'create')) {
             $request->session()->flash('error', 'Permission denied.');
@@ -104,6 +104,7 @@ class MenuController extends AppController
                 if (isset($menuItem['id']) && !empty($menuItem['id'])) {
                     // Update existing menu item
                     $payload['key'] = $menuItem['title'];
+                    $payload['key_hi'] = $menuItem['title_hi'];
                     $payload['value'] = $menuItem['link'];
                     $payload['slug'] = $menuItem['slug'];
                     $payload['mega_menu'] = isset($menuItem['megaMenu']) && $menuItem['megaMenu'] ? json_encode($menuItem['megaMenu']) : '[]';
@@ -112,6 +113,7 @@ class MenuController extends AppController
                 } else {
                     // Create a new menu item
                     $record['key'] = $menuItem['title'];
+                    $payload['key_hi'] = $menuItem['title_hi'];
                     $record['value'] = $menuItem['link'];
                     $record['slug'] = $menuItem['slug'];
                     $record['mega_menu'] = isset($menuItem['megaMenu']) && $menuItem['megaMenu'] ? json_encode($menuItem['megaMenu']) : '[]';
@@ -119,54 +121,16 @@ class MenuController extends AppController
                 }
             }
 
-            // if(isset($data['mega_menu_title']) && $data['mega_menu_title'])
-            // {
-            //     Menu::where('slug', 'mega_menu_title')->delete();
-            //     $record['key'] = 'Mega Menu Title';
-            //     $record['value'] = $data['mega_menu_title'];
-            //     $record['slug'] = 'mega_menu_title';
-            //     Menu::create($record);
-            // }
-
-            // if(isset($data['enable_mega_menu']) && $data['enable_mega_menu'] !== '' && $data['enable_mega_menu'] !== null)
-            // {
-            //     Menu::where('slug', 'enable_mega_menu')->delete();
-            //     $record['key'] = 'Enable/Disable Mega Menu';
-            //     $record['value'] = $data['enable_mega_menu'] ? 1 : 0;
-            //     $record['slug'] = 'enable_mega_menu';
-            //     Menu::create($record);
-            // }
-
-            // for($i = 1; $i <= 4; $i++)
-            // {
-            //     if(isset($data['mega_menu_title' . $i]) && $data['mega_menu_title' . $i])
-            //     {
-            //         Menu::where('slug', 'mega_menu_title' . $i)->delete();
-            //         $record['key'] = 'Mega Menu Title' . $i;
-            //         $record['value'] = $data['mega_menu_title' . $i];
-            //         $record['slug'] = 'mega_menu_title' . $i;
-            //         Menu::create($record);
-            //     }
-
-            //     if(isset($data['enable_mega_menu' . $i]) && $data['enable_mega_menu' . $i] !== '' && $data['enable_mega_menu' . $i] !== null)
-            //     {
-            //         Menu::where('slug', 'enable_mega_menu' . $i)->delete();
-            //         $record['key'] = 'Enable/Disable Mega Menu' . $i;
-            //         $record['value'] = $data['enable_mega_menu' . $i] ? 1 : 0;
-            //         $record['slug'] = 'enable_mega_menu' . $i;
-            //         Menu::create($record);
-            //     }
-            // }
-
-
 
             return response()->json([
                 'status' => true,
-                'message' => 'Header menu saved successfully'
+                'message' => 'Header menu saved successfully',
             ]);
         }
 
-        return view("admin/menu/add");
+        return view("admin/menu/add", [
+            'type' => !$slug ? 'en' : 'hi'
+        ]);
     }
 
 
@@ -188,9 +152,11 @@ class MenuController extends AppController
                     'title' => [
                         'required'
                     ],
+                    'title_hi' => 'required',
                     'link' => 'required',
                 ], [
                     'title.required' => 'The title field is required.',
+                    'title_hi.required' => 'The title hinidi field is required.',
                     'title.regex' => 'The title cannot start with whitespace.',
                     'title.unique' => 'The title must be unique.',
                     'link.required' => 'The link field is required.',
@@ -210,6 +176,7 @@ class MenuController extends AppController
                 foreach ($data['footerItems'] as $footerItem) {
                     // Create a new footer item
                     $record['key'] = $footerItem['title'];
+                    $record['key_hi'] = $footerItem['title_hi'];
                     $record['value'] = $footerItem['link'];
                     $record['slug'] = $footerItem['slug'];
                     // dd($record);
@@ -248,9 +215,11 @@ class MenuController extends AppController
                     'title' => [
                         'required'
                     ],
+                    'title_hi' => 'required',
                     'link' => 'required',
                 ], [
                     'title.required' => 'The title field is required.',
+                    'title_hi.required' => 'The title hindi field is required.',
                     'title.regex' => 'The title cannot start with whitespace.',
                     'title.unique' => 'The title must be unique.',
                     'link.required' => 'The link field is required.',
@@ -270,6 +239,7 @@ class MenuController extends AppController
                 foreach ($data['coursesItems'] as $footerItem) {
                     // Create a new footer item
                     $record['key'] = $footerItem['title'];
+                    $record['key_hi'] = $footerItem['title_hi'];
                     $record['value'] = $footerItem['link'];
                     $record['slug'] = $footerItem['slug'];
                     // dd($record);
@@ -309,9 +279,11 @@ class MenuController extends AppController
                     'title' => [
                         'required'
                     ],
+                    'title_hi' => 'required',
                     'link' => 'required',
                 ], [
                     'title.required' => 'The title field is required.',
+                    'title_hi.required' => 'The title hindi field is required.',
                     'title.regex' => 'The title cannot start with whitespace.',
                     'title.unique' => 'The title must be unique.',
                     'link.required' => 'The link field is required.',
@@ -331,6 +303,7 @@ class MenuController extends AppController
                 foreach ($data['informationItems'] as $footerItem) {
                     // Create a new footer item
                     $record['key'] = $footerItem['title'];
+                    $record['key_hi'] = $footerItem['title_hi'];
                     $record['value'] = $footerItem['link'];
                     $record['slug'] = $footerItem['slug'];
                     // dd($record);
@@ -369,9 +342,11 @@ class MenuController extends AppController
                     'title' => [
                         'required'
                     ],
+                    'title_hi' => 'required',
                     'link' => 'required',
                 ], [
                     'title.required' => 'The title field is required.',
+                    'title_hi.required' => 'The title hindi field is required.',
                     'title.regex' => 'The title cannot start with whitespace.',
                     'title.unique' => 'The title must be unique.',
                     'link.required' => 'The link field is required.',
@@ -388,6 +363,7 @@ class MenuController extends AppController
                 Menu::where('slug', 'LIKE', 'other_links')->delete();
                 foreach ($data['otherLinksItems'] as $footerItem) {
                     $record['key'] = $footerItem['title'];
+                    $record['key_hi'] = $footerItem['title_hi'];
                     $record['value'] = $footerItem['link'];
                     $record['slug'] = $footerItem['slug'];
                     // dd($record);
@@ -452,7 +428,7 @@ class MenuController extends AppController
 
     public function getMenuItems()
     {
-        $menuItems = Menu::select('id', 'key', 'value', 'slug', 'mega_menu as megaMenu')->get();
+        $menuItems = Menu::select('id', 'key', 'key_hi', 'value', 'slug', 'mega_menu as megaMenu')->get();
         foreach($menuItems as $k => $v)
         {
             $menuItems[$k]->megaMenu = $menuItems[$k]->megaMenu ? json_decode($menuItems[$k]->megaMenu) : [];

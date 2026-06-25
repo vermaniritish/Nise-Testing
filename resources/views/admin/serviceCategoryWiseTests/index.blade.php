@@ -58,7 +58,7 @@
 						<table class="table align-items-center table-flush listing-table">
 							<thead class="thead-light">
 								<tr>
-									<th class="checkbox-th" width="5%">
+									<th class="checkbox-th text-center" width="5%">
 										<div class="custom-control custom-checkbox">
 											<input type="checkbox" class="custom-control-input mark_all" id="mark_all">
 											<label class="custom-control-label" for="mark_all"></label>
@@ -78,32 +78,32 @@
 									
 									<th class="sort">
 										Service
-										<?php if(isset($_GET['sort']) && $_GET['sort'] == 'service_category_wise_tests.service_id' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
-										<i class="fas fa-sort-down active" data-field="service_category_wise_tests.service_id" data-sort="asc"></i>
-										<?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'service_category_wise_tests.service_id' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
-										<i class="fas fa-sort-up active" data-field="service_category_wise_tests.service_id" data-sort="desc"></i>
+										<?php if(isset($_GET['sort']) && $_GET['sort'] == 'testing_services_title' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
+										<i class="fas fa-sort-down active" data-field="testing_services_title" data-sort="asc"></i>
+										<?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'testing_services_title' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
+										<i class="fas fa-sort-up active" data-field="testing_services_title" data-sort="desc"></i>
 										<?php else: ?>
-										<i class="fas fa-sort" data-field="service_category_wise_tests.service_id"></i>
+										<i class="fas fa-sort" data-field="testing_services_title"></i>
 										<?php endif; ?>
 									</th>
 									<th class="sort">
 										Category
-										<?php if(isset($_GET['sort']) && $_GET['sort'] == 'service_category_wise_tests.service_category_id' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
-										<i class="fas fa-sort-down active" data-field="service_category_wise_tests.service_category_id" data-sort="asc"></i>
-										<?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'service_category_wise_tests.service_category_id' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
-										<i class="fas fa-sort-up active" data-field="service_category_wise_tests.service_category_id" data-sort="desc"></i>
+										<?php if(isset($_GET['sort']) && $_GET['sort'] == 'test_category_title' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
+										<i class="fas fa-sort-down active" data-field="test_category_title" data-sort="asc"></i>
+										<?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'test_category_title' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
+										<i class="fas fa-sort-up active" data-field="test_category_title" data-sort="desc"></i>
 										<?php else: ?>
-										<i class="fas fa-sort" data-field="service_category_wise_tests.service_category_id"></i>
+										<i class="fas fa-sort" data-field="test_category_title"></i>
 										<?php endif; ?>
 									</th>
 									<th class="sort">
 										Type
-										<?php if(isset($_GET['sort']) && $_GET['sort'] == 'service_category_wise_tests.title' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
-										<i class="fas fa-sort-down active" data-field="service_category_wise_tests.title" data-sort="asc"></i>
-										<?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'service_category_wise_tests.title' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
-										<i class="fas fa-sort-up active" data-field="service_category_wise_tests.title" data-sort="desc"></i>
+										<?php if(isset($_GET['sort']) && $_GET['sort'] == 'title' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
+										<i class="fas fa-sort-down active" data-field="title" data-sort="asc"></i>
+										<?php elseif(isset($_GET['sort']) && $_GET['sort'] == 'title' && isset($_GET['direction']) && $_GET['direction'] == 'desc'): ?>
+										<i class="fas fa-sort-up active" data-field="title" data-sort="desc"></i>
 										<?php else: ?>
-										<i class="fas fa-sort" data-field="service_category_wise_tests.title"></i>
+										<i class="fas fa-sort" data-field="title"></i>
 										<?php endif; ?>
 									</th>
 									<th class="sort">

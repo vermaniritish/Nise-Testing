@@ -384,34 +384,6 @@ Table Of Contents end
 
 })(jQuery);
 
-// Apply selected language
-function langChange(lang) {
-    localStorage.setItem('lang', lang);
-    document.body.classList.remove('lang-en-active', 'lang-hi-active');
-    document.body.classList.add(lang === 'hi' ? 'lang-hi-active' : 'lang-en-active');
-    updateButton(lang);
-}
-
-// Toggle Hindi/English on button click
-function toggleLang() {
-    const currentLang = localStorage.getItem('lang') || 'en';
-    const newLang = (currentLang === 'en') ? 'hi' : 'en';
-    langChange(newLang);
-}
-
-// Update button label
-function updateButton(lang) {
-    const btn = document.getElementById('langBtn');
-    if (btn) btn.textContent = (lang === 'en') ? 'हिंदी' : 'English';
-}
-
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', function () {
-    const lang = localStorage.getItem('lang') || 'en';
-    document.body.classList.add(lang === 'hi' ? 'lang-hi-active' : 'lang-en-active');
-    updateButton(lang);
-});
-
 
 // Base font size (default is 100%)
 let currentFontSize = 100;
@@ -459,6 +431,7 @@ $(document).ready(function() {
     }, "Please enter a valid email address.");
 
     $("#registrationForm").validate({
+		ignore: ":hidden:not(input[type='file'])",
         rules: {
             email: {
                 required: true,
@@ -484,3 +457,18 @@ $(document).ready(function() {
     });
 
 });
+function myFunction() {
+  var dots = document.getElementById("dots");
+  var moreText = document.getElementById("more");
+  var btnText = document.getElementById("myBtn");
+
+  if (dots.style.display === "none") {
+    dots.style.display = "inline";
+    btnText.innerHTML = "Read more"; 
+    moreText.style.display = "none";
+  } else {
+    dots.style.display = "none";
+    btnText.innerHTML = "Read less"; 
+    moreText.style.display = "inline";
+  }
+}

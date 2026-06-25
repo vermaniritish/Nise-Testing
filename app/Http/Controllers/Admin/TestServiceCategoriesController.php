@@ -42,7 +42,7 @@ class TestServiceCategoriesController extends AppController
         if ($request->get('search')) {
             $search = $request->get('search');
             $search = '%' . $search . '%';
-            $where['(testing_service_categories.id LIKE ? or testing_service_categories.test_category_title LIKE ?)'] = [$search, $search];
+            $where['(testing_service_categories.id LIKE ? or testing_service_categories.test_category_title LIKE ? or testing_services.title LIKE ?)'] = [$search, $search, $search];
         }
 
         if ($request->get('created_on')) {
@@ -299,13 +299,7 @@ class TestServiceCategoriesController extends AppController
         if (is_array($ids) && !empty($ids)) {
             switch ($action) {
                 case 'delete':
-                    foreach ($ids as $id) {
-                        $notice = TestServiceCategory::find($id);
-                        if ($notice) {
-                            $notice->categories()->detach(); // Detach categories from the notice
-                        }
-                    }
-                    TestServiceCategory::removeAll($ids);
+                    TestServiceCategory::whereIn('id', $ids)->delete();
                     $message = count($ids) . ' records has been deleted.';
                     break;
             }

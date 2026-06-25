@@ -184,9 +184,9 @@ class Notices extends AppModel
     	$service->modified = date('Y-m-d H:i:s');
 	    if($service->save())
 	    {
-            if(isset($data['name']) && $data['name'])
+            if(isset($data['title']) && $data['title'])
             {
-                $service->slug = Str::slug($service->name) . '-' . General::encode($service->id);
+                $service->slug = Str::slug($service->title) . '-' . General::encode($service->id);
                 $service->save();
             }
 	    	return $service;
@@ -213,9 +213,9 @@ class Notices extends AppModel
     	$service->modified = date('Y-m-d H:i:s');
 	    if($service->save())
 	    {
-            if(isset($data['name']) && $data['name'])
+            if(isset($data['title']) && $data['title'])
             {
-                $service->slug = Str::slug($service->name) . '-' . General::encode($service->id);
+                $service->slug = Str::slug($service->title) . '-' . General::encode($service->id);
                 $service->save();
             }
 	    	return $service;

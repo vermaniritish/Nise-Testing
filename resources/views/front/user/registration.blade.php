@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-12 text-center">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}">{{ __('front.Home') }}</a></li>
                             <li class="breadcrumb-item active">Sign up</li>
                         </ol>
                     </div>
@@ -146,7 +146,7 @@
                                             <div class="col-md-6 col-sm-6">
                                                 <div class="upload-image-section">
                                                     <div class="upload-section">
-                                                        <div class="button-ref mb-3">
+                                                        <div class="button-ref">
                                                             <button class="btn btn-icon btn-primary btn-lg" type="button" onclick="document.getElementById('pan_file_file').click()">
                                                                 <span class="btn-inner--icon" style="font-size: 13px;"><i class="fas fa-upload"></i></span>
                                                                 <span class="btn-inner--text" style="font-size: 13px;">Upload File</span>
@@ -154,7 +154,7 @@
                                                         </div>
 
                                                         <!-- HIDDEN FILE INPUT -->
-                                                        <input type="file" id="pan_file_file" name="pan_file" class="d-none" onchange="previewFile(this)">
+                                                        <input type="file" required id="pan_file_file" name="pan_file" class="d-none" onchange="previewFile(this)">
                                                         
                                                         <!-- PREVIEW SECTION -->
                                                         <div id="file_preview" class="mt-3"></div>
@@ -184,7 +184,7 @@
                                             <div class="col-md-6 col-sm-6">
                                                 <div class="upload-image-section">
                                                     <div class="upload-section">
-                                                        <div class="button-ref mb-3">
+                                                        <div class="button-ref">
                                                             <button class="btn btn-icon btn-primary btn-lg" type="button" 
                                                                 onclick="document.getElementById('company_registration_file').click()">
                                                                 <span class="btn-inner--icon" style="font-size: 13px;"><i class="fas fa-upload"></i></span>
@@ -193,7 +193,7 @@
                                                         </div>
 
                                                         <!-- HIDDEN FILE INPUT -->
-                                                        <input type="file" id="company_registration_file" name="company_file" class="d-none" onchange="companyPreviewFile(this)">
+                                                        <input type="file" id="company_registration_file" required name="company_file" class="d-none" onchange="companyPreviewFile(this)">
                                                         
                                                         <!-- PREVIEW SECTION -->
                                                         <div id="company_registration_file_preview" class="mt-3"></div>
@@ -305,14 +305,14 @@
                                     </div>
                                 </div>
 
-                                <br/><div class="row">
+                                <!-- <br/><div class="row">
                                     <div class="col-md-3 col-sm-3">
                                         <label>Passowrd</label>
                                     </div>
                                     <div class="col-md-9 col-sm-9">
                                         <input type="password" class="form-control"  placeholder="*********" required="" name="password" aria-required="true">
                                     </div>
-                                </div>
+                                </div> -->
 
 
                                 </div>
@@ -339,9 +339,11 @@
     function chngtype(all) {
         if(all.value == 'Company'){
          $("#company").show();
+         $("#company input").attr('required', 'required');
          $("#individual").hide();    
         }else{
          $("#individual").show();
+         $("#company input").attr('required', null);
          $("#company").hide();
         }
     }
@@ -398,14 +400,6 @@
             }
         }
     }
-
-    setTimeout(() => {
-        document.querySelectorAll('.alert').forEach(el => {
-            el.style.transition = "opacity 0.5s ease";
-            el.style.opacity = "0";
-            setTimeout(() => el.remove(), 500); // fade-out ke baad remove
-        });
-    }, 2000);
 
 
 </script>

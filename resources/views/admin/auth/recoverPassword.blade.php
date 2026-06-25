@@ -35,7 +35,7 @@
 								<div class="form-group passwordGroup">
 									<label>New Password</label>
 									<div class="input-group">
-										<input type="password" class="form-control" name="new_password" placeholder="*****" aria-label="" aria-describedby="button-addon4" name="password" required>
+										<input type="password" class="form-control" autocomplete="off" name="new_password" placeholder="*****" aria-label="" aria-describedby="button-addon4" name="password" required>
 										<div class="input-group-append" id="button-addon4">
 											<button class="btn btn-outline-primary viewPassword" type="button"><i class="fas fa-eye"></i></button>
 										</div>
@@ -46,7 +46,7 @@
 								<div class="form-group passwordGroup">
 									<label>Confirm Password</label>
 									<div class="input-group">
-										<input type="password" class="form-control" name="confirm_password" placeholder="******" aria-label="" aria-describedby="button-addon4" name="password" required>
+										<input type="password" class="form-control" autocomplete="off" name="confirm_password" placeholder="******" aria-label="" aria-describedby="button-addon4" name="password" required>
 										<div class="input-group-append" id="button-addon4">
 											<button class="btn btn-outline-primary viewPassword" type="button"><i class="fas fa-eye"></i></button>
 										</div>

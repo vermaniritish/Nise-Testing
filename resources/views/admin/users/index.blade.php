@@ -36,13 +36,55 @@
 								</div>
 								<input class="form-control listing-search" placeholder="Search" type="text" value="<?php echo (isset($_GET['search']) && $_GET['search'] ? $_GET['search'] : '') ?>">
 							</div>
+						
+						<?php if(Permissions::hasPermission('users', 'update') || Permissions::hasPermission('users', 'delete')): ?>
+							<div class="dropdown" data-toggle="tooltip" data-title="Bulk Actions">
+								<a class="btn btn-sm btn-icon-only text-warning" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<i class="fas fa-ellipsis-v"></i>
+								</a>
+								<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+									<?php if(Permissions::hasPermission('users', 'update')): ?>
+									<a 
+										class="dropdown-item" 
+										href="javascript:;"
+										onclick="bulk_actions('<?php echo route('admin.users.bulkActions', ['action' => 'active']) ?>', 'active');"
+									>
+										<span class="badge badge-dot mr-4">
+											<i class="bg-success"></i>
+											<span class="status">Publish</span>
+										</span>
+									</a>
+									<a 
+										class="dropdown-item" 
+										href="javascript:;"
+										onclick="bulk_actions('<?php echo route('admin.users.bulkActions', ['action' => 'inactive']) ?>', 'inactive');"
+									>
+										<span class="badge badge-dot mr-4">
+											<i class="bg-warning"></i>
+											<span class="status">Unpublish</span>
+										</span>
+									</a>
+									<div class="dropdown-divider"></div>
+									<?php endif; ?>
+									<?php if(Permissions::hasPermission('users', 'delete')): ?>
+		                            <a 
+		                            	href="javascript:void(0);" 
+		                            	class="waves-effect waves-block dropdown-item text-danger" 
+		                            	onclick="bulk_actions('<?php echo route('admin.users.bulkActions', ['action' => 'delete']) ?>', 'delete');">
+											<i class="fas fa-times text-danger"></i>
+											<span class="status text-danger">Delete</span>
+		                            </a>
+		                            <?php endif; ?>
+								</div>
+							</div>
+							<?php endif; ?>
 						</div>
 					</div>
 					<div class="table-responsive">
 						<table class="table align-items-center table-flush listing-table">
 							<thead class="thead-light">
 								<tr>
-									<th class="checkbox-th">
+									<th class="checkbox-th text-center">
 										<div class="custom-control custom-checkbox">
 											<input type="checkbox" class="custom-control-input mark_all" id="mark_all">
 											<label class="custom-control-label" for="mark_all"></label>

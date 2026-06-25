@@ -37,7 +37,8 @@ class AuthController extends AppController
 		            $request->toArray(),
 		            [
 		                'email' => 'required|email',
-		                'password' => 'required'
+		                'password' => 'required',
+						'txt_Captcha' => 'required|captcha'
 		            ]
 		        );
 
@@ -77,7 +78,7 @@ class AuthController extends AppController
 			        		else
 			        		{
 			        			$request->session()->flash('error', 'Session could not be establised. Please try again.');
-				        		return redirect()->back()->withInput();			
+				        		return redirect()->route('admin.login')->withInput();			
 			        		}
 			        	}
 			        	else
@@ -90,26 +91,26 @@ class AuthController extends AppController
 				        	else
 				        	{
 				        		$request->session()->flash('error', 'Session could not be establised. Please try again.');
-				        		return redirect()->back()->withInput();		
+				        		return redirect()->route('admin.login')->withInput();		
 				        	}
 				        }
 			        }
 			        else
 			        {
 			        	$request->session()->flash('error', 'The credentials that you\'ve entered doesn\'t match any account');
-			        	return redirect()->back()->withInput();
+			        	return redirect()->route('admin.login')->withInput();
 			        }
 			    }
 			    else
 			    {
 			    	$request->session()->flash('error', 'Please provide valid inputs.');
-			    	return redirect()->back()->withErrors($validator)->withInput();
+			    	return redirect()->route('admin.login')->withErrors($validator)->withInput();
 			    }
 		    }
 		    else
 		    {
 		    	$request->session()->flash('error', 'Invalid request.');
-		        return redirect()->back()->withInput();
+		        return redirect()->route('admin.login')->withInput();
 		    }
 	    }
 

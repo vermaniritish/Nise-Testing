@@ -9,9 +9,9 @@
 					<div id="ost-container">
 						<div class="ost-multi-header">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="index.php">Home</a></li>
-								<li class="breadcrumb-item"><a href="testing-services.php">Testing Services</a></li>
-								<li class="breadcrumb-item active">Testing of Solar Photovoltaic modules</li>
+								<li class="breadcrumb-item"><a href="{{ url('/') }}">{{ __('front.Home') }}</a></li>
+								<li class="breadcrumb-item"><a href="{{ url('/testing-service-detail/'.$testServiceCategoryDetail->service->slug) }}">{{ $testServiceCategoryDetail->service->title }}</a></li>
+								<li class="breadcrumb-item active">{{$testServiceCategoryDetail->test_category_title}}</li>
 							</ol>
 						</div>
 					</div>
@@ -28,7 +28,20 @@
 		<div class="row">
 			<div class="col-lg-1 col-md-1 col-12">&nbsp;</div>
 			<div class="col-lg-10 col-md-10 col-12">
-				
+				@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 				<div class="row">
 					<div class="col-12 ser-page-into">
 						<form id="formValidate" method="post" action="{{route('testServiceCategoryDetails',['slug'=> $testServiceCategoryDetail->slug])}}" class="test-module-form" enctype="multipart/form-data">
@@ -37,7 +50,7 @@
                             <table class="table table-striped theme-table">
                                 <thead> 
                                     <tr> 
-                                        <th class="heading text-center" colspan="6">PV crystalline silicon/thin film Module Individual Tests</th>
+                                        <th class="heading text-center" colspan="6">{{ $testServiceCategoryDetail->service->title }} / {{$testServiceCategoryDetail->test_category_title}}</th>
                                     </tr>
                                     <tr>
                                         <th>Test</th>
@@ -51,14 +64,25 @@
                                 <tbody>
                                     <tr class="test-row">
                                         <td width="35%">
-                                            <select name="order_test[test_type_id][]" required class="selectpickerr show-tick field_test" data-live-search="true" title="Select test" style="width:80% !important">
-                                                <option id="" value="">Select</option>
-                                                @if(isset($serviceCategoryWiseTests) && $serviceCategoryWiseTests)
-	                                                @foreach($serviceCategoryWiseTests as $servCatWiseTest)
-	                                                	<option data-id="{{$servCatWiseTest->id}}" id="{{$servCatWiseTest->fee}}" value="{{$servCatWiseTest->id}}">{{$servCatWiseTest->title}}</option>
-	                                                @endforeach
-                                                @endif  
-                                            </select>
+                                            <div class="test-wrapper">
+
+                                                <!-- TEST SELECT -->
+                                                <div class="mb-3">
+                                                    <select name="order_test[test_type_id][]" class="form-control test-select">
+                                                        <option value="">Select Test</option>
+                                                    </select>
+                                                </div>
+
+
+                                                <!-- VARIATION SELECT -->
+                                                <div>
+                                                    <select class="form-control variation-select d-none">
+                                                        <option value="">Select Variation</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="test-description mt-2 d-none"></div>
+                                            </div>
                                         </td> 
                                         <td width="20%">
                                             <input name="order_test[sample_fee][]" readonly required value="0" type="text" class="form-control field_sample txtboxToFilterNumber">
@@ -367,7 +391,89 @@
 </section>
 
 <script>
+var serviceCategoryWiseTests = @json($serviceCategoryWiseTests);
+// Populate all test dropdowns
+$('.test-select').each(function () {
+    var select = $(this);
 
+    $.each(serviceCategoryWiseTests, function (i, test) {
+        select.append(
+            '<option value="'+ test.id +'" data-id="'+test.id+'" id="'+test.fee+'" key="'+test.id+'" value="'+test.id+'">'+ test.title +'</option>'
+        );
+    });
+});
+
+
+// When Test Changes
+$(document).on('change', '.test-select', function () {
+
+    var wrapper = $(this).closest('.test-wrapper');
+    var variationSelect = wrapper.find('.variation-select');
+    var selectedTestId = $(this).val();
+    var descriptionBox = wrapper.find('.test-description');
+    variationSelect.addClass('d-none').html('<option value="">Select Variation</option>');
+    descriptionBox.addClass('d-none').html('');
+
+    if (!selectedTestId) return;
+
+    var selectedTest = serviceCategoryWiseTests.find(
+        test => test.id == selectedTestId
+    );
+
+    if (!selectedTest) return;
+
+    if (selectedTest.description) {
+        descriptionBox.removeClass('d-none').html(
+            '<div class="">'+ selectedTest.description +'</div>'
+        );
+    }
+
+    var selectedTest = serviceCategoryWiseTests.find(
+        test => test.id == selectedTestId
+    );
+
+    if (selectedTest && selectedTest.variations) {
+
+        var variations = selectedTest.variations;
+
+        if (typeof variations === "string") {
+            variations = JSON.parse(variations);
+        }
+
+        variationSelect.removeClass('d-none');
+
+        $.each(variations, function (i, variation) {
+            variationSelect.append(
+                '<option data-price="'+ variation.price +'" value="'+ i +'">'
+                + variation.label + ' - ₹' + variation.price +
+                '</option>'
+            );
+        });
+    }
+
+    exec();
+});
+
+
+// When Variation Changes
+$(document).on('change', '.variation-select', function () {
+
+    exec();
+
+});
+
+
+function exec(){
+    // $('body').on('change', '.selectpickerr', function() {
+    $('.test-select').each(function(){
+        var spv = $(this).find(':selected').attr("data-id");
+        $(this).parents('td').next('td').next('td').next('td').children('.SPVmodule').val(spv); 
+        let variation = $(this).parents('td').find('.variation-select option:selected');
+        var price = variation && variation.attr('data-price') ? variation.attr('data-price')*1 : ($(this).find(':selected').attr("id")*1);
+        $(this).parents('td').next('td').children('.field_sample').val(price); 
+        calculateFee();
+    })
+}
     //$(document).ready(function(){
 		
         $(".btn-add-row").click(function(){
@@ -376,21 +482,11 @@
             //alert(html_val);
             elem_val.find("tr.test-row:last").after('<tr class="test-row">'+html_val+'</tr>');
             elem_val.find("tr.test-row:last").find("td a.btn-remove-row").removeClass("disabled");
+            elem_val.find("tr.test-row:last").find('.test-description').addClass('d-none').html('');
+            elem_val.find("tr.test-row:last").find('.variation-select').addClass('d-none').html('<option value="">Select Variation</option>');
             //$(".selectpicker").selectpicker('refresh');
             $('.field_sample, .number_of_sample, .total_test').off().on('keyup',calculateFee);
             $('.number_of_sample').off().on('change',calculateFee);
-            $('.selectpickerr').change(function(){
-
-                    var spv = $(this).find(':selected').attr("data-id");
-       				$(this).parent('td').next('td').next('td').next('td').children('.SPVmodule').val(spv); 
-
-
-
-                var price = parseInt(allPrice[$(this).val()]);
-                var rr = parseInt(allPrice[$(this).val()]);
-                $(this).parent('td').next('td').children('.field_sample').val(price);
-                calculateFee();
-            });
             calculateFee();
             numberValidation();
         });
@@ -441,8 +537,8 @@
 
         // in all salt mist test and IEC61853 make SPV Module required per sample "3" and increase as per incresement on number of samples -- 13.11.18
 
-        $('.selectpickerr ').each(function(){
-             var selectpickerr_id  = $(this).find(':selected').val();
+        /*$('.selectpickerr').each(function(){
+            var selectpickerr_id  = $(this).find(':selected').val();
             var samplecount = parseInt($(this).parent('td').next('td').next('td').children('.number_of_sample').val()); 
             if(selectpickerr_id=='21' || selectpickerr_id=='22' || selectpickerr_id=='23' || selectpickerr_id=='24' || selectpickerr_id=='25' || selectpickerr_id=='26'){
             
@@ -454,7 +550,7 @@
 
 
             }
-        });
+        });*/
 
              // end 13.11.18
 
@@ -508,7 +604,7 @@
 
     }
 
-    $('.field_sample, .number_of_sample, .total_test').on('keyup',calculateFee);
+    $('body').on('keyup', '.field_sample, .number_of_sample, .total_test',calculateFee);
     $('.number_of_sample').on('change',calculateFee);
 
     function numberValidation(){
@@ -535,29 +631,13 @@
 
     }
     numberValidation();
-                var allPrice = {"1":"4550","2":"4550","3":"4550","4":"21840","5":"21840","6":"8190","7":"16380","8":"33670","9":"22750","10":"22750","11":"254800","12":"273000","13":"136500","14":"4550","15":"13650","16":"4550","17":"4550","18":"195000","20":"5200","21":"109200","22":"54600","23":"72800","24":"109200","25":"182000","26":"65000","27":"13000"};            
-
-    $('.selectpickerr').change(function(){
-
-
-       //alert($(this).find(':selected').attr("data-id"));
-
-       var spv = $(this).find(':selected').attr("data-id");
-       $(this).parent('td').next('td').next('td').next('td').children('.SPVmodule').val(spv); 
-
-
-
-        var price = parseInt(allPrice[$(this).val()]);
-        $(this).parent('td').next('td').children('.field_sample').val(price); 
-        // if(this.value == 18){
-        //     $(".number_of_sample").val('4');
-        //     $(".billmat").prop('required',true);
-        // }else{
-        //     $(".number_of_sample").val('1');
-        //     $(".billmat").prop('required',false);
-        // }
-        calculateFee();
-    });
+    // $('body').on('change', '.selectpickerr', function(){
+    //     var spv = $(this).find(':selected').attr("data-id");
+    //     $(this).parent('td').next('td').next('td').next('td').children('.SPVmodule').val(spv); 
+    //     var price = appVue.selectedVariation && appVue.selectedVariation.price ? (appVue.selectedVariation.price*1) : ($(this).find(':selected').attr("id")*1);
+    //     $(this).parent('td').next('td').children('.field_sample').val(price); 
+    //     calculateFee();
+    // });
 
 
     var repeatdiv = $("#parentrepeatdivadd").html();

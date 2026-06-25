@@ -1,4 +1,3 @@
-
 @extends('layouts.adminlayout')
 @section('content')
     <div class="header bg-primary pb-6">
@@ -38,7 +37,7 @@
                                         <div class="col-lg-1 text-right">
                                             <i class="drag-point fa fa-grip-vertical" style="background: linen;padding: 4px;cursor: grab;font-size: 16px;margin-top:10px;"></i>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-title">Title</label>
                                                 <input type="text" class="form-control" v-model="item.title" placeholder="Title" >
@@ -47,7 +46,16 @@
                                                 </small>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-title">Title Hindi</label>
+                                                <input type="text" class="form-control" v-model="item.title_hi" placeholder="Title" >
+                                                <small class="text-danger" v-if="errors[`menuItems.${index}`] && errors[`menuItems.${index}`].title_hi">
+                                                    @{{ errors[`menuItems.${index}`].title_hi[0] }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-link">Link</label>
                                                 <input type="text" class="form-control" v-model="item.link" placeholder="Link" >
@@ -57,7 +65,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-3 d-flex align-items-center">
+                                        <div class="col-lg-2 d-flex align-items-center">
                                             <button type="button" class="btn btn-danger" @click="addMegaMenuItem(index)" style="margin-top: 0;">
                                                 <i class="fa fa-plus"></i>
                                             </button>
@@ -73,13 +81,19 @@
                                                     <div class="col-lg-1 text-right">
                                                         <i class="drag-point fa fa-grip-vertical" style="background: linen;padding: 4px;cursor: grab;font-size: 16px;margin-top:10px;"></i>
                                                     </div>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-3">
                                                         <div class="form-group">
                                                             <label class="form-control-label" for="input-title">Title</label>
                                                             <input type="text" class="form-control" v-model="v.title" placeholder="Title">
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-5">
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            <label class="form-control-label" for="input-title">Title Hindi</label>
+                                                            <input type="text" class="form-control" v-model="v.title_hi" placeholder="Title">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
                                                         <div class="form-group">
                                                             <label class="form-control-label" for="input-link">Link</label>
                                                             <input type="text" class="form-control" v-model="v.link" placeholder="Link">
@@ -127,7 +141,7 @@
                                         <div class="col-lg-1 text-right">
                                             <i class="drag-point fa fa-grip-vertical" style="background: linen;padding: 4px;cursor: grab;font-size: 16px;margin-top:10px;"></i>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-title">Title</label>
                                                 <input type="text" class="form-control" v-model="item.title" placeholder="Title">
@@ -136,7 +150,16 @@
                                                 </small>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-title">Title Hindi</label>
+                                                <input type="text" class="form-control" v-model="item.title_hi" placeholder="Title">
+                                                <small class="text-danger" v-if="footerErrors[`footerItems.${index}`] && footerErrors[`footerItems.${index}`].title_hi">
+                                                    @{{ footerErrors[`footerItems.${index}`].title_hi[0] }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-link">Link</label>
                                                 <input type="text" class="form-control" v-model="item.link" placeholder="Link">
@@ -181,7 +204,7 @@
                                         <div class="col-lg-1 text-right">
                                             <i class="drag-point fa fa-grip-vertical" style="background: linen;padding: 4px;cursor: grab;font-size: 16px;margin-top:10px;"></i>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-title">Title</label>
                                                 <input type="text" class="form-control" v-model="item.title" placeholder="Title">
@@ -190,7 +213,16 @@
                                                 </small>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-title">Title Hindi</label>
+                                                <input type="text" class="form-control" v-model="item.title_hi" placeholder="Title">
+                                                <small class="text-danger" v-if="footerErrors[`coursesItems.${index}`] && footerErrors[`coursesItems.${index}`].title_hi">
+                                                    @{{ footerErrors[`coursesItems.${index}`].title_hi[0] }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-link">Link</label>
                                                 <input type="text" class="form-control" v-model="item.link" placeholder="Link">
@@ -236,7 +268,7 @@
                                         <div class="col-lg-1 text-right">
                                             <i class="drag-point fa fa-grip-vertical" style="background: linen;padding: 4px;cursor: grab;font-size: 16px;margin-top:10px;"></i>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-title">Title</label>
                                                 <input type="text" class="form-control" v-model="item.title" placeholder="Title">
@@ -245,7 +277,16 @@
                                                 </small>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-title">Title Hindi</label>
+                                                <input type="text" class="form-control" v-model="item.title_hi" placeholder="Title">
+                                                <small class="text-danger" v-if="footerErrors[`informationItems.${index}`] && footerErrors[`informationItems.${index}`].title_hi">
+                                                    @{{ footerErrors[`informationItems.${index}`].title_hi[0] }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-link">Link</label>
                                                 <input type="text" class="form-control" v-model="item.link" placeholder="Link">
@@ -290,7 +331,7 @@
                                         <div class="col-lg-1 text-right">
                                             <i class="drag-point fa fa-grip-vertical" style="background: linen;padding: 4px;cursor: grab;font-size: 16px;margin-top:10px;"></i>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-title">Title</label>
                                                 <input type="text" class="form-control" v-model="item.title" placeholder="Title">
@@ -299,7 +340,16 @@
                                                 </small>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="input-title">Title Hindi</label>
+                                                <input type="text" class="form-control" v-model="item.title_hi" placeholder="Title">
+                                                <small class="text-danger" v-if="footerErrors[`otherLinksItems.${index}`] && footerErrors[`otherLinksItems.${index}`].title_hi">
+                                                    @{{ footerErrors[`otherLinksItems.${index}`].title_hi[0] }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="input-link">Link</label>
                                                 <input type="text" class="form-control" v-model="item.link" placeholder="Link">
@@ -333,3 +383,6 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+<script>var menuType = "{{ $type }}";</script>
+@endpush

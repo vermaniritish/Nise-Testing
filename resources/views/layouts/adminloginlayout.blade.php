@@ -97,6 +97,7 @@ $recaptchaSiteKey = Settings::get('recaptcha_key');
 	    });
 	 </script>
 	<?php endif; ?>
+	@stack('scripts')
 	<script src="<?php echo url('assets/js/argon.js?v=1.2.0') ?>"></script>
 	<script src="<?php echo url('assets/js/custom.js?v=1.2.0') ?>"></script>
 </body>

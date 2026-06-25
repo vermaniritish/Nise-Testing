@@ -28,8 +28,11 @@ use App\Models\Admin\OrderTest;
 use App\Models\Admin\OrderRemark;
 use App\Models\Admin\Users;
 use App\Models\Admin\AdminAuth;
+use App\Models\Admin\Settings;
 use PHPUnit\Framework\Error\Notice;
 use Illuminate\Support\Facades\Storage;
+use App\Libraries\General;
+use Mpdf\Mpdf;
 
 class TestManagementsController extends AppController
 {
@@ -48,18 +51,18 @@ class TestManagementsController extends AppController
         $where = [];
         if ($request->get('search')) {
             $search = '%' . $request->get('search') . '%';
-            $where['(order_tests.id LIKE ?)'] = [$search];
+            $where['(orders.order_number LIKE ? or testing_services.title LIKE ? or service_category_wise_tests.title LIKE ?)'] = [$search, $search, $search];
         }
 
         if ($request->get('created_on')) {
             $createdOn = $request->get('created_on');
             if (!empty($createdOn[0])) {
-                $where['order_tests.created >= ?'] = [
+                $where['orders.created >= ?'] = [
                     date('Y-m-d 00:00:00', strtotime($createdOn[0]))
                 ];
             }
             if (!empty($createdOn[1])) {
-                $where['order_tests.created <= ?'] = [
+                $where['orders.created <= ?'] = [
                     date('Y-m-d 23:59:59', strtotime($createdOn[1]))
                 ];
             }
@@ -323,6 +326,44 @@ class TestManagementsController extends AppController
         }
     }
 
+    public function pdf(Request $request, $id)
+    {
+        $id = General::decrypt($id);
+        $orderTest = OrderTest::with('documents')->find($id);
+        $logo = Settings::get('logo');
+        $companyName = Settings::get('company_name');
+        if ($orderTest) {
+            $html = view('admin.testManagements.pdf', [
+                'orderTest' => $orderTest,
+                'logo' => $logo,
+                'companyName' => $companyName
+            ])->render();
+
+            // Create mPDF instance
+            $mpdf = new Mpdf([
+                'mode' => 'utf-8',
+                'format' => 'A4',
+                'margin_top' => 15,
+                'margin_bottom' => 15,
+                'margin_left' => 10,
+                'margin_right' => 10,
+            ]);
+
+            // Optional: Footer
+            $mpdf->SetFooter('{PAGENO}');
+
+            // Write HTML
+            $mpdf->WriteHTML($html);
+
+            // Open PDF in browser
+            return response($mpdf->Output('test-job.pdf', 'S'))
+                ->header('Content-Type', 'application/pdf');
+        } else {
+            abort(404);
+        }
+    }
+
+
     public function testOrderRemark(Request $request)
     {
         if ($request->isMethod('post')) {
@@ -388,13 +429,7 @@ class TestManagementsController extends AppController
         if (is_array($ids) && !empty($ids)) {
             switch ($action) {
                 case 'delete':
-                    foreach ($ids as $id) {
-                        $notice = TestManagement::find($id);
-                        if ($notice) {
-                            $notice->categories()->detach(); // Detach categories from the notice
-                        }
-                    }
-                    TestManagement::removeAll($ids);
+                    OrderTest::whereIn('id', $ids)->delete();
                     $message = count($ids) . ' records has been deleted.';
                     break;
             }

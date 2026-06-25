@@ -14,7 +14,7 @@ class State extends AppModel
 {
     protected $table = 'states';
     protected $primaryKey = 'id';
-    
+    public $timestamps = false;
 
     public static function getListing(Request $request, $where = [])
     {
@@ -146,9 +146,8 @@ class State extends AppModel
         {
             $states->{$k} = $v;
         }
-
-        $states->created_at = date('Y-m-d H:i:s');
-        $states->updated_at = date('Y-m-d H:i:s');
+        $states->created = date('Y-m-d H:i:s');
+        $states->modified = date('Y-m-d H:i:s');
         
         if($states->save())
         {
@@ -179,7 +178,7 @@ class State extends AppModel
             $states->{$k} = $v;
         }
 
-        $states->updated_at = date('Y-m-d H:i:s');
+        $states->modified = date('Y-m-d H:i:s');
 
         if($states->save())
         {

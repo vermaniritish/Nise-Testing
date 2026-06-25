@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Session;
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers\CCAvenueController;
+
+Route::get('/checkout', [CCAvenueController::class, 'checkout']);
+Route::post('/ccavenue/pay', [CCAvenueController::class, 'pay'])->name('ccavenue.pay');
+Route::post('/ccavenue/response', [CCAvenueController::class, 'response'])->name('ccavenue.response');
 
 Route::get('locale/{lang}', function ($lang) {
     $available = ['en', 'hi'];
@@ -26,16 +31,14 @@ Route::get('locale/{lang}', function ($lang) {
 Route::middleware(['guest'])->group(function () {
     include "Admin/auth.php";
     Route::get('/', '\App\Http\Controllers\User\DashboardController@home')->name('home.index');
-    Route::get('/news-events', '\App\Http\Controllers\User\DashboardController@newsEvents')->name('newsEvents');
-    Route::get('/news-event-details/{id?}', '\App\Http\Controllers\User\DashboardController@newsEventDetails')->name('newsEventDetails');
-    Route::get('/notices', '\App\Http\Controllers\User\DashboardController@notices')->name('notices');
+    // Route::get('/notices', '\App\Http\Controllers\User\DashboardController@notices')->name('notices');
     Route::get('/testing-service', '\App\Http\Controllers\User\DashboardController@testingService')->name('testingService');
 
     Route::get('/testing-service-detail/{slug}', '\App\Http\Controllers\User\DashboardController@testServiceDetails')->name('testServiceDetails');
 
     Route::match(['get','post'],'/test-service-category-detail/{slug}', '\App\Http\Controllers\User\DashboardController@testServiceCategoryDetails')->name('testServiceCategoryDetails');
 
-    Route::get('/notice-details/{id?}', '\App\Http\Controllers\User\DashboardController@noticeDetails')->name('noticeDetails');
+    Route::get('/notice/{slug}', '\App\Http\Controllers\User\DashboardController@noticeDetails')->name('noticeDetails');
     Route::get('/search', '\App\Http\Controllers\User\DashboardController@search')->name('search');
 
     Route::get('/page/details/{slug?}', '\App\Http\Controllers\User\DashboardController@screenReaderDetail')->name('screenReaderDetail');
@@ -118,6 +121,9 @@ Route::middleware(['guest'])->group(function () {
 
     Route::get('/logout', '\App\Http\Controllers\User\LoginController@logout')
     ->name('logout');
+
+    Route::get('/test-pdf/{id}', '\App\Http\Controllers\Admin\TestManagementsController@pdf')
+    ->name('testpdf');
 });
 
 Route::prefix('user')->middleware(['auth'])->group(function () {

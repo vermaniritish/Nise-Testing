@@ -28,26 +28,3 @@ Route::post('/other-links-menu/add', '\App\Http\Controllers\Admin\MenuController
 
 Route::get('menu/delete/{id}', '\App\Http\Controllers\Admin\MenuController@deleteMenuItem')->name('menu.delete');
 
-
-
-// hindi
-
-Route::get('/menu-hindi/add', '\App\Http\Controllers\Admin\MenuHindiController@add')
-    ->name('admin.menuHindi.add');
-
-Route::post('/hi/header/menu/add', '\App\Http\Controllers\Admin\MenuHindiController@add')
-    ->name('admin.hedaerMenu.add.hi');
-
-Route::get('/hi/menu/getMenuItems', '\App\Http\Controllers\Admin\MenuHindiController@getMenuItems')
-    ->name('admin.menu.getMenuItems.hi');
-
-Route::post('/hi/menu/{id}/view', '\App\Http\Controllers\Admin\MenuHindiController@view')
-    ->name('admin.menu.view.hi');
-
-Route::post('/hi/footer-menu/add', '\App\Http\Controllers\Admin\MenuHindiController@addFooterMenu')
-    ->name('admin.footerMenu.add.hi');
-
-Route::delete('/hi/menu/delete/{id}', '\App\Http\Controllers\Admin\MenuHindiController@deleteMenuItem')->name('menu.delete.hi');
-
-
-

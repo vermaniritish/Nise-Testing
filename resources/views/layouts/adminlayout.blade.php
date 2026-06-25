@@ -4,7 +4,7 @@ $favicon = Settings::get('favicon');
 $logo = Settings::get('logo');
 $companyName = Settings::get('company_name');
 $googleKey = Settings::get('google_api_key');
-$version = 1.0;
+$version = 1.1;
 ?>
 <!DOCTYPE html>
 <html>
@@ -98,15 +98,7 @@ $version = 1.0;
 				return "<?php echo csrf_token() ?>";
 			}
 		</script>
-
-
-{{-- <script>
-    const headerMenuAdd = "{{ route('admin.hedaerMenu.add') }}";
-    const footerMenuAdd = "{{ route('admin.footerMenu.add') }}";
-    const menuDelete = "{{ route('menu.delete','') }}";
-    const getMenu = "{{ route('admin.menu.getMenuItems') }}";
-</script> --}}
-
+		@stack('scripts')
 		<script src="<?php echo url('assets/vendor/jquery/dist/jquery.min.js') ?>"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
@@ -138,13 +130,5 @@ $version = 1.0;
 		<?php elseif( (strpos($action, '/add') > -1 || strpos($action, '/edit') > -1)  && file_exists(public_path('assets/js/'.$controller.'/form.js')) ): ?>
 		<script src="<?php echo url('assets/js/'.$controller.'/form.js?v=' . $version) ?>"></script>
 		<?php endif; ?>
-
-        {{-- <?php if(request()->routeIs('admin.menuHindi.add') && file_exists(public_path('assets/js/menuHindi/form.js'))): ?>
-          <script src="<?php echo url('assets/js/menuHindi/form.js?v=' . $version) ?>"></script>
-        <?php endif; ?> --}}
-
-
-    @stack('scripts')
-
 </body>
 </html>

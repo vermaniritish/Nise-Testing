@@ -47,7 +47,7 @@ class UsersController extends AppController
     	{
     		$search = $request->get('search');
     		$search = '%' . $search . '%';
-    		$where['(id LIKE ? or first_name LIKE ? or last_name LIKE ? or email LIKE ? or phonenumber LIKE ?)'] = [$search,$search,$search, $search, $search];
+    		$where['(id LIKE ? or person_name LIKE ? or company_name LIKE ? or registration_number LIKE ? or email LIKE ? or mobile LIKE ?)'] = [$search,$search,$search, $search, $search, $search];
     	}
 
     	if($request->get('last_login'))
@@ -96,7 +96,7 @@ class UsersController extends AppController
     				$where['status'] = 1;
     			break;
     			case 'non_active':
-    				$where['status'] = 0;
+    				$where[] = '(status = 0 or status is null)';
     			break;
     		}
 
@@ -138,16 +138,17 @@ class UsersController extends AppController
         if ($request->isMethod('post')) {
 
             $rules = [
-                'organisation_name' => 'required|string|max:255',
-	            'organisation_file' => 'nullable',
+                'company_name' => 'required|string|max:255',
+                'person_name' => 'required|string|max:255',
+	            'company_file' => 'nullable',
 	            'pan'           => 'required|string|max:10',
 	            'pan_file'      => 'nullable',
 	            'gst'           => 'required|string|max:15',
 	            'gst_file'      => 'nullable',
-	            'address'       => 'required|string|max:500',
+	            'address_1'       => 'required|string|max:500',
 	            // 'pin'           => 'required|digits:6',
 	            'state_id'      => 'required',
-	            'district_id'   => 'required', 
+	            'city'   => 'required', 
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -160,7 +161,7 @@ class UsersController extends AppController
 
             // Handle file uploads dynamically
             $fileFields = [
-                'pan_file', 'gst_file', 'organisation_file'
+                'pan_file', 'gst_file', 'company_file'
             ];
 
             foreach ($fileFields as $field) {
@@ -171,12 +172,12 @@ class UsersController extends AppController
                     $data[$field] = $filename;
                 }
             }
-
+			$data['registration_type'] = 'Company';
             // Save data
             $user = Users::create($data);
-            $uniqueNumber = str_pad($user->id, 5, '0', STR_PAD_LEFT); // like 00001
-            $userId = 'SM-INST-' . $uniqueNumber;
-            $user->institute_code = $userId;
+            // $uniqueNumber = str_pad($user->id, 5, '0', STR_PAD_LEFT); // like 00001
+            // $userId = 'SM-INST-' . $uniqueNumber;
+            // $user->institute_code = $userId;
             $user->save();
             return redirect()->route('admin.users')->with('success', 'user added successfully!');
         }

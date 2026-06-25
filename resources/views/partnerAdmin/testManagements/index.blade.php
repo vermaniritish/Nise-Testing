@@ -94,7 +94,7 @@
                                         <i class="fas fa-sort" data-field="test_managements.order_date"></i>
                                         <?php endif; ?>
                                     </th>
-                                    <th style="vertical-align:top;" class="sort">
+                                    <!-- <th style="vertical-align:top;" class="sort">
                                         Assign Job
                                         <?php if(isset($_GET['sort']) && $_GET['sort'] == 'test_managements.assign_job' && isset($_GET['direction']) && $_GET['direction'] == 'asc'): ?>
                                         <i class="fas fa-sort-down active" data-field="test_managements.assign_job" data-sort="asc"></i>
@@ -153,8 +153,8 @@
                                         <?php else: ?>
                                         <i class="fas fa-sort" data-field="test_managements.actual_completion_date"></i>
                                         <?php endif; ?>
-                                    </th>
-                                    <th class="text-center" width="10%">
+                                    </th> -->
+                                    <th class="text-center">
                                         Actions
                                     </th>
                                 </tr>

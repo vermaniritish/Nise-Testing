@@ -1,6 +1,6 @@
 <?php foreach($listing->items() as $k => $row): ?>
 <tr>
-	<td>
+	<td class="text-center">
 		<!-- MAKE SURE THIS HAS ID CORRECT AND VALUES CORRENCT. THIS WILL EFFECT ON BULK CRUTIAL ACTIONS -->
 		<div class="custom-control custom-checkbox">
 			<input type="checkbox" class="custom-control-input listing_check" id="listing_check<?php echo $row->id ?>" value="<?php echo $row->id ?>">
@@ -20,7 +20,6 @@
 		<?php echo $row->owner_first_name . ' ' . $row->owner_last_name ?>
 	</td>
 	<td>
-		<?php if(!in_array($row->slug, ['home', 'about-us', 'terms-conditions', 'privacy-policy'])): ?>
 		<div class="custom-control">
 			<label class="custom-toggle">
 				<?php $switchUrl =  route('admin.actions.switchUpdate', ['relation' => 'pages', 'field' => 'status', 'id' => $row->id]); ?>
@@ -28,7 +27,6 @@
 				<span class="custom-toggle-slider rounded-circle" data-label-off="OFF" data-label-on="ON"></span>
 			</label>
 		</div>
-		<?php endif; ?>
 	</td>
 	<td>
 		<?php echo _dt($row->created) ?>
@@ -40,7 +38,7 @@
 			</a>
 			<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
 				@if(in_array($row->slug, ['home', 'about-us', 'terms-conditions', 'privacy-policy']))
-					<a class="dropdown-item" target="_blank" href="<?php echo url('/'.$row->slug) ?>">
+					<a class="dropdown-item" target="_blank" href="<?php echo url('/page/details/'.$row->slug) ?>">
 				@else
 					<a class="dropdown-item" target="_blank" href="<?php echo route('admin.pages.view', ['id' => $row->id]) ?>">
 				@endif

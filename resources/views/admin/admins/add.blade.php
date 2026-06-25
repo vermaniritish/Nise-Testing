@@ -59,7 +59,7 @@
 								<div class="col-lg-6">
 									<div class="form-group">
 										<label class="form-control-label" for="input-username">Email Address</label>
-										<input type="email" id="input-username" class="form-control" placeholder="info@example.com" name="email"  value="{{ old('email') }}">
+										<input type="email" id="input-username" required class="form-control" placeholder="info@example.com" name="email"  value="{{ old('email') }}">
 										@error('email')
 										    <small class="text-danger">{{ $message }}</small>
 										@enderror
@@ -68,7 +68,7 @@
 								<div class="col-lg-6">
 									<div class="form-group">
 										<label class="form-control-label" for="input-email">Phone Number</label>
-										<input type="text" id="input-email" class="form-control" placeholder="9988774455" name="phonenumber" value="{{ old('phonenumber') }}" minlength="10" maxlength="10" pattern="[0-9]{10}" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+										<input type="text" id="input-email" class="form-control" required placeholder="9988774455" name="phonenumber" value="{{ old('phonenumber') }}" minlength="10" maxlength="10" pattern="[0-9]{10}" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
 										@error('phonenumber')
 										    <small class="text-danger">{{ $message }}</small>
 										@enderror
@@ -137,7 +137,7 @@
 
 									<div class="form-group passwordGroup <?php echo old('send_password_email') != '0' ? 'd-none' : '' ?>">
 										<div class="input-group">
-											<input type="password" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4" name="password" value="{{ old('password') }}">
+											<input type="password" autocomplete="off" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4" name="password" value="{{ old('password') }}">
 											<div class="input-group-append" id="button-addon4">
 												<button class="btn btn-outline-primary viewPassword" type="button"><i class="fas fa-eye"></i></button>
 												<button class="btn btn-outline-primary regeneratePassword" type="button"><i class="fas fa-redo-alt"></i></button>

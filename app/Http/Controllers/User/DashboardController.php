@@ -246,7 +246,7 @@ class DashboardController extends AppController
     public function testServiceCategoryDetails(Request $request, $slug)
     {
         $testServiceCategoryDetail = TestServiceCategory::where('slug', $slug)->first();
-        $serviceCategoryWiseTests = ServiceCategoryWiseTest::getAll();
+        $serviceCategoryWiseTests = ServiceCategoryWiseTest::where('service_category_id', $testServiceCategoryDetail->id)->get();
         $userId = UserAuth::getLoginId();
 
         if ($request->isMethod('post')) {
@@ -256,8 +256,7 @@ class DashboardController extends AppController
                 'total_fee' => 'required',
                 'grand_total_fee' => 'required',
 
-                'order_test.test_type_id' => 'required|array',
-                'order_test.test_type_id.*' => 'required',
+                
 
                 'order_test.sample_fee.*' => 'required',
                 'order_test.number_of_sample.*' => 'required',
@@ -309,8 +308,8 @@ class DashboardController extends AppController
                 'tds_scgst_value' => $request->tds_scgst_value,
                 'total_tds_igst' => $request->total_tds_igst,
                 'grand_total_fee' => $request->grand_total_fee,
-                'upload_pv_module_docs' => $data['upload_pv_module_docs'],
-                'internal_test_report'  => $data['internal_test_report'],
+                'upload_pv_module_docs' => isset($data['upload_pv_module_docs']) && $data['upload_pv_module_docs'] ? $data['upload_pv_module_docs'] : null,
+                'internal_test_report'  => isset($data['internal_test_report']) && $data['internal_test_report'] ? $data['internal_test_report'] : null,
             ]);
 
             // ✔ SAFE: Check array exists before loop
@@ -550,14 +549,20 @@ class DashboardController extends AppController
         ]);
     }
 
-    function noticeDetails(Request $request, $id){
+    function noticeDetails(Request $request, $slug){
 
         $notice = Notices::where('status', 1)
-            ->findOrFail($id);
-
-        return view('front/noticeDetail', [
-            'notice'  => $notice
-        ]);
+            ->where('slug', 'LIKE', $slug)
+            ->limit(1)
+            ->first();
+        if($notice) {
+            return view('front/noticeDetail', [
+                'notice'  => $notice
+            ]);
+        }
+        else {
+            abort(404);
+        }
     }
 
     function logout(Request $request)

@@ -43,7 +43,7 @@ class ServiceCategoryWiseTestsController extends AppController
         if ($request->get('search')) {
             $search = $request->get('search');
             $search = '%' . $search . '%';
-            $where['(service_category_wise_tests.id LIKE ? or service_category_wise_tests.title LIKE ?)'] = [$search, $search];
+            $where['(service_category_wise_tests.id LIKE ? or testing_services.title LIKE ? or testing_service_categories.test_category_title LIKE ? or service_category_wise_tests.title LIKE ?)'] = [$search, $search, $search, $search];
         }
 
         if ($request->get('created_on')) {
@@ -107,6 +107,7 @@ class ServiceCategoryWiseTestsController extends AppController
             ]);
 
             if (!$validator->fails()) {
+                $data['variations'] = json_encode(isset($data['variations']) && $data['variations'] ? $data['variations'] : []);
                 if (ServiceCategoryWiseTest::create($data)) {
                     return redirect()->route('admin.serviceCategoryWiseTests')
                                      ->with('success', 'Service category wise test created successfully.');
@@ -141,6 +142,7 @@ class ServiceCategoryWiseTestsController extends AppController
             ]);
 
             if (!$validator->fails()) {
+                $data['variations'] = json_encode(isset($data['variations']) && $data['variations'] ? $data['variations'] : []);
                 if (ServiceCategoryWiseTest::modify($id, $data)) {
                     return redirect()->route('admin.serviceCategoryWiseTests')
                         ->with('success', 'Service category wise test information updated successfully.');

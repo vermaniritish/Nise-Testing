@@ -18,7 +18,7 @@
             <div class="col-xl-8">
                 <div class="card">
                     <div class="card-body">
-                        <p>Welcome to Suryamitra Admin Dashboard.</p>
+                        <p>Welcome to Testing Admin Dashboard.</p>
                     </div>
                 </div>
             </div>

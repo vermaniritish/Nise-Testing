@@ -71,15 +71,15 @@ class OrderTest extends AppModel
 
         $listing = OrderTest::select(
                 'order_tests.*',
+                'orders.id as order_id',
                 'service_category_wise_tests.title as category_title',
-                'testing_services.title as service_title'
+                'testing_services.title as service_title',
+                'orders.created as created'
             )
             ->with('order_data', 'service_category_wise_test')
-
-            // ⭐ Added Required JOINs (TEST-TYPE → CATEGORY → SERVICE)
+            ->leftJoin('orders', 'orders.id', '=', 'order_tests.order_id')
             ->leftJoin('service_category_wise_tests', 'service_category_wise_tests.id', '=', 'order_tests.test_type_id')
             ->leftJoin('testing_services', 'testing_services.id', '=', 'service_category_wise_tests.service_id')
-
             ->orderBy($orderBy, $direction);
 
         // ----------------------------

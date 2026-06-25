@@ -64,10 +64,14 @@ class ServiceCategoryWiseTest extends AppModel
 
     	$listing = ServiceCategoryWiseTest::select([
 	    		'service_category_wise_tests.*',
+                'testing_services.title as testing_services_title',
+                'testing_service_categories.test_category_title as test_category_title',
                 'owner.first_name as owner_first_name',
                 'owner.last_name as owner_last_name'
 	    	])
             ->leftJoin('admins as owner', 'owner.id', '=', 'service_category_wise_tests.created_by')
+            ->leftJoin('testing_services', 'testing_services.id', '=', 'service_category_wise_tests.service_id')
+            ->leftJoin('testing_service_categories', 'testing_service_categories.id', '=', 'service_category_wise_tests.service_category_id')
 	    	->orderBy($orderBy, $direction);
         if(!empty($where))
 	    {

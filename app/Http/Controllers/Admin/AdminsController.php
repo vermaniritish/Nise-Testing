@@ -45,7 +45,7 @@ class AdminsController extends AppController
     	{
     		$search = $request->get('search');
     		$search = '%' . $search . '%';
-    		$where['(concat(first_name, "", last_name) LIKE ? or email LIKE ? or phonenumber LIKE ?)'] = [$search, $search, $search];
+    		$where['(concat(first_name, last_name) LIKE ? or email LIKE ? or phonenumber LIKE ?)'] = [str_replace(" ", "", $search), $search, $search];
     	}
 
     	if($request->get('last_login'))
@@ -71,8 +71,12 @@ class AdminsController extends AppController
     				$where['is_admin'] = 1;
     			break;
     		}
-    		
     	}
+
+		if($request->has('status') && $request->get('status') !== "")
+		{
+			$where['status'] = $request->get('status');
+		}
 
     	$listing = Admins::getListing($request, $where);
 

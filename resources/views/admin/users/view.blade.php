@@ -120,19 +120,22 @@
 								</tr>
 								<tr>
 									<th>GST</th>
-									<td><?php echo $user->gst ?></td>
-								</tr>
-								<tr>
-									<th>Tin Number</th>
-									<td><?php echo $user->tin ?></td>
+									<td>
+										<?php echo $user->gst ?>
+										<br />
+										<?php if($user->gst_file): ?>
+									        <a href="<?php echo url($user->gst_file); ?>" 
+									           target="_blank" class="btn btn-sm btn-primary">
+									           View Company File
+									        </a>
+									    <?php endif; ?>
+									</td>
 								</tr>
 								<tr>
 									<th>Registration Number</th>
 									<td>
-									    <?php echo $user->registration_number; ?>
-
+									    <?php echo $user->registration_number; ?><br />
 									    <?php if($user->company_file): ?>
-									        <br>
 									        <a href="<?php echo url($user->company_file); ?>" 
 									           target="_blank" class="btn btn-sm btn-primary">
 									           View Company File
@@ -140,7 +143,6 @@
 									    <?php endif; ?>
 									</td>
 								</tr>
-								@else
 								@endif
 
 								@if(isset($user->registration_type) && $user->registration_type == 'Company')

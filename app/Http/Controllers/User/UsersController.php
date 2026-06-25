@@ -8,6 +8,7 @@ use App\Models\Admin\District;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use App\Libraries\General;
 
 class UsersController extends AppController
 {
@@ -214,7 +215,7 @@ class UsersController extends AppController
             $user->pan_file = $panFile;
             $user->tin = $request->tin; 
             $user->registration_number = $request->registration_number;
-            $user->person_name = $request->person_name;
+            $user->ind_contact_person_name = $user->person_name = $request->person_name;
             $user->mobile = $request->mobile;
             $user->email = $request->email;
             $user->created = date('Y-m-d H:i:s');
@@ -223,7 +224,20 @@ class UsersController extends AppController
             // Create institute code like SM-INST-00001
             // $uniqueNumber = str_pad($user->id, 5, '0', STR_PAD_LEFT);
             // $user->institute_code = 'SM-INST-' . $uniqueNumber;
-            $user->save();
+
+            $codes = [
+                '{company_name}' => $user->company_name,
+                '{person_name}' => $user->person_name,
+                '{email}' => $user->email,
+                '{mobile}' => $user->mobile,
+            ];
+
+            General::sendTemplateEmail(
+                $user->email, 
+                'company-registration', 
+                $codes
+            );
+            
         } 
         elseif ($type === 'Individual') {
             $request->validate([
@@ -235,8 +249,7 @@ class UsersController extends AppController
                 'ind_city_or_district'  => 'required|string|max:255',
                 'ind_pin_code'          => 'required|digits:6',
                 'ind_mobile_number'                => 'required|string|max:15',
-                'ind_email'                 => 'required|email|max:255|unique:users,email',
-                'password'              => 'required|string|min:6',
+                'ind_email'                 => 'required|email|max:255|unique:users,email'
             ]);
 
             $user = new User();
@@ -254,11 +267,18 @@ class UsersController extends AppController
             $user->password = Hash::make($request->password);
             $user->created = date('Y-m-d H:i:s');
             $user->save();
+            $codes = [
+                '{name}' => $user->ind_contact_person_name,
+                '{email}' => $user->email,
+                '{mobile}' => $user->mobile,
+            ];
 
-            // Generate code
-            // $uniqueNumber = str_pad($user->id, 5, '0', STR_PAD_LEFT);
-            // $user->institute_code = 'SM-IND-' . $uniqueNumber;
-            $user->save();
+            General::sendTemplateEmail(
+                $user->email, 
+                'individual-registration', 
+                $codes
+            );
+
         }
 
         return redirect()->route('registration.confirmation')

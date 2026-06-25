@@ -181,6 +181,14 @@
 								<label class="form-control-label" for="input-first-name">Phone Number</label>
 								<input type="text" class="form-control" name="company_phonenumber" required placeholder="" value="{{ Settings::get('company_phonenumber') }}">
 							</div>
+							<div class="form-group">
+								<label class="form-control-label" for="input-first-name">Customer Support Phone Number</label>
+								<input type="text" class="form-control" name="customer_support_phone" required placeholder="" value="{{ Settings::get('customer_support_phone') }}">
+							</div>
+							<div class="form-group">
+								<label class="form-control-label" for="input-first-name">Customer Support Email</label>
+								<input type="text" class="form-control" name="customer_support_email" required placeholder="" value="{{ Settings::get('customer_support_email') }}">
+							</div>
 						</div>
 						<hr class="my-4" />
 						<h6 class="heading-small text-muted mb-4">Social Links</h6>
@@ -249,7 +257,7 @@
 									<input type="text" class="form-control" name="smtp_host" required placeholder="smtp.google.com" value="{{ Settings::get('smtp_host') }}">
 								</div>
 								<div class="form-group">
-									<?php $enc =  Settings::get('from_email') ?>
+									<?php $enc =  Settings::get('smtp_encryption') ?>
 									<label class="form-control-label" for="input-first-name">SMTP Encryption</label>
 									<select class="form-control" name="smtp_encryption" required placeholder="smtp.google.com" value="">
 										<option value="ssl" <?php echo ($enc == 'ssl' ? 'selected' : '') ?> >SSL (Secure Socket Layer)</option>

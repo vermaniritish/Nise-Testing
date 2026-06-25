@@ -27,6 +27,7 @@ use App\Models\Admin\Actions;
 use App\Models\PartnerAdmin\Center;
 use App\Models\PartnerAdmin\Batche;
 use App\Models\Admin\PollingStation;
+use App\Models\Admin\Users;
 use App\Models\Admin\TestServiceCategory;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +43,233 @@ class ActionsController extends AppController
 	* To Upload File
 	* @param Request $request
 	*/
-    function uploadFile(Request $request)
+	public function uploadFile(Request $request)
+{
+    $data = $request->all();
+
+    $validator = Validator::make($data, [
+        'path'      => 'required',
+        'file_type' => 'required',
+        'file'      => 'required|file|max:10240', // 10 MB
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Validation failed.',
+            'errors' => $validator->errors()->toArray(),
+            'has_file' => $request->hasFile('file')
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Allowed Upload Paths
+    |--------------------------------------------------------------------------
+    */
+   /* $allowedPaths = [
+        'uploads/images',
+        'uploads/documents',
+        'uploads/products',
+        'uploads/categories',
+        'uploads/admins'
+    ];
+
+    if (!in_array($data['path'], $allowedPaths)) {
+        return response()->json([
+            'status'  => 'error',
+            'message' => 'Invalid upload path.',
+            'path'    => $data['path']
+        ]);
+    }*/
+
+    if (!$request->hasFile('file')) {
+        return response()->json([
+            'status'  => 'error',
+            'message' => 'No file received.'
+        ]);
+    }
+
+    $file = $request->file('file');
+
+    if (!$file->isValid()) {
+        return response()->json([
+            'status'  => 'error',
+            'message' => 'Uploaded file is invalid.'
+        ]);
+    }
+
+    $originalName = $file->getClientOriginalName();
+    $extension    = strtolower($file->getClientOriginalExtension());
+    $mimeType     = $file->getMimeType();
+
+    /*
+    |--------------------------------------------------------------------------
+    | Block Double Extensions
+    |--------------------------------------------------------------------------
+    */
+    if (preg_match('/\.(php|phtml|phar|asp|aspx|jsp|exe|sh)\./i', $originalName)) {
+        return response()->json([
+            'status'  => 'error',
+            'message' => 'Invalid file name.'
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Block Dangerous Extensions
+    |--------------------------------------------------------------------------
+    */
+    $blockedExtensions = [
+        'php',
+        'phtml',
+        'phar',
+        'asp',
+        'aspx',
+        'jsp',
+        'exe',
+        'sh',
+        'bat',
+        'cgi',
+        'pl'
+    ];
+
+    if (in_array($extension, $blockedExtensions)) {
+        return response()->json([
+            'status'  => 'error',
+            'message' => 'This file type is not allowed.'
+        ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Allowed File Types
+    |--------------------------------------------------------------------------
+    */
+    if ($data['file_type'] == 'image') {
+
+        $allowedExtensions = [
+            'jpg',
+            'jpeg',
+            'png',
+            'gif',
+            'webp'
+        ];
+
+        $allowedMimes = [
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'image/webp'
+        ];
+
+    } else {
+
+        $allowedExtensions = [
+            'pdf',
+            'doc',
+            'docx',
+            'xls',
+            'xlsx',
+            'csv',
+            'txt'
+        ];
+
+        $allowedMimes = [
+            'application/pdf',
+            'application/x-pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/vnd.ms-excel',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'text/csv',
+            'text/plain'
+        ];
+    }
+
+    if (!in_array($extension, $allowedExtensions)) {
+        return response()->json([
+            'status'    => 'error',
+            'message'   => 'File extension not allowed.',
+            'extension' => $extension
+        ]);
+    }
+
+    if (!in_array($mimeType, $allowedMimes)) {
+        return response()->json([
+            'status'  => 'error',
+            'message' => 'Invalid MIME type.',
+            'mime'    => $mimeType
+        ]);
+    }
+
+    try {
+
+        if ($data['file_type'] == 'image') {
+
+            $uploadedFile = FileSystem::uploadImage(
+                $file,
+                $data['path']
+            );
+
+            if ($uploadedFile) {
+
+                $fileName = FileSystem::getFileNameFromPath($uploadedFile);
+
+                if (!empty($data['resize_large'])) {
+                    FileSystem::resizeImage(
+                        $uploadedFile,
+                        $fileName,
+                        $data['resize_large']
+                    );
+                }
+
+                if (!empty($data['resize_small'])) {
+                    FileSystem::resizeImage(
+                        $uploadedFile,
+                        'S-' . $fileName,
+                        $data['resize_small']
+                    );
+                }
+            }
+
+        } else {
+
+            $uploadedFile = FileSystem::uploadFile(
+                $file,
+                $data['path']
+            );
+        }
+
+        if (!$uploadedFile) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'File upload failed.'
+            ]);
+        }
+
+        $names = explode('/', $uploadedFile);
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'File uploaded successfully.',
+            'url'     => url($uploadedFile),
+            'name'    => end($names),
+            'path'    => $uploadedFile
+        ]);
+
+    } catch (\Exception $e) {
+
+        \Log::error('Upload Error: '.$e->getMessage());
+
+        return response()->json([
+            'status'  => 'error',
+            'message' => 'Upload failed.',
+            'error'   => $e->getMessage() // Remove in production
+        ]);
+    }
+}
+    /*function uploadFile(Request $request)
     {
     	$data = $request->toArray();
     	$validator = Validator::make(
@@ -124,7 +351,7 @@ class ActionsController extends AppController
 		    	'message' => 'File could not be uploaded due to missing parameters.'
 		    ]);	
 	    }
-    }
+    }*/
 
     /**
 	* To Remove File
@@ -277,6 +504,22 @@ class ActionsController extends AppController
 					]);
 	    	if($updated)
 	    	{
+				if($table == 'users' && $request->get('flag'))
+				{
+					$user = Users::find($id);
+					
+					$codes = [
+						'{name}' => $user->registration_type == 'company' ? $user->company_name : $user->ind_contact_person_name,
+						'{email}' => $user->email,
+						'{mobile}' => $user->mobile,
+					];
+
+					General::sendTemplateEmail(
+						$user->email, 
+						'approved-account', 
+						$codes
+					);
+				}
 	    		return Response()->json([
 			    	'status' => 'success',
 			    	'message' => 'Record updated successfully.'

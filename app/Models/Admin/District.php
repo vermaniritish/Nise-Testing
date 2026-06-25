@@ -14,7 +14,7 @@ class District extends AppModel
 {
     protected $table = 'district';
     protected $primaryKey = 'id';
-    
+    public $timestamps = false;
     public function states()
     {
         return $this->belongsTo(State::class, 'state_id', 'id');
@@ -163,16 +163,11 @@ class District extends AppModel
             $district->{$k} = $v;
         }
 
-        $district->created_at = date('Y-m-d H:i:s');
-        $district->updated_at = date('Y-m-d H:i:s');
+        $district->created = date('Y-m-d H:i:s');
+        $district->modified = date('Y-m-d H:i:s');
         
         if($district->save())
         {
-            if(isset($data['title']) && $data['title'])
-            {
-                $district->slug = Str::slug($district->title) . '-' . General::encode($district->id);
-                $district->save();
-            }
 
             return $district;
         }
@@ -195,15 +190,10 @@ class District extends AppModel
             $district->{$k} = $v;
         }
         
-        $district->updated_at = date('Y-m-d H:i:s');
+        $district->modified = date('Y-m-d H:i:s');
 
         if($district->save())
         {
-            if(isset($data['title']) && $data['title'])
-            {
-                $district->slug = Str::slug($district->title) . '-' . General::encode($district->id);
-                $district->save();
-            }
 
             return $district;
         }

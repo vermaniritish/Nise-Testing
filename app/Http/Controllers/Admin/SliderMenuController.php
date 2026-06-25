@@ -118,6 +118,11 @@ class SliderMenuController extends AppController
                     'heading' => ['required'],
                     'heading_hi' => ['required'],
                     'image' => ['required'],
+				],
+				[
+					'heading.required'    => 'Heading is required.',
+					'heading_hi.required' => 'Hindi heading is required.',
+					'image.required'      => 'Please upload an image.',
 				]
 	        );
 
@@ -164,8 +169,13 @@ class SliderMenuController extends AppController
                     [
                         'heading' => ['required'],
                         'heading_hi' => ['required'],
-                        'image' => ['required'],
-                    ]
+                        'image' => ['nullable'],
+					],
+					[
+						'heading.required'    => 'Heading is required.',
+						'heading_hi.required' => 'Hindi heading is required.',
+						'image.required'      => 'Please upload an image.',
+					]
                 );
 		        if(!$validator->fails())
 		        {
