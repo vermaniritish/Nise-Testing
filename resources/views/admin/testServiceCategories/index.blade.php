@@ -126,9 +126,11 @@
 										<i class="fas fa-sort" data-field="testing_service_categories.created"></i>
 										<?php endif; ?>
 									</th>
+									<?php if(Permissions::hasPermission('testing_service_categories', 'update') || Permissions::hasPermission('testing_service_categories', 'delete')): ?>
 									<th class="text-center" width="10%">
 										Actions
 									</th>
+									<?php endif; ?>
 								</tr>
 							</thead>
 							<tbody class="list">

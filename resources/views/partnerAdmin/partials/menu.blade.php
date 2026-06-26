@@ -11,7 +11,7 @@
             <?php $active = strpos(request()->route()->getAction()['as'], 'partnerAdmin.testManagements') > -1; ?>
             <a class="nav-link <?php echo $active ? ' active' : ''; ?>" href="{{route('partnerAdmin.testManagements')}}">
                 <i class="fa fa-building text-primary"></i>
-                <span class="nav-link-text">Test Managements</span>
+                <span class="nav-link-text">Test Requests</span>
             </a>
         </li>
     </ul>

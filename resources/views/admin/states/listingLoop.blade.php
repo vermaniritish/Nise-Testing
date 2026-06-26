@@ -14,6 +14,7 @@
 		{{ $row->name }}
 	</td>
 	<td>
+        <?php if(Permissions::hasPermission('states', 'update')): ?>
         <div class="custom-control">
             <label class="custom-toggle">
                 <?php $switchUrl = route('admin.actions.switchUpdate', ['relation' => 'states', 'field' => 'status', 'id' => $row->id]); ?>
@@ -22,10 +23,14 @@
                 <span class="custom-toggle-slider rounded-circle" data-label-off="OFF" data-label-on="ON"></span>
             </label>
         </div>
+        <?php else: ?>
+            <?php echo $row->status ? 'Active' : 'Inactive'; ?>
+        <?php endif; ?>
     </td>
 	<td>
 		{{ _dt($row->created) }}
 	</td>
+    <?php if(Permissions::hasPermission('states', 'update') || Permissions::hasPermission('states', 'delete')): ?>
 	<td class="text-center">
         <div class="dropdown">
             <a class="btn btn-sm btn-icon-only text-warning" href="#" role="button" data-toggle="dropdown"
@@ -50,5 +55,6 @@
             </div>
         </div>
     </td>
+    <?php endif; ?>
 </tr>
 @endforeach

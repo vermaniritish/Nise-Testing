@@ -28,6 +28,7 @@
     </td>
 
     <td>
+        <?php if(Permissions::hasPermission('testing_services', 'update')): ?>
         <div class="custom-control">
             <label class="custom-toggle">
                 <?php $switchUrl = route('admin.actions.switchUpdate', ['relation' => 'testing_services', 'field' => 'status', 'id' => $row->id]); ?>
@@ -36,6 +37,9 @@
                 <span class="custom-toggle-slider rounded-circle" data-label-off="OFF" data-label-on="ON"></span>
             </label>
         </div>
+        <?php else: ?>
+            <?php echo $row->status ? 'Active' : 'Inactive'; ?>
+        <?php endif; ?>
     </td>
     <td>
         <?php echo _dt($row->created); ?>
@@ -51,8 +55,9 @@
                     <i class="fas fa-eye text-yellow"></i>
                     <span class="status">View</span>
                 </a>
-                <div class="dropdown-divider"></div>
+                
                 <?php if(Permissions::hasPermission('testing_services', 'update')): ?>
+                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="<?php echo route('admin.testingService.edit', ['id' => $row->id]); ?>">
                     <i class="fas fa-pencil-alt text-info"></i>
                     <span class="status">Edit</span>

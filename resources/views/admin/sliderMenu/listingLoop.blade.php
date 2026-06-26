@@ -17,6 +17,7 @@
 		<?php echo $row->heading ?>
 	</td>
     <td>
+		@if(Permissions::hasPermission('slider_menu', 'update'))
 		<div class="custom-control">
 			<label class="custom-toggle">
 				<?php $switchUrl =  route('admin.actions.switchUpdate', ['relation' => 'slider_menu', 'field' => 'status', 'id' => $row->id]); ?>
@@ -24,21 +25,20 @@
 				<span class="custom-toggle-slider rounded-circle" data-label-off="OFF" data-label-on="ON"></span>
 			</label>
 		</div>
+		@else
+		<?php echo ($row->status ? 'Active' : 'Inactive') ?>
+		@endif
 	</td>
 	<td>
 		<?php echo _dt($row->created) ?>
 	</td>
+	<?php if(Permissions::hasPermission('slider_menu', 'update') || Permissions::hasPermission('slider_menu', 'delete')): ?>
 	<td class="text-center">
 			<div class="dropdown">
 				<a class="btn btn-sm btn-icon-only text-warning" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<i class="fas fa-ellipsis-v"></i>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-					<a class="dropdown-item" href="<?php echo route('admin.sliderMenu.view', ['id' => $row->id]) ?>">
-						<i class="fas fa-eye text-yellow"></i>
-						<span class="status">View</span>
-					</a>
-					<div class="dropdown-divider"></div>
 					<?php if(Permissions::hasPermission('slider_menu', 'update')): ?>
 					<a class="dropdown-item" href="<?php echo route('admin.sliderMenu.edit', ['id' => $row->id]) ?>">
 						<i class="fas fa-pencil-alt text-info"></i>
@@ -60,5 +60,6 @@
 				</div>
 			</div>
 	</td>
+	<?php endif; ?>
 </tr>
 <?php endforeach; ?>

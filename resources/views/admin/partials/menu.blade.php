@@ -16,7 +16,7 @@
         <li class="nav-item">
             <a class="nav-link<?php echo $active ? ' active' : ''; ?>" href="<?php echo route('admin.testManagements'); ?>">
                 <i class="fa fa-cart-arrow-down text-primary"></i>
-                <span class="nav-link-text">Test Management</span>
+                <span class="nav-link-text">Test Request</span>
             </a>
         </li>
         <?php endif; ?>
@@ -113,6 +113,7 @@
                     <span class="nav-link-text">Manage State/District</span>
                 </a>
                 <ul class="list-unstyled submenu collapse<?php echo $active ? ' show' : ''; ?>" id="submenu_location">
+                    <?php if(Permissions::hasPermission('states', 'listing')): ?>
                     <li class="nav-item">
                         <a class="nav-link<?php echo request()->route()->getAction()['as'] == 'admin.states' ? ' active' : ''; ?>" href="<?php echo route('admin.states'); ?>">
                             <span class="badge badge-dot mr-4">
@@ -121,6 +122,8 @@
                             </span>
                         </a>
                     </li>
+                    <?php endif; ?>
+                    <?php if(Permissions::hasPermission('district', 'listing')): ?>
                     <li class="nav-item">
                         <a class="nav-link<?php echo request()->route()->getAction()['as'] == 'admin.district' ? ' active' : ''; ?>" href="<?php echo route('admin.district'); ?>">
                             <span class="badge badge-dot mr-4">
@@ -129,17 +132,28 @@
                             </span>
                         </a>
                     </li>
+                    <?php endif; ?>
                 </ul>
             </li>
         <?php endif; ?>
-        <?php if(Permissions::hasPermission('menu', 'listing')): ?>
-        <?php $active = strpos(request()->route()->getAction()['as'], 'admin.menu.add') > -1 || strpos(request()->route()->getAction()['as'], 'admin.menuHindi.add') > -1 || strpos(request()->route()->getAction()['as'], 'admin.editHomePage') > -1 || strpos(request()->route()->getAction()['as'], 'admin.editAaboutUs') > -1 || strpos(request()->route()->getAction()['as'], 'admin.pages') > -1 || strpos(request()->route()->getAction()['as'], 'admin.sliderMenu') > -1 || strpos(request()->route()->getAction()['as'], 'admin.notices') > -1 || strpos(request()->route()->getAction()['as'], 'admin.testingService') > -1; ?>
+        <?php if(Permissions::hasPermission('home_page', 'update')): ?>
+        <?php $active = strpos(request()->route()->getAction()['as'], 'admin.menu.add') > -1 || strpos(request()->route()->getAction()['as'], 'admin.menuHindi.add') > -1 || strpos(request()->route()->getAction()['as'], 'admin.editHomePage') > -1 || strpos(request()->route()->getAction()['as'], 'admin.editAaboutUs') > -1 || strpos(request()->route()->getAction()['as'], 'admin.pages') > -1 || strpos(request()->route()->getAction()['as'], 'admin.sliderMenu') > -1; ?>
             <li class="nav-item">
                 <a class="nav-link<?php echo $active ? ' active' : ''; ?>" href="#submenu_website_cms" data-toggle="collapse">
                     <i class="fas fa-laptop-code text-primary"></i>
                     <span class="nav-link-text">Website CMS</span>
                 </a>
                 <ul class="list-unstyled submenu collapse<?php echo $active ? ' show' : ''; ?>" id="submenu_website_cms">
+                    @if(Permissions::hasPermission('menu', 'update'))
+                    <li class="nav-item">
+                        <a class="nav-link<?php echo $active ? ' active' : ''; ?>" href="<?php echo route('admin.menu.add'); ?>">
+                            <span class="badge badge-dot mr-4">
+                                <i class="bg-gray"></i>
+                                <span class="status">Header Menu</span>
+                            </span>
+                        </a>
+                    </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link<?php echo $active ? ' active' : ''; ?>" href="<?php echo route('admin.editHomePage'); ?>">
                             <span class="badge badge-dot mr-4">
@@ -156,6 +170,7 @@
                             </span>
                         </a>
                     </li>
+                    @if(Permissions::hasPermission('pages', 'listing'))
                     <li class="nav-item">
                         <a class="nav-link<?php echo $active ? ' active' : ''; ?>" href="<?php echo route('admin.pages'); ?>">
                             <span class="badge badge-dot mr-4">
@@ -164,6 +179,8 @@
                             </span>
                         </a>
                     </li>
+                    @endif
+                    @if(Permissions::hasPermission('slider_menu', 'listing'))
                     <li class="nav-item">
                         <a class="nav-link<?php echo $active ? ' active' : ''; ?>" href="<?php echo route('admin.sliderMenu'); ?>">
                             <span class="badge badge-dot mr-4">
@@ -172,7 +189,8 @@
                             </span>
                         </a>
                     </li>
-                    
+                    @endif
+                    @if(Permissions::hasPermission('notices', 'listing'))
                     <li class="nav-item">
                         <a class="nav-link<?php echo $active ? ' active' : ''; ?>" href="<?php echo route('admin.notices'); ?>">
                             <span class="badge badge-dot mr-4">
@@ -181,14 +199,8 @@
                             </span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link<?php echo $active ? ' active' : ''; ?>" href="<?php echo route('admin.menu.add'); ?>">
-                            <span class="badge badge-dot mr-4">
-                                <i class="bg-gray"></i>
-                                <span class="status">Menu English</span>
-                            </span>
-                        </a>
-                    </li>
+                    @endif
+                    
                 </ul>
             </li>
         <?php endif; ?>

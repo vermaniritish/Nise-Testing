@@ -61,8 +61,8 @@
 				            	<thead class="thead-light">
 					              	<tr>
 					              		<th width="5%">
-			              					<div class="form-check">
-			              			        	<input type="checkbox" class="form-check-input mark_all" id="mark_all">
+			              					<div class="custom-checkbox">
+			              			        	<input type="checkbox" class="custom-control-input mark_all" id="mark_all">
 			              			        	<label class="form-check-label" for="mark_all"></label>
 			              			      	</div>
 					              		</th>
@@ -117,9 +117,11 @@
 											<i class="fas fa-sort" data-field="district.created"></i>
 											@endif
 										</th>
+										<?php if(Permissions::hasPermission('district', 'update') || Permissions::hasPermission('district', 'delete')): ?>
 										<th class="text-center">
 											Actions
 										</th>
+										<?php endif; ?>
 					              	</tr>
 				            	</thead>
 				            	<tbody class="list">

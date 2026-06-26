@@ -218,6 +218,7 @@ class UsersController extends AppController
             $user->ind_contact_person_name = $user->person_name = $request->person_name;
             $user->mobile = $request->mobile;
             $user->email = $request->email;
+            $user->status = 1;
             $user->created = date('Y-m-d H:i:s');
             $user->save();
 
@@ -266,6 +267,7 @@ class UsersController extends AppController
             $user->email = $request->ind_email;
             $user->password = Hash::make($request->password);
             $user->created = date('Y-m-d H:i:s');
+            $user->status = 1;
             $user->save();
             $codes = [
                 '{name}' => $user->ind_contact_person_name,

@@ -104,7 +104,7 @@ class TestManagementsController extends AppController
 
             if (OrderTest::modify($request->test_id, $data)) {
                 return redirect()->route('admin.testManagements')
-                    ->with('success', 'Test Management updated successfully.');
+                    ->with('success', 'Test request updated successfully.');
             }
 
             return back()->with('error', 'Information could not be saved. Please try again.');

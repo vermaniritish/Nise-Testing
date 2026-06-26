@@ -107,9 +107,11 @@
 										<i class="fas fa-sort" data-field="slider_menu.created"></i>
 										<?php endif; ?>
 									</th>
+									<?php if(Permissions::hasPermission('slider_menu', 'update') || Permissions::hasPermission('slider_menu', 'delete')): ?>
 									<th class="text-center" width="10%">
 										Actions
 									</th>
+									<?php endif; ?>
 								</tr>
 							</thead>
 							<tbody class="list">

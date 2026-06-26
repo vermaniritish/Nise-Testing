@@ -196,28 +196,37 @@
 												
 											</td>
 											<td>
+												<?php $pX = $p['permissions'] ? json_decode($p['permissions'], true) : null; ?>
+												@if($pX && $pX['listing'])
 												<label class="custom-toggle">
 													<input type="checkbox" name="permissions[<?php echo $p['id'] ?>][]" value="listing" <?php echo (isset($adminPermissions[$p['id']]) && in_array('listing', $adminPermissions[$p['id']]) ? 'checked' : '') ?>>
 													<span class="custom-toggle-slider rounded-circle"></span>
 												</label>
+												@endif
 											</td>
 											<td>
+												@if($pX && $pX['create'])
 												<label class="custom-toggle">
 												  <input type="checkbox"  name="permissions[<?php echo $p['id'] ?>][]" value="create" <?php echo (isset($adminPermissions[$p['id']]) && in_array('create', $adminPermissions[$p['id']]) ? 'checked' : '') ?>>
 												  <span class="custom-toggle-slider rounded-circle"></span>
 												</label>
+												@endif
 											</td>
 											<td>
+												@if($pX && $pX['update'])
 												<label class="custom-toggle">
 											  		<input type="checkbox"  name="permissions[<?php echo $p['id'] ?>][]" value="update" <?php echo (isset($adminPermissions[$p['id']]) && in_array('update', $adminPermissions[$p['id']]) ? 'checked' : '') ?>>
 													<span class="custom-toggle-slider rounded-circle"></span>
 												</label>
+												@endif
 											</td>
 											<td>
+												@if($pX && $pX['delete'])
 												<label class="custom-toggle">
 												  	<input type="checkbox"  name="permissions[<?php echo $p['id'] ?>][]" value="delete" <?php echo (isset($adminPermissions[$p['id']]) && in_array('delete', $adminPermissions[$p['id']]) ? 'checked' : '') ?>>
 												  	<span class="custom-toggle-slider rounded-circle"></span>
 												</label>
+												@endif
 											</td>
 										</tr>
 										<?php endforeach; ?>

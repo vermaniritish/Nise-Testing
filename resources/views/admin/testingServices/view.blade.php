@@ -9,15 +9,19 @@
 					</div>
 					<div class="col-lg-6 col-5 text-right">
 						<a href="<?php echo route('admin.testingService') ?>" class="btn btn-neutral"><i class="fa fa-arrow-left"></i> Back</a>
+						<?php if(Permissions::hasPermission('testing_services', 'update') || Permissions::hasPermission('testing_services', 'delete')): ?>
 						<div class="dropdown" data-toggle="tooltip" data-title="More Actions">
 							<a class="btn btn-neutral" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i class="fas fa-ellipsis-v"></i>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+								<?php if(Permissions::hasPermission('testing_services', 'update')): ?>
 								<a class="dropdown-item" href="<?php echo route('admin.testingService.edit', ['id' => $page->id]) ?>">
 									<i class="fas fa-pencil-alt text-info"></i>
 									<span class="status">Edit</span>
 								</a>
+								<?php endif; ?>
+								<?php if(Permissions::hasPermission('testing_services', 'delete')): ?>
 								<div class="dropdown-divider"></div>
 								<a
 									class="dropdown-item _delete"
@@ -27,8 +31,10 @@
 									<i class="fas fa-times text-danger"></i>
 									<span class="status text-danger">Delete</span>
 								</a>
+								<?php endif; ?>
 							</div>
 						</div>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>

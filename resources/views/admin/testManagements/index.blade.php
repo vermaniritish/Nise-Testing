@@ -5,7 +5,7 @@
             <div class="header-body">
                 <div class="row align-items-center py-4">
                     <div class="col-lg-6 col-7">
-                        <h6 class="h2 text-white d-inline-block mb-0">Manage Test Managements</h6>
+                        <h6 class="h2 text-white d-inline-block mb-0">Test Requests</h6>
                     </div>
                     <div class="col-lg-6 col-5 text-right">
                         @include('admin.testManagements.filters')
@@ -24,7 +24,7 @@
                     <!-- Card header -->
                     <div class="card-header border-0">
                         <div class="heading">
-                            <h3 class="mb-0">Here Is Your Test Management!</h3>
+                            <h3 class="mb-0">Here Is Your Test Requests!</h3>
                         </div>
                         <div class="actions">
                             <div class="input-group input-group-alternative input-group-merge">

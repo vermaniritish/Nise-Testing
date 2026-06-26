@@ -67,8 +67,10 @@ class Permissions extends AppModel
     {
         $permissions = AdminPermissions::select([
             'permission_id',
-            'mode'
+            'mode',
+            'permissions.permissions'
         ])
+        ->leftJoin('permissions', 'permissions.id' , '=', 'admin_permissions.permission_id')
         ->where('admin_id', $adminId)
         ->get();
 

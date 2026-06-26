@@ -311,7 +311,7 @@ class AdminsController extends AppController
 		        		}
 
 		        		$request->session()->flash('success', 'Admin updated successfully.');
-		        		return redirect()->route('admin.admins');
+		        		return redirect()->back();
 		        	}
 		        	else
 		        	{

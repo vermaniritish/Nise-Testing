@@ -69,7 +69,7 @@ class TestManagementsController extends AppController
             if (!$validator->fails()) {
                 if (OrderTest::modify($request->test_id, $data)) {
                     return redirect()->route('partnerAdmin.testManagements')
-                        ->with('success', 'Test Management information updated successfully.');
+                        ->with('success', 'Test request updated successfully.');
                 }
 
                 return back()->with('error', 'Information could not be saved. Please try again.')->withInput();

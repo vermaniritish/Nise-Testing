@@ -28,7 +28,7 @@ class MenuController extends AppController
 
     function index(Request $request)
     {
-        if (!Permissions::hasPermission('menu', 'listing')) {
+        if (!Permissions::hasPermission('menu', 'update')) {
             $request->session()->flash('error', 'Permission denied.');
             return redirect()->route('admin.dashboard');
         }
@@ -89,7 +89,7 @@ class MenuController extends AppController
 
     public function add(Request $request, $slug = null)
     {
-        if (!Permissions::hasPermission('menu', 'create')) {
+        if (!Permissions::hasPermission('menu', 'update')) {
             $request->session()->flash('error', 'Permission denied.');
             return redirect()->route('admin.dashboard');
         }
@@ -136,7 +136,7 @@ class MenuController extends AppController
 
     public function addFooterMenu(Request $request)
     {
-        if (!Permissions::hasPermission('menu', 'create')) {
+        if (!Permissions::hasPermission('menu', 'update')) {
             $request->session()->flash('error', 'Permission denied.');
             return redirect()->route('admin.dashboard');
         }
@@ -199,7 +199,7 @@ class MenuController extends AppController
 
     public function addCoursesMenu(Request $request)
     {
-        if (!Permissions::hasPermission('menu', 'create')) {
+        if (!Permissions::hasPermission('menu', 'update')) {
             $request->session()->flash('error', 'Permission denied.');
             return redirect()->route('admin.dashboard');
         }
@@ -263,7 +263,7 @@ class MenuController extends AppController
 
     public function addInformationMenu(Request $request)
     {
-        if (!Permissions::hasPermission('menu', 'create')) {
+        if (!Permissions::hasPermission('menu', 'update')) {
             $request->session()->flash('error', 'Permission denied.');
             return redirect()->route('admin.dashboard');
         }
@@ -326,7 +326,7 @@ class MenuController extends AppController
 
     public function addOtherLinksMenu(Request $request)
     {
-        if (!Permissions::hasPermission('menu', 'create')) {
+        if (!Permissions::hasPermission('menu', 'update')) {
             $request->session()->flash('error', 'Permission denied.');
             return redirect()->route('admin.dashboard');
         }
@@ -441,7 +441,7 @@ class MenuController extends AppController
 
     function delete(Request $request, $id)
     {
-        if (!Permissions::hasPermission('menu', 'delete')) {
+        if (!Permissions::hasPermission('menu', 'update')) {
             $request->session()->flash('error', 'Permission denied.');
             return redirect()->route('admin.dashboard');
         }
@@ -458,7 +458,7 @@ class MenuController extends AppController
 
     function bulkActions(Request $request, $action)
     {
-        if (($action != 'delete' && !Permissions::hasPermission('menu', 'update')) || ($action == 'delete' && !Permissions::hasPermission('menu', 'delete'))) {
+        if (($action != 'delete' && !Permissions::hasPermission('menu', 'update')) || ($action == 'delete' && !Permissions::hasPermission('menu', 'update'))) {
             $request->session()->flash('error', 'Permission denied.');
             return redirect()->route('admin.dashboard');
         }

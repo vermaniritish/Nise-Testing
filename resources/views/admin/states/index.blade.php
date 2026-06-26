@@ -106,9 +106,11 @@
 											<i class="fas fa-sort" data-field="states.created"></i>
 											@endif
 										</th>
+										<?php if(Permissions::hasPermission('states', 'update') || Permissions::hasPermission('states', 'delete')): ?>
 										<th class="text-center">
 											Actions
 										</th>
+										<?php endif; ?>
 					              	</tr>
 				            	</thead>
 				            	<tbody class="list">

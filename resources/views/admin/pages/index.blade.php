@@ -31,6 +31,7 @@
 							<h3 class="mb-0">Here Is Your Pages Listing!</h3>
 						</div>
 						<div class="actions">
+							@if(Permissions::hasPermission('pages', 'update'))
 							<div class="input-group input-group-alternative input-group-merge">
 								<div class="input-group-prepend">
 									<span class="input-group-text"><i class="fas fa-search"></i></span>
@@ -62,16 +63,9 @@
 											<span class="status">Unpublish</span>
 										</span>
 									</a>
-									{{-- <div class="dropdown-divider"></div>
-		                            <a
-		                            	href="javascript:void(0);"
-		                            	class="waves-effect waves-block dropdown-item text-danger"
-		                            	onclick="bulk_actions('<?php echo route('admin.pages.bulkActions', ['action' => 'delete']) ?>', 'delete');">
-											<i class="fas fa-times text-danger"></i>
-											<span class="status text-danger">Delete</span>
-		                            </a> --}}
 								</div>
 							</div>
+							@endif
 						</div>
 					</div>
 					<div class="table-responsive">

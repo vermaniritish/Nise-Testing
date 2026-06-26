@@ -20,6 +20,7 @@
 		<?php echo $row->name ?>
 	</td>
 	<td>
+		<?php if(Permissions::hasPermission('district', 'update')): ?>
 		<div class="custom-control">
 			<label class="custom-toggle">
 				<?php $switchUrl =  route('admin.actions.switchUpdate', ['relation' => 'district', 'field' => 'status', 'id' => $row->id]); ?>
@@ -27,10 +28,14 @@
 				<span class="custom-toggle-slider rounded-circle" data-label-off="OFF" data-label-on="ON"></span>
 			</label>
 		</div>
+		<?php else: ?>
+            <?php echo $row->status ? 'Active' : 'Inactive'; ?>
+        <?php endif; ?>
 	</td>
 	<td>
 		<?php echo _dt($row->created) ?>
 	</td>
+	<?php if(Permissions::hasPermission('district', 'update') || Permissions::hasPermission('district', 'delete')): ?>
 	<td class="text-center">
 		<div class="dropdown">
 			<a class="btn btn-sm btn-icon-only text-warning" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,7 +43,6 @@
 			</a>
 			<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
 				<?php if(Permissions::hasPermission('district', 'update')): ?>
-					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="<?php echo route('admin.district.edit', ['id' => $row->id]) ?>">
 						<i class="fas fa-pencil-alt text-info"></i>
 						<span class="status">Edit</span>
@@ -58,5 +62,6 @@
 			</div>
 		</div>
 	</td>
+	<?php endif; ?>
 </tr>
 <?php endforeach; ?>

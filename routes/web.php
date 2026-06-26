@@ -31,6 +31,7 @@ Route::get('locale/{lang}', function ($lang) {
 Route::middleware(['guest'])->group(function () {
     include "Admin/auth.php";
     Route::get('/', '\App\Http\Controllers\User\DashboardController@home')->name('home.index');
+    Route::get('/login', '\App\Http\Controllers\User\DashboardController@home')->name('home.login');
     // Route::get('/notices', '\App\Http\Controllers\User\DashboardController@notices')->name('notices');
     Route::get('/testing-service', '\App\Http\Controllers\User\DashboardController@testingService')->name('testingService');
 

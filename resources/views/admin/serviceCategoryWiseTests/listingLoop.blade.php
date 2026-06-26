@@ -29,6 +29,7 @@
     </td>
 
     <td>
+        <?php if(Permissions::hasPermission('service_category_wise_tests', 'update')): ?>
         <div class="custom-control">
             <label class="custom-toggle">
                 <?php $switchUrl = route('admin.actions.switchUpdate', ['relation' => 'service_category_wise_tests', 'field' => 'status', 'id' => $row->id]); ?>
@@ -37,6 +38,9 @@
                 <span class="custom-toggle-slider rounded-circle" data-label-off="OFF" data-label-on="ON"></span>
             </label>
         </div>
+        <?php else: ?>
+            <?php echo $row->status ? "Active" : 'Inactive' ?>
+        <?php endif; ?>
     </td>
     <td>
         <?php echo _dt($row->created); ?>

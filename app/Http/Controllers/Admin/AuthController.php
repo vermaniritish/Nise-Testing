@@ -29,6 +29,10 @@ class AuthController extends AppController
 
     function login(Request $request)
     {
+		if(AdminAuth::getLoginId()) {
+			return redirect()->route('admin.dashboard');
+		}
+
     	if($request->isMethod('post'))
     	{
 	    	if($request->has(['email', 'password']))
@@ -123,6 +127,10 @@ class AuthController extends AppController
 
     function secondAuth(Request $request, $token)
     {
+		if(AdminAuth::getLoginId()) {
+			return redirect()->route('admin.dashboard');
+		}
+		
     	$otp = $request->get('otp');
 		$user = AdminAuth::getRow([
 			'token LIKE ?' => [

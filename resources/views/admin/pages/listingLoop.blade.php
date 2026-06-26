@@ -20,6 +20,7 @@
 		<?php echo $row->owner_first_name . ' ' . $row->owner_last_name ?>
 	</td>
 	<td>
+		@if(Permissions::hasPermission('pages', 'update'))
 		<div class="custom-control">
 			<label class="custom-toggle">
 				<?php $switchUrl =  route('admin.actions.switchUpdate', ['relation' => 'pages', 'field' => 'status', 'id' => $row->id]); ?>
@@ -27,6 +28,9 @@
 				<span class="custom-toggle-slider rounded-circle" data-label-off="OFF" data-label-on="ON"></span>
 			</label>
 		</div>
+		@else
+		<?php echo ($row->status ? 'Active' : 'Inactive') ?>
+		@endif
 	</td>
 	<td>
 		<?php echo _dt($row->created) ?>
@@ -45,8 +49,8 @@
 					<i class="fas fa-eye text-yellow"></i>
 					<span class="status">View</span>
 				</a>
-				<div class="dropdown-divider"></div>
                 <?php if(Permissions::hasPermission('pages', 'update')): ?>
+					<div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="<?php echo route('admin.pages.edit', ['id' => $row->id]) ?>">
                         <i class="fas fa-pencil-alt text-info"></i>
                         <span class="status">Edit</span>

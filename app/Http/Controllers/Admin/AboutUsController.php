@@ -32,7 +32,7 @@ class AboutUsController extends AppController
 
     function edit(Request $request)
     {
-        if (!Permissions::hasPermission('about_us', 'update')) {
+        if (!Permissions::hasPermission('home_page', 'update')) {
             $request->session()->flash('error', 'Permission denied.');
             return redirect()->route('admin.dashboard');
         }
