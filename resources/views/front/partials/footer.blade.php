@@ -9,8 +9,9 @@
 <?php 
 $logos = CustomPageData::get('logos');
 $logos = $logos ? json_decode($logos, true) : null;
-$totalUnique = \App\Models\Admin\Visitor::distinct('ip_address')->count('ip_address');
-$lastUpdate = Admins::select(['last_login'])->orderBy('last_login', 'desc')->limit(1)->pluck('last_login')->first();
+$totalUnique= ""; $lastUpdate ="";
+//$totalUnique = \App\Models\Admin\Visitor::distinct('ip_address')->count('ip_address');
+//$lastUpdate = Admins::select(['last_login'])->orderBy('last_login', 'desc')->limit(1)->pluck('last_login')->first();
 $disclaimerStatus = Pages::where('slug','disclaimer')->first();
 $privacyPolicyStatus = Pages::where('slug','privacy-policy')->first();
 $siteMapStatus = Pages::where('slug','site-map')->first();

@@ -104,19 +104,14 @@ class ProfileController extends AppController
 	            $validator = Validator::make(
 		            $request->toArray(),
 		            [
-		                'password' => [	   
-            'min:8',
-            'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&^()_\-+=])[A-Za-z\d@$!%*#?&^()_\-+=]{8,}$/'
+		                'password' => [
+						    'min:8'
 		                ],
 		                'new_password' => [
-						    'required',
-            'min:8',
-            'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&^()_\-+=])[A-Za-z\d@$!%*#?&^()_\-+=]{8,}$/'
+						    'min:8'
 		                ],
 		                'confirm_password' => [
-						    'required',
-            'min:8',
-            'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&^()_\-+=])[A-Za-z\d@$!%*#?&^()_\-+=]{8,}$/'
+						    'min:8'
 		                ]
 		            ]
 		        );

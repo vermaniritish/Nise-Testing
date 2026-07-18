@@ -144,16 +144,6 @@
                     <span class="nav-link-text">Website CMS</span>
                 </a>
                 <ul class="list-unstyled submenu collapse<?php echo $active ? ' show' : ''; ?>" id="submenu_website_cms">
-                    @if(Permissions::hasPermission('menu', 'update'))
-                    <li class="nav-item">
-                        <a class="nav-link<?php echo $active ? ' active' : ''; ?>" href="<?php echo route('admin.menu.add'); ?>">
-                            <span class="badge badge-dot mr-4">
-                                <i class="bg-gray"></i>
-                                <span class="status">Header Menu</span>
-                            </span>
-                        </a>
-                    </li>
-                    @endif
                     <li class="nav-item">
                         <a class="nav-link<?php echo $active ? ' active' : ''; ?>" href="<?php echo route('admin.editHomePage'); ?>">
                             <span class="badge badge-dot mr-4">
@@ -200,7 +190,16 @@
                         </a>
                     </li>
                     @endif
-                    
+                    @if(Permissions::hasPermission('menu', 'update'))
+                    <li class="nav-item">
+                        <a class="nav-link<?php echo $active ? ' active' : ''; ?>" href="<?php echo route('admin.menu.add'); ?>">
+                            <span class="badge badge-dot mr-4">
+                                <i class="bg-gray"></i>
+                                <span class="status">Menu English</span>
+                            </span>
+                        </a>
+                    </li>
+                    @endif
                 </ul>
             </li>
         <?php endif; ?>

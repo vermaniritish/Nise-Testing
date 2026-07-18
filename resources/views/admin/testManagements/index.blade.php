@@ -5,7 +5,7 @@
             <div class="header-body">
                 <div class="row align-items-center py-4">
                     <div class="col-lg-6 col-7">
-                        <h6 class="h2 text-white d-inline-block mb-0">Test Requests</h6>
+                        <h6 class="h2 text-white d-inline-block mb-0">Manage Test Managements</h6>
                     </div>
                     <div class="col-lg-6 col-5 text-right">
                         @include('admin.testManagements.filters')
@@ -24,7 +24,7 @@
                     <!-- Card header -->
                     <div class="card-header border-0">
                         <div class="heading">
-                            <h3 class="mb-0">Here Is Your Test Requests!</h3>
+                            <h3 class="mb-0">Here Is Your Test Management!</h3>
                         </div>
                         <div class="actions">
                             <div class="input-group input-group-alternative input-group-merge">
@@ -32,6 +32,11 @@
                                     <span class="input-group-text"><i class="fas fa-search"></i></span>
                                 </div>
                                 <input class="form-control listing-search" placeholder="Search" type="text" value="<?php echo (isset($_GET['search']) && $_GET['search'] ? $_GET['search'] : '') ?>">
+                            </div>
+                            <div class="ml-2">
+                                <a href="{{ route('admin.testManagements.export.excel') }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}" class="btn btn-neutral btn-sm">
+                                    <i class="fas fa-file-excel"></i> Export Excel
+                                </a>
                             </div>
                             <?php if(Permissions::hasPermission('test_managements', 'delete')): ?>
                             <div class="dropdown" data-toggle="tooltip" data-designation="Bulk Actions" >

@@ -36,6 +36,11 @@
 									<span class="input-group-text"><i class="fas fa-search"></i></span>
 								</div>
 								<input class="form-control listing-search" placeholder="Search" type="text" value="<?php echo (isset($_GET['search']) && $_GET['search'] ? $_GET['search'] : '') ?>">
+					<div class="ml-2">
+						<a href="{{ route('admin.testingService.export.excel') }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}" class="btn btn-neutral btn-sm">
+							<i class="fas fa-file-excel"></i> Export Excel
+						</a>
+					</div>
 							</div>
 							<?php if(Permissions::hasPermission('testing_services', 'delete')): ?>
 							<div class="dropdown" data-toggle="tooltip" data-designation="Bulk Actions" >

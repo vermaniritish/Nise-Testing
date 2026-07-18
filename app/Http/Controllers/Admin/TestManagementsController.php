@@ -29,6 +29,8 @@ use App\Models\Admin\OrderRemark;
 use App\Models\Admin\Users;
 use App\Models\Admin\AdminAuth;
 use App\Models\Admin\Settings;
+use App\Exports\TestManagementsExport;
+use Maatwebsite\Excel\Facades\Excel;
 use PHPUnit\Framework\Error\Notice;
 use Illuminate\Support\Facades\Storage;
 use App\Libraries\General;
@@ -142,6 +144,17 @@ class TestManagementsController extends AppController
                 'testingServices' => $testingServices
             ]
         );
+    }
+
+    public function exportExcel(Request $request)
+    {
+        if (!Permissions::hasPermission('order_tests', 'listing')) {
+            $request->session()->flash('error', 'Permission denied.');
+            return redirect()->route('admin.dashboard');
+        }
+
+        $fileName = 'test_managements_' . date('Y_m_d_His') . '.xlsx';
+        return Excel::download(new TestManagementsExport($request), $fileName);
     }
 
     // function index(Request $request)

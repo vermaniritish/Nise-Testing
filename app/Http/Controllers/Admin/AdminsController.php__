@@ -22,8 +22,6 @@ use App\Models\Admin\AdminAuth;
 use App\Libraries\General;
 use App\Models\Admin\Admins;
 use App\Models\Admin\TestingService;
-use App\Exports\AdminsExport;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 
@@ -112,27 +110,16 @@ class AdminsController extends AppController
 	    }
     }
 
-    public function exportExcel(Request $request)
-    {
-        if (!AdminAuth::isAdmin()) {
-            $request->session()->flash('error', 'Permission denied.');
-            return redirect()->route('admin.dashboard');
-        }
-
-        $fileName = 'admins_' . date('Y_m_d_His') . '.xlsx';
-        return Excel::download(new AdminsExport($request), $fileName);
-    }
-
     function add(Request $request)
     {
-        if(!AdminAuth::isAdmin())
-        {
-            $request->session()->flash('error', 'Permission denied.');
-            return redirect()->route('admin.dashboard');
-        }
+    	if(!AdminAuth::isAdmin())
+    	{
+    		$request->session()->flash('error', 'Permission denied.');
+    		return redirect()->route('admin.dashboard');
+    	}
 
-     	if($request->isMethod('post'))
-     	{
+    	if($request->isMethod('post'))
+    	{
     		$data = $request->toArray();
 
     		/** Set random password in case send email button is on **/
@@ -163,12 +150,10 @@ class AdminsController extends AppController
 	                ],
 	                'send_password_email' => 'required',
 	                'is_admin' => 'required',
-	                 'password' => [
-            'required',
-            'string',
-            'min:8',
-            'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&^()_\-+=])[A-Za-z\d@$!%*#?&^()_\-+=]{8,}$/'
-        ],
+	                'password' => [
+	                	'required',
+					    'min:8',
+	                ],
 	                'permissions' => [
 	                	Rule::requiredIf(function () use ($request) {
 					        return $request->get('is_admin') === null || $request->get('is_admin') == '0';
@@ -267,14 +252,8 @@ class AdminsController extends AppController
 	    		$validator = Validator::make(
 		            $data,
 		            [
-		                'first_name' => [
-        'required',
-        'regex:/^[A-Za-z\s]+$/'
-    ],
-    'last_name' => [
-        'required',
-        'regex:/^[A-Za-z\s]+$/'
-    ],
+		                'first_name' => 'required',
+		                'last_name' => 'required',
 		                'email' => [
 		                	'required',
 		                	'email',
@@ -282,11 +261,9 @@ class AdminsController extends AppController
 		                ],
 		                'is_admin' => 'required',
 		                'password' => [
-            'required',
-            'string',
-            'min:8',
-            'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&^()_\-+=])[A-Za-z\d@$!%*#?&^()_\-+=]{8,}$/'
-        ],
+		                	'nullable',
+						    'min:8',
+		                ],
 		                'permissions' => [
 		                	Rule::requiredIf(function () use ($request) {
 						        return $request->get('is_admin') === null || $request->get('is_admin') == '0';

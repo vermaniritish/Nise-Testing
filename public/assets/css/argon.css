@@ -10217,7 +10217,7 @@ input[type='button'].btn-block
 {
 
     display: inline-flex;
-
+    min-width: 50px;
 
 
     margin-right: 1rem;
@@ -49028,7 +49028,7 @@ button.section-darker:focus
 
 {
 
-    background: #fff;
+    background: #e5ef49;
 
 }
 
@@ -60020,7 +60020,7 @@ input.datetimepicker[data-color='yellow'] + .bootstrap-datetimepicker-widget.dro
 
 .custom-radio .custom-control-input ~ .custom-control-label, .radio-section .custom-radio .custom-control-input ~ .custom-control-label{
 
-    padding-left: 20px;
+    padding-left: 0px;
 
 }
 
@@ -60032,7 +60032,7 @@ input.datetimepicker[data-color='yellow'] + .bootstrap-datetimepicker-widget.dro
 
 .custom-control-inline,  .radio-section .custom-control-inline{
 
-    margin-right: 10px;
+    margin-left: 10px;
 
 }
 

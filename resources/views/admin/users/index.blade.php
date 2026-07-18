@@ -36,12 +36,11 @@
 								</div>
 								<input class="form-control listing-search" placeholder="Search" type="text" value="<?php echo (isset($_GET['search']) && $_GET['search'] ? $_GET['search'] : '') ?>">
 							</div>
-						
-						<?php if(Permissions::hasPermission('users', 'update') || Permissions::hasPermission('users', 'delete')): ?>
-							<div class="dropdown" data-toggle="tooltip" data-title="Bulk Actions">
-								<a class="btn btn-sm btn-icon-only text-warning" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<i class="fas fa-ellipsis-v"></i>
-								</a>
+                            <div class="ml-2">
+                                <a href="{{ route('admin.users.export.excel') }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}" class="btn btn-neutral btn-sm">
+                                    <i class="fas fa-file-excel"></i> Export Excel
+                                </a>
+                            </div>
 								<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
 									<?php if(Permissions::hasPermission('users', 'update')): ?>
 									<a 
@@ -77,7 +76,7 @@
 		                            <?php endif; ?>
 								</div>
 							</div>
-							<?php endif; ?>
+							
 						</div>
 					</div>
 					<div class="table-responsive">

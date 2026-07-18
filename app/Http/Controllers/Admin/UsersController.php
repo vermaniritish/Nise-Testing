@@ -23,6 +23,8 @@ use App\Libraries\FileSystem;
 use App\Models\Admin\Users;
 use App\Models\Admin\State;
 use App\Models\PartnerAdmin\Center;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -131,6 +133,17 @@ class UsersController extends AppController
 	    		]
 	    	);
 	    }
+    }
+
+    public function exportExcel(Request $request)
+    {
+        if (!Permissions::hasPermission('users', 'listing')) {
+            $request->session()->flash('error', 'Permission denied.');
+            return redirect()->route('admin.dashboard');
+        }
+
+        $fileName = 'users_' . date('Y_m_d_His') . '.xlsx';
+        return Excel::download(new UsersExport($request), $fileName);
     }
     
     public function add(Request $request, $id = null)

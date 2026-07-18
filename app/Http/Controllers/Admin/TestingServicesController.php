@@ -22,6 +22,8 @@ use App\Libraries\FileSystem;
 use App\Http\Controllers\Admin\AppController;
 use App\Models\Admin\TestingService;
 use App\Models\Admin\SliderMenu;
+use App\Exports\TestingServicesExport;
+use Maatwebsite\Excel\Facades\Excel;
 use PHPUnit\Framework\Error\Notice;
 
 class TestingServicesController extends AppController
@@ -58,6 +60,12 @@ class TestingServicesController extends AppController
         }
 
         $listing = TestingService::getListing($request, $where);
+
+        if ($request->get('export_excel')) {
+            $fileName = 'testing_services_' . date('Y_m_d_His') . '.xlsx';
+            return Excel::download(new TestingServicesExport($request), $fileName);
+        }
+
         if ($request->ajax()) {
             $html = view(
                 "admin/testingServices/listingLoop",
@@ -191,6 +199,16 @@ class TestingServicesController extends AppController
         }
     }
 
+    public function exportExcel(Request $request)
+    {
+        if (!Permissions::hasPermission('testing_services', 'listing')) {
+            $request->session()->flash('error', 'Permission denied.');
+            return redirect()->route('admin.dashboard');
+        }
+
+        $fileName = 'testing_services_' . date('Y_m_d_His') . '.xlsx';
+        return Excel::download(new TestingServicesExport($request), $fileName);
+    }
 
     public function delete(Request $request, $id)
     {
